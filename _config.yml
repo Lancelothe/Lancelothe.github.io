@@ -36,7 +36,7 @@ auto_spacing: false
 max_open_file: 100
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
 relative_link: false
 future: true
 highlight:
