@@ -10,9 +10,9 @@ tags: Hexo
 
 
 ----------
-* [1.环境配置](#1) 
-* [2.Hexo安装部署](#1) 
-* [3.错误总结](#1) 
+* [1.环境配置](#1)
+* [2.Hexo安装部署](#2)
+* [3.错误总结](#3)
 
 
 <h2 id="1">1.环境配置</h2>
@@ -48,7 +48,7 @@ hexo s -g #生成后+本地预览
 
 现在我们来看一下本地预览的效果吧
 `hexo g`
-`hexo s`	
+`hexo s`
 　
 其实这里有个问题，默认的4000端口我在Windows上一直打不开，我没有在配置文件中重新设置，所以我每次启动的时候都会用这个命令指定端口`hexo s -p 40000` 我直接加了个0，用了40000端口。
 出现下面这个就说明你可以开始用网页在本地预览了。
@@ -67,7 +67,7 @@ INFO  Hexo is running at http://localhost:40000/. Press Ctrl+C to stop.
   branch: master
 </pre>
 按照我的格式填写即可，我的Github名字是Lancelothe，所以你需要将这个改为你的名字。关于type和repository的格式似乎在Hexo3.0版本以上就是需要这样写，以前好像type可以写成github.
-如何查看你的Hexo版本呢？ 
+如何查看你的Hexo版本呢？
 　　<br/>用`hexo -v`命令
 <pre>hexo: 3.3.7
 hexo-cli: 1.0.3
@@ -107,9 +107,9 @@ openssl: 1.0.2g
 
 2.持久使用
 `npm config set registry https://registry.npm.taobao.org`
-// 配置后可通过下面方式来验证是否成功 
+// 配置后可通过下面方式来验证是否成功
 `npm config get registry`
-// 或npm info express 
+// 或npm info express
 
 3.通过cnpm
   使用
@@ -117,5 +117,3 @@ openssl: 1.0.2g
 // 使用cnpm install expresstall express
 
 后面还会为大家带来Hexo的高级用法的，谢谢支持。
-
-
