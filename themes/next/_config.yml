@@ -150,6 +150,7 @@ font:
 # Value is the target link (E.g. GitHub: https://github.com/iissnan)
 #social:
   #LinkLabel: Link
+  GitHub: https://github.com/Lancelothe
 
 
 # Social Links Icons
@@ -324,7 +325,8 @@ disqus:
 #hypercomments_id:
 
 # Gentie productKey
-#gentie_productKey:
+# 网易云跟帖第三方插件： KEY
+gentie_productKey: ad587cd52aec4da88bcf719a8b7435e8
 
 # changyan
 changyan:
@@ -529,7 +531,7 @@ pace: false
 pace_theme: pace-theme-minimal
 
 # Canvas-nest
-canvas_nest: false
+canvas_nest: true
 
 # three_waves
 three_waves: false
@@ -626,6 +628,15 @@ vendors:
   # https://github.com/ethantw/Han
   han:
 
+
+  
+# --------------------------------------------------------------
+# background settings
+# --------------------------------------------------------------
+# add canvas-nest effect
+# see detail from https://github.com/hustcc/canvas-nest.js
+# 似乎上面已经有了这个设置项
+# canvas_nest: true
 
 # Assets
 css: css
