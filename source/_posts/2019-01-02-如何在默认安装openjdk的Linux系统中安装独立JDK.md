@@ -1,8 +1,10 @@
 ---
 title: 如何在默认安装openjdk的Linux系统中安装独立JDK
 date: 2019-01-02 12:58:01
-categories: Java
-tags: Java
+categories: 
+- Java
+tags: 
+- Jdk
 ---
 
 

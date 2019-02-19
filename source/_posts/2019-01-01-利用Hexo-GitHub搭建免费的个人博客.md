@@ -1,8 +1,11 @@
 ---
 title: 利用Hexo + GitHub搭建免费的个人博客
 date: 2019-01-01 16:50:15
-categories: Hexo
-tags: Hexo
+categories: 
+- Hexo
+tags: 
+- Hexo
+- 博客
 ---
 
 <p>今天给大家带来一份用Hexo + Github 搭建属于自己的个人博客的教程。其实现在这种博客的搭建方式有很多种。最早我见的是Jekyll、接下来这个Hexo，最近在研究Python发现用Flask和Django都可以搭建的，只是路数不同罢了。

@@ -1,7 +1,11 @@
 ---
 title: Java8新特性（一） 之 Lambda表达式
 date: 2019-02-19 23:30:53
-tags: Java
+categories: 
+- Java
+tags: 
+- Java8
+- Lambda
 ---
 
 [TOC]
