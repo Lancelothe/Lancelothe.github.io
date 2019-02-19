@@ -1,6 +1,6 @@
 ---
 title: 利用Hexo + GitHub搭建免费的个人博客
-date: 2017-07-01 16:50:15
+date: 2019-01-01 16:50:15
 categories: Hexo
 tags: Hexo
 ---
@@ -17,9 +17,10 @@ tags: Hexo
 
 <h2 id="1">1.环境配置</h2>
 首先要明确有几个环境是必须有的。没有的话请先安装。
+
 - Git（官网下载较慢，我建议用这个网址[gitb,org](http://gitb.org/)）
 　作用：用来提交Hexo的内容。
-- nodejs(我建议用v4.\*版本较好，官网有6.\*和8.\*的我装上后有点问题)
+- nodejs（我建议用v4.\*版本较好，官网有6.\*和8.\*的我装上后有点问题）
 　作用：用来生成静态页面的。
 - Github的账号（自己申请，并创建一个名为`yourname.github.io`的仓库）
 
@@ -34,13 +35,14 @@ $ cd blog
 $ npm install               #  安装依赖的组件
 $ hexo g # 或者hexo generate
 $ hexo s # 或者hexo server，可以在http://localhost:4000/ 查看</code></pre>
-<b>说几个比较常用的命令</b>
-1、hexo generate (hexo g) 生成静态文件，会在当前目录下生成一个新的叫做public的文件夹
-2、hexo server (hexo s) 启动本地web服务，用于博客的本地预览
-3、hexo deploy (hexo d) 发布博客到远端
-4、hexo clena 清除hexo g生成的本地缓存
-5、hexo new "postName" #新建文章
-6、hexo new page "pageName" #新建页面
+<b>说几个比较常用的命令:</b>
+
+1. hexo generate (hexo g) 生成静态文件，会在当前目录下生成一个新的叫做public的文件夹
+2. hexo server (hexo s) 启动本地web服务，用于博客的本地预览
+3. hexo deploy (hexo d) 发布博客到远端
+4. hexo clena 清除hexo g生成的本地缓存
+5. hexo new "postName" #新建文章
+6. hexo new page "pageName" #新建页面
 
 <b>还有一些常用的组合</b>
 hexo d -g #生成后+远程部署
@@ -56,7 +58,7 @@ hexo s -g #生成后+本地预览
 INFO  Hexo is running at http://localhost:40000/. Press Ctrl+C to stop.
 </pre>
 预览图如下：
-![预览效果](利用Hexo-GitHub搭建免费的个人博客/20170703161639.png)
+![预览效果](/images/20170703161639.png)
 
 <p>然后你就可以发布到你的Github上了</p>
 用命令`hexo d` 即可。但是我们发现需要输入Github的账号密码，所以这里还需要配置你的Github的地址，
