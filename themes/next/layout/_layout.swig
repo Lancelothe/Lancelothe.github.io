@@ -88,5 +88,8 @@
   
   <!-- 页面点击小红心 -->
   <script type="text/javascript" src="/js/src/love.js"></script>
+  <!-- 页面点击文字 -->
+  <script type="text/javascript" src="/js/src/mouse.js"></script>
+
 </body>
 </html>
