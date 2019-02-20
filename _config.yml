@@ -90,3 +90,6 @@ deploy:
   type: git
   repository: git@github.com:Lancelothe/Lancelothe.github.io.git
   branch: master
+  name: lancelot
+  email: whoami.ace@gmail.com
+
