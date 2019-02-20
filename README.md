@@ -1,2 +1,1 @@
-# Lancelothe.github.io
-Hexo Blog For Lancelot
+# Hexo Blog By Lancelot
