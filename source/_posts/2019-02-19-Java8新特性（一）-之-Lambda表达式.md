@@ -8,8 +8,6 @@ tags:
 - Lambda
 ---
 
-[TOC]
-
 ## Lambda表达式是什么
 
 Lambda表达式（lambda expression）是一个匿名函数，由数学中的λ演算而得名。在Java 8中可以把Lambda表达式理解为匿名函数，它没有名称，但是有参数列表、函数主体、返回类型等。
