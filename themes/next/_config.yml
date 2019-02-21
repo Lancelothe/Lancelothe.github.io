@@ -144,13 +144,16 @@ font:
 # Sidebar Settings
 # ---------------------------------------------------------------
 
+# Posts / Categories / Tags in sidebar.
+site_state: true
+
 
 # Social Links
 # Key is the link label showing to end users.
 # Value is the target link (E.g. GitHub: https://github.com/iissnan)
-#social:
-  #LinkLabel: Link
+social:
   GitHub: https://github.com/Lancelothe
+  知乎: https://www.zhihu.com/people/he-bo-hao-74/activities
 
 
 # Social Links Icons
@@ -159,12 +162,12 @@ font:
 #   Key is the name of the item and value is the name of FontAwesome icon. Key is case-senstive.
 #   When an globe mask icon presenting up means that the item has no mapping icon.
 social_icons:
-  enable: true
   # Icon Mappings.
   # KeyMapsToSocialItemKey: NameOfTheIconFromFontAwesome
-  GitHub: github
-  Twitter: twitter
-  Weibo: weibo
+  #GitHub: github
+  #知乎: zhihu
+  #Twitter: twitter
+  #Weibo: weibo
 
 
 # Sidebar Avatar
@@ -213,7 +216,7 @@ sidebar:
   b2t: false
 
   # Scroll percent label in b2t button
-  scrollpercent: false
+  scrollpercent: true
 
 
 # Blog rolls
@@ -637,6 +640,24 @@ vendors:
 # see detail from https://github.com/hustcc/canvas-nest.js
 # 似乎上面已经有了这个设置项
 # canvas_nest: true
+
+#live2d右下角卡通少女
+live2d:
+  enable: true
+  scriptFrom: local
+  pluginRootPath: live2dw/
+  pluginJsPath: lib/
+  pluginModelPath: assets/
+  tagMode: false
+  debug: false
+  model:
+    use: live2d-widget-model-wanko
+  display:
+    position: right
+    width: 150
+    height: 300
+  mobile:
+    show: true
 
 # Assets
 css: css

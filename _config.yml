@@ -7,7 +7,7 @@ title: Lancelot's blog
 subtitle: I can do all things!
 description: I can do all things!
 author: Lancelot He
-language: zh-Hans
+language: zh-CN
 timezone:
 
 # URL
@@ -81,7 +81,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: next
+theme: next-reloaded
 
 
 # Deployment
