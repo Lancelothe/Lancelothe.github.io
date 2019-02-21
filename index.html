@@ -1,26 +1,25 @@
-<!doctype html>
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
 
 
 
   
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-CN">
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
 
 
 
@@ -36,48 +35,6 @@
 
 
 
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
-
-
-  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -86,38 +43,43 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/favicon_16x16.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/favicon_32x32.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/favicon_16x16.ico?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/uploads/favicon_32x32.ico?v=7.0.0" color="#222">
 
 
 
 
 
 
-<meta name="description" content="I can do all things!">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Lancelot&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="Lancelot&#39;s blog">
-<meta property="og:description" content="I can do all things!">
-<meta property="og:locale" content="zh-Hans">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Lancelot&#39;s blog">
-<meta name="twitter:description" content="I can do all things!">
 
-
-
-<script type="text/javascript" id="hexo.configurations">
+<script id="hexo.configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    sidebar: {"position":"right","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
+    version: '7.0.0',
+    sidebar: {"position":"right","display":"always","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     algolia: {
       applicationID: '',
       apiKey: '',
@@ -129,12 +91,36 @@
 </script>
 
 
+  
+
+
+
+
+  <meta name="description" content="I can do all things!">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Lancelot&#39;s blog">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="Lancelot&#39;s blog">
+<meta property="og:description" content="I can do all things!">
+<meta property="og:locale" content="zh-CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Lancelot&#39;s blog">
+<meta name="twitter:description" content="I can do all things!">
+
+
+
+
+
 
   <link rel="canonical" href="http://yoursite.com/">
 
 
 
-
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
 
   <title>Lancelot's blog</title>
   
@@ -150,30 +136,47 @@
 
 
 
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
 
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
 
-  
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
   
   
     
   
 
-  
-  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
-  
-  
   <div class="container sidebar-position-right 
-   page-home 
- ">
+  page-home">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
+  <div class="site-meta">
     
 
     <div class="custom-logo-site-title">
@@ -183,13 +186,16 @@
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
+    
       
         <p class="site-subtitle">I can do all things!</p>
       
+    
+    
   </div>
 
   <div class="site-nav-toggle">
-    <button>
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -197,65 +203,106 @@
   </div>
 </div>
 
-<nav class="site-nav">
-  
 
+
+<nav class="site-nav">
   
     <ul id="menu" class="menu">
       
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            首页
-          </a>
-        </li>
-      
         
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            归档
-          </a>
-        </li>
-      
         
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
-            
-            关于
-          </a>
-        </li>
+          
+          <li class="menu-item menu-item-home menu-item-active">
+
+    
+    
+    
       
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
         
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            分类
-          </a>
-        </li>
-      
         
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
-            
-            标签
-          </a>
-        </li>
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
       
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
 
       
+      
     </ul>
+  
+
+  
+    
+
   
 
   
@@ -263,12 +310,20 @@
 
 
 
- </div>
+  
+
+
+
+</div>
     </header>
+
+    
+
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
+          
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
@@ -281,12 +336,18 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/19/Java8新特性（一）-之-Lambda表达式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Lancelot He">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="I can do all things!">
       <meta itemprop="image" content="/uploads/avatar.png">
     </span>
 
@@ -301,11 +362,20 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/19/Java8新特性（一）-之-Lambda表达式/" itemprop="url">Java8新特性（一） 之 Lambda表达式</a></h1>
+                
+                <a href="/2019/02/19/Java8新特性（一）-之-Lambda表达式/" class="post-title-link" itemprop="url">Java8新特性（一） 之 Lambda表达式</a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -313,13 +383,30 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-19T23:30:53+08:00">
-                2019-02-19
-              </time>
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-19 23:30:53" itemprop="dateCreated datePublished" datetime="2019-02-19T23:30:53+08:00">2019-02-19</time>
             
 
             
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-20 01:07:31" itemprop="dateModified" datetime="2019-02-20T01:07:31+08:00">2019-02-20</time>
+              
             
           </span>
 
@@ -335,11 +422,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
 
                 
                 
@@ -348,6 +431,7 @@
           
 
           
+            
             
           
 
@@ -364,6 +448,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -372,30 +459,66 @@
       
         
           
-          Lambda表达式是什么Lambda表达式（lambda expression）是一个匿名函数，由数学中的λ演算而得名。在Jav
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/02/19/Java8新特性（一）-之-Lambda表达式/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+            <h2 id="Lambda表达式是什么"><a href="#Lambda表达式是什么" class="headerlink" title="Lambda表达式是什么"></a>Lambda表达式是什么</h2><p>Lambda表达式（lambda expression）是一个匿名函数，由数学中的λ演算而得名。在Java 8中可以把Lambda表达式理解为匿名函数，它没有名称，但是有参数列表、函数主体、返回类型等。</p>
+<p>Lambda表达式的语法如下：</p>
+<blockquote>
+<p>(parameters) -&gt; { statements; }</p>
+</blockquote>
+<p>为什么要使用Lambda表达式？前面你也看到了，在Java中使用内部类显得十分冗长，要编写很多样板代码，Lambda表达式正是为了简化这些步骤出现的，它使代码变得清晰易懂。</p>
+<h2 id="如何使用Lambda表达式"><a href="#如何使用Lambda表达式" class="headerlink" title="如何使用Lambda表达式"></a>如何使用Lambda表达式</h2><p>Lambda表达式是为了简化内部类的，你可以把它当成是内部类的一种简写方式，只要是有内部类的代码块，都可以转化成Lambda表达式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Comparator排序</span></span><br><span class="line">List&lt;Integer&gt; list = Arrays.asList(<span class="number">3</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">2</span>);</span><br><span class="line">list.sort(<span class="keyword">new</span> Comparator&lt;Integer&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Integer o1, Integer o2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> o1.compareTo(o2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用Lambda表达式简化</span></span><br><span class="line">list.sort((o1, o2) -&gt; o1.compareTo(o2));</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Runnable代码块</span></span><br><span class="line">Thread thread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Hello Man!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用Lambda表达式简化</span></span><br><span class="line">Thread thread = <span class="keyword">new</span> Thread(() -&gt; System.out.println(<span class="string">"Hello Man!"</span>));</span><br></pre></td></tr></table></figure>
+<p>可以看出，只要是内部类的代码块，就可以使用Lambda表达式简化，并且简化后的代码清晰易懂。</p>
+<h3 id="方法引用"><a href="#方法引用" class="headerlink" title="方法引用"></a>方法引用</h3><p>甚至，Comparator排序的Lambda表达式还可以进一步简化：</p>
+<blockquote>
+<p>list.sort(Integer::compareTo);</p>
+</blockquote>
+<p>这种写法被称为 <strong>方法引用</strong>，方法引用是Lambda表达式的简便写法。如果你的Lambda表达式只是调用这个方法，最好使用名称调用，而不是描述如何调用，这样可以提高代码的可读性。</p>
+<p>方法引用使用<code>::</code>分隔符，分隔符的前半部分表示引用类型，后面半部分表示引用的方法名称。例如：<code>Integer::compareTo</code>表示引用类型为<code>Integer</code>，引用名称为<code>compareTo</code>的方法。</p>
+<p>对于 Lambda 表达式到方法引用的简化，我们提供以下规则： </p>
+<table>
+<thead>
+<tr>
+<th>Lambda 表达式</th>
+<th>方法引用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(args) -&gt; ClassName.staticMethod(args)</td>
+<td>ClassName::staticMethod</td>
+</tr>
+<tr>
+<td>(arg0, …) -&gt; arg0.instanceMethod(…)</td>
+<td>ClassName::instanceMethod</td>
+</tr>
+<tr>
+<td>(args) -&gt; expression.instanceMethod(args)</td>
+<td>expression::instanceMethod</td>
+</tr>
+</tbody>
+</table>
+<p>特别的，对于构造函数的方法引用：  <code>ClassName::new</code><br>类似使用方法引用的例子还有打印集合中的元素到控制台中：<br><code>list.forEach(System.out::println);</code></p>
+
+          
         
       
     </div>
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
+    
+    
 
-    <div>
+    
+
+    
       
-    </div>
+    
+    
+
+    
 
     <footer class="post-footer">
       
@@ -409,6 +532,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -421,12 +548,18 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/02/如何在默认安装openjdk的Linux系统中安装独立JDK/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Lancelot He">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="I can do all things!">
       <meta itemprop="image" content="/uploads/avatar.png">
     </span>
 
@@ -441,11 +574,20 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/01/02/如何在默认安装openjdk的Linux系统中安装独立JDK/" itemprop="url">如何在默认安装openjdk的Linux系统中安装独立JDK</a></h1>
+                
+                <a href="/2019/01/02/如何在默认安装openjdk的Linux系统中安装独立JDK/" class="post-title-link" itemprop="url">如何在默认安装openjdk的Linux系统中安装独立JDK</a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -453,13 +595,30 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-02T12:58:01+08:00">
-                2019-01-02
-              </time>
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-02 12:58:01" itemprop="dateCreated datePublished" datetime="2019-01-02T12:58:01+08:00">2019-01-02</time>
             
 
             
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-20 00:47:40" itemprop="dateModified" datetime="2019-02-20T00:47:40+08:00">2019-02-20</time>
+              
             
           </span>
 
@@ -475,11 +634,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
 
                 
                 
@@ -488,6 +643,7 @@
           
 
           
+            
             
           
 
@@ -504,6 +660,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -512,30 +671,59 @@
       
         
           
-          今天总结一下在Linux系统中卸载默认的openjdk改为我们自己独立安装的oracle的Jdk版本。就像我们在Windows上
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/01/02/如何在默认安装openjdk的Linux系统中安装独立JDK/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+            <p>今天总结一下在Linux系统中卸载默认的openjdk改为我们自己独立安装的oracle的Jdk版本。就像我们在Windows上安装的环境一样。</p>
+<hr>
+<ul>
+<li><a href="#1">1.卸载&amp;下载</a></li>
+<li><a href="#2">2.解压安装</a></li>
+<li><a href="#3">3.修改配置</a></li>
+<li><a href="#4">4.选择使用JAVA的版本</a></li>
+<li><a href="#5">5.测试</a></li>
+</ul>
+<h2 id="1"> 一、卸载&amp;下载   </h2><br>#### 1、卸载自带的opendjk ####<br><br>    rpm –qa|grep jdk<br>    rpm –e –nodeps  jdk***    //将过滤出的结果进行卸载<br>#### 2、下载一个Sun的JDK（现在应该叫oracle的JDK）。 ####<br>下一个自解压的tar包。<br>这里我下载的是jdk-7u79-linux-x64.tar.gz<br><br>下载地址 : <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html" target="_blank" rel="noopener">点击这里</a><br><br><h2 id="2"> 二、解压安装 </h2>
+
+<p>1.解压jdk-7u79-linux-x64.tar.gz<br></p>
+<p>2.将解压后jdk-7u79-linux-x64.tar.gz复制到/usr/java下</p>
+<h2 id="3"> 三、修改配置 </h2><br>#### 方法1：修改/etc/profile 文件 ####<br>所有用户的 shell都有权使用这些环境变量<br><strong><1> 在 shell终端执行命令：vi /etc/profile</1></strong><br><strong><2> 在 profile文件末尾加入：</2></strong><br><br>    JAVA_HOME=/usr/jdk1.7.0_79<br>      JRE_HOME=/usr/local/java/jdk1.7.0_79/jre<br>      PATH=$JAVA_HOME/bin:$PATH<br>      CLASSPATH=.:$JAVA_HOME/lib/dt.jar: $JAVA_HOME/lib/tools.jar<br>      export JAVA_HOME,JRE_HOME,PATH,CLASSPATH<br><br><code>PS：上面我们说的修改配置系统环境变量是在Unix操作系统下面的。</code><p><br>下面来说说在DOS系统下面如何更改配置系统环境变量。<br>#### DOS: ####<br><br>1. 在系统变量里新建JAVA_HOME变量，变量值为：<code>D:\others\JAVA\JDK</code>（根据自己的安装路径填写）<br><br>2. 新建Classpath变量，在Classpath变量（已存在不用新建）添加变量值，变量值为：<br><code>.;%JAVA\_HOME%\lib;%JAVA_HOME%\lib\tools.jar;</code><br><br>3. 在path变量（已存在不用新建）添加变量值：<br><code>%JAVA\_HOME%\bin;%JAVA_HOME%\jre\bin（注意变量值之间用“;”隔开）</code><br><br><code>eg:;%JAVA\_HOME%\lib;%JAVA\_HOME%\lib\tools.jar;%JAVA\_HOME%\bin;%JAVA\_HOME%\jre\bin;</code><br><br>4. 测试是否配置成功<br>在dos中，输入命令java，回车后应该会出现java的各种命令；<br>javac  出现相关编译的命令；<br>java -version 出现jdk版本号<br>补充环境变量的解析:<br>JAVA_HOME:jdk的安装路径<br>Classpath:java加载类路径，只有类在classpath中java命令才能识别，在路径前加了个”.”表示当前路径。<br>path：系统在任何路径下都可以识别java,javac命令。<br><br><strong><3>重启系统</3></strong><br>ps: 如果你不想重新系统，可以用命令<code>source /etc/profile</code>使配置文件立即生效。否则只能重启系统才能使配置参数生效。然后我们可以通过<br><br>    echo $JAVA_HOME<br>    echo $PATH<br>    echo $CLASSPATH<br>查看配置的信息。<br>但是我最后还是重启了才真正生效。<br>#### 方法2：修改.bashrc文件 ####<br>如果你需要给某个用户权限使用这些环境变量，你只需要修改其个人用户主目录下的.bashrc就可以了,而不像第一种方法给所有用户权限。<br><strong><1>在 shell终端执行命令：vi ~/.bashrc</1></strong><br><strong><2>在.bashrc文件末尾加入：</2></strong><br><br>    set JAVA_HOME=/usr/jdk1.7.0_79<br>    export JAVA_HOME<br>    set PATH=$JAVA_HOME/bin:$PATH<br>    export PATH<br>    set CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar<br>    export CLASSPATH<br><strong><3>重新登录</3></strong><br><code>注意：Linux使用:(冒号)而不是;(分号)来分隔路径</code><br><br></p><h2 id="4"> 四、选择使用JAVA的版本 </h2>
+
+<ol>
+<li><p>更新参数使配置生效<br><br> <code>update-alternatives --install /usr/bin/java java /usr/jdk1.7.0\_79/bin/java 300</code><br><br> <code>update-alternatives --install /usr/bin/javac javac /usr/jdk1.7.0\_79/bin/javac 300</code></p>
+</li>
+<li><p>选择需要使用的版本<br>在终端输入命令：<code>update-alternatives –config java</code></p>
+</li>
+</ol>
+<p></p><h2 id="5"> 五、测试 </h2><br>进行完如上配置后，就可以进行测试了<br><br>在DOS或终端下输入 <code>java -version</code>，然后输出显示，显示出来的是当前系统JRE的最高版本<br>我这里显示的是：<p></p>
+<p><strong>ps：环境变量配置文件</strong><br>在Ubuntu中有如下几个文件可以设置环境变量</p><p></p>
+<ol>
+<li><p>/etc/profile:在登录时,操作系统定制用户环境时使用的第一个文件,此文件为系统的每个用户设置环境信息,当用户第一次登录时,该文件被执行。</p>
+</li>
+<li><p>/etc/environment:在登录时操作系统使用的第二个文件,系统在读取你自己的profile前,设置环境文件的环境变量。</p>
+</li>
+<li><p>~/.bash_profile:在登录时用到的第三个文件是.profile文件,每个用户都可使用该文件输入专用于自己使用的shell信息,当用户登录时,该文件仅仅执行一次!默认情况下,他设置一些环境变量,执行用户的.bashrc文件。/etc/bashrc:为每一个运行bash shell的用户执行此文件.当bash shell被打开时,该文件被读取.</p>
+</li>
+<li><p>~/.bashrc:该文件包含专用于你的bash shell的bash信息,当登录时以及每次打开新的shell时,该该文件被读取。<br>几个环境变量的优先级<br><strong>1&gt;2&gt;3</strong></p>
+</li>
+</ol>
+
+          
         
       
     </div>
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
+    
+    
 
-    <div>
+    
+
+    
       
-    </div>
+    
+    
+
+    
 
     <footer class="post-footer">
       
@@ -549,6 +737,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -561,12 +753,18 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/01/利用Hexo-GitHub搭建免费的个人博客/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Lancelot He">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="I can do all things!">
       <meta itemprop="image" content="/uploads/avatar.png">
     </span>
 
@@ -581,11 +779,20 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/01/01/利用Hexo-GitHub搭建免费的个人博客/" itemprop="url">利用Hexo + GitHub搭建免费的个人博客</a></h1>
+                
+                <a href="/2019/01/01/利用Hexo-GitHub搭建免费的个人博客/" class="post-title-link" itemprop="url">利用Hexo + GitHub搭建免费的个人博客</a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -593,13 +800,30 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-01T16:50:15+08:00">
-                2019-01-01
-              </time>
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-01 16:50:15" itemprop="dateCreated datePublished" datetime="2019-01-01T16:50:15+08:00">2019-01-01</time>
             
 
             
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-20 00:47:40" itemprop="dateModified" datetime="2019-02-20T00:47:40+08:00">2019-02-20</time>
+              
             
           </span>
 
@@ -615,11 +839,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hexo/" itemprop="url" rel="index">
-                    <span itemprop="name">Hexo</span>
-                  </a>
-                </span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hexo/" itemprop="url" rel="index"><span itemprop="name">Hexo</span></a></span>
 
                 
                 
@@ -628,6 +848,7 @@
           
 
           
+            
             
           
 
@@ -644,6 +865,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -652,30 +876,65 @@
       
         
           
-          今天给大家带来一份用Hexo + Github 搭建属于自己的个人博客的教程。其实现在这种博客的搭建方式有很多种。最早我见的是J
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/01/01/利用Hexo-GitHub搭建免费的个人博客/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+            <p>今天给大家带来一份用Hexo + Github 搭建属于自己的个人博客的教程。其实现在这种博客的搭建方式有很多种。最早我见的是Jekyll、接下来这个Hexo，最近在研究Python发现用Flask和Django都可以搭建的，只是路数不同罢了。<br>我选择了这个Hexo，目前这个用的人也比较多，应该说是简单易搭建吧，可扩展也可自己美化。话不多说，下面就开始。</p>
+
+
+<hr>
+<ul>
+<li><a href="#1">1.环境配置</a></li>
+<li><a href="#2">2.Hexo安装部署</a></li>
+<li><a href="#3">3.错误总结</a></li>
+</ul>
+<p></p><h2 id="1">1.环境配置</h2><br>首先要明确有几个环境是必须有的。没有的话请先安装。<p></p>
+<ul>
+<li>Git（官网下载较慢，我建议用这个网址<a href="http://gitb.org/" target="_blank" rel="noopener">gitb,org</a>）<br>　作用：用来提交Hexo的内容。</li>
+<li>nodejs（我建议用v4.*版本较好，官网有6.*和8.*的我装上后有点问题）<br>　作用：用来生成静态页面的。</li>
+<li>Github的账号（自己申请，并创建一个名为<code>yourname.github.io</code>的仓库）</li>
+</ul>
+<p>自行安装完环境后，将自己 SSH key导入到申请的GitHub中。建议导入，不然后面每次提交代码都要手动输入GitHub的账号密码，相当麻烦。</p>
+<p></p><h2 id="2">2.Hexo安装部署</h2><br>Hexo的安装也相当简单，以Windows为例：<p></p>
+<p><pre><code class="bash">$ cd d:/hexo<br>$ npm install hexo-cli -g   #  -g代表全局安装<br>$ hexo init blog            #  初始化blog目录<br>$ cd blog<br>$ npm install               #  安装依赖的组件<br>$ hexo g # 或者hexo generate<br>$ hexo s # 或者hexo server，可以在<a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a> 查看</code></pre><br><b>说几个比较常用的命令:</b></p>
+<ol>
+<li>hexo generate (hexo g) 生成静态文件，会在当前目录下生成一个新的叫做public的文件夹</li>
+<li>hexo server (hexo s) 启动本地web服务，用于博客的本地预览</li>
+<li>hexo deploy (hexo d) 发布博客到远端</li>
+<li>hexo clena 清除hexo g生成的本地缓存</li>
+<li>hexo new “postName” #新建文章</li>
+<li>hexo new page “pageName” #新建页面</li>
+</ol>
+<p><b>还有一些常用的组合</b><br>hexo d -g #生成后+远程部署<br>hexo s -g #生成后+本地预览</p>
+<p>现在我们来看一下本地预览的效果吧<br><code>hexo g</code><br><code>hexo s</code><br>　<br>其实这里有个问题，默认的4000端口我在Windows上一直打不开，我没有在配置文件中重新设置，所以我每次启动的时候都会用这个命令指定端口<code>hexo s -p 40000</code> 我直接加了个0，用了40000端口。<br>出现下面这个就说明你可以开始用网页在本地预览了。</p>
+<p><pre>INFO  Start processing<br>INFO  Hexo is running at <a href="http://localhost:40000/" target="_blank" rel="noopener">http://localhost:40000/</a>. Press Ctrl+C to stop.<br></pre><br>预览图如下：<br><img src="/images/20170703161639.png" alt="预览效果"></p>
+<p>然后你就可以发布到你的Github上了</p><br>用命令<code>hexo d</code> 即可。但是我们发现需要输入Github的账号密码，所以这里还需要配置你的Github的地址，<br>编辑本地的<code>_config.yml</code> 文件，这是关于Hexo的配置文件。找到如下配置项：<br><pre>deploy:<br>  type: git<br>  repository: <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:Lancelothe/Lancelothe.github.io.git<br>  branch: master<br></pre><br>按照我的格式填写即可，我的Github名字是Lancelothe，所以你需要将这个改为你的名字。关于type和repository的格式似乎在Hexo3.0版本以上就是需要这样写，以前好像type可以写成github.<br>如何查看你的Hexo版本呢？<br>　　<br>用<code>hexo -v</code>命令<br><pre>hexo: 3.3.7<br>hexo-cli: 1.0.3<br>os: Windows_NT 6.1.7601 win32 x64<br>http_parser: 2.5.2<br>node: 4.4.2<br>v8: 4.5.103.35<br>uv: 1.8.0<br>zlib: 1.2.8<br>ares: 1.10.1-DEV<br>icu: 56.1<br>modules: 46<br>openssl: 1.0.2g<br><br></pre><br><p>到此为止，你的Hexo个人博客就已经搭建完毕了。<br>下面来看看搭建过程中哪些可能遇到的问题</p>
+
+<p></p><h2 id="3">3.错误总结</h2><p></p>
+<p></p><h4>问题1：npm install 报 command not found</h4><br>原因：PATH配置不对。<br>解决：选择『计算机』-『属性』-『高级系统设置』-『环境变量』，先查看了『系统变量』部分，发现安装后确实在系统变量的Path后追加了安装路径，即：C:\Program Files\nodejs；然后，打开『用户环境变量』部分查看了下Path的值，发现在最后系统自动加入了C:\Users\s94983\AppData\Roaming\npm，在『用户环境变量』部分的Path下再追加C:\Program Files\nodejs，然后关闭掉git base，（有可能需要重启电脑才可生效）问题解决！<p></p>
+<p></p><h4>问题2：hexo deploy时重复输入用户名密码的问题</h4><br>原因：repository配置时没有采用<a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>的形式，而是采用了老的<a href="https://github.com" target="_blank" rel="noopener">https://github.com</a><br>解决：采用<a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>形式即可。<p></p>
+<p></p><h4>问题3：ERROR Deployer not found: git 或者 ERROR Deployer not found: github</h4><br>原因：未安装依赖包<p></p><br>解决：使用 <code>npm install hexo-deployer-git --save</code> 安装依赖<p></p>
+<p></p><h4>问题4：npm安装时下载速度慢</h4><br>解决： 可以换成淘宝的镜像源。<br>镜像举例：<br>1.临时使用<br><code>npm --registry https://registry.npm.taobao.org install express</code><p></p>
+<p>2.持久使用<br><code>npm config set registry https://registry.npm.taobao.org</code><br>// 配置后可通过下面方式来验证是否成功<br><code>npm config get registry</code><br>// 或npm info express</p>
+<p>3.通过cnpm<br>  使用<br><code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code><br>// 使用cnpm install expresstall express</p>
+<p>后面还会为大家带来Hexo的高级用法的，谢谢支持。</p>
+
+          
         
       
     </div>
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
+    
+    
 
-    <div>
+    
+
+    
       
-    </div>
+    
+    
+
+    
 
     <footer class="post-footer">
       
@@ -689,6 +948,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -699,9 +962,6 @@
 
 
           </div>
-          
-
-
           
 
         </div>
@@ -717,71 +977,120 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
 
       
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Lancelot He">
-          <p class="site-author-name" itemprop="name">Lancelot He</p>
-           
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Lancelot He">
+            
+              <p class="site-author-name" itemprop="name">Lancelot He</p>
               <p class="site-description motion-element" itemprop="description">I can do all things!</p>
+          </div>
+
           
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Lancelothe" title="GitHub &rarr; https://github.com/Lancelothe" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.zhihu.com/people/he-bo-hao-74/activities" title="知乎 &rarr; https://www.zhihu.com/people/he-bo-hao-74/activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>知乎</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
         </div>
-        <nav class="site-state motion-element">
-
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">3</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-categories">
-              <a href="/categories/index.html">
-                <span class="site-state-item-count">2</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
-                <span class="site-state-item-count">5</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
-
-
-      </section>
+      </div>
 
       
 
@@ -797,30 +1106,39 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2019</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Lancelot He</span>
+
+  
+
+  
 </div>
 
 
-<!-- <div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
 
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div> -->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.0.0</div>
+
+
 
 
         
+
+
+
+
+
+
+
 
         
       </div>
@@ -830,14 +1148,21 @@
       <div class="back-to-top">
         <i class="fa fa-arrow-up"></i>
         
+          <span id="scrollpercent"><span>0</span>%</span>
+        
       </div>
     
 
+    
+
+    
+
+    
   </div>
 
   
 
-<script type="text/javascript">
+<script>
   if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
     window.Promise = null;
   }
@@ -851,77 +1176,6 @@
 
 
 
-  
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-  
-  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
-
-
-
-  
-  
-
-  
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
-
-  
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
 
 
 
@@ -929,16 +1183,14 @@
 
   
     
-    <script>
-      var cloudTieConfig = {
-        url: document.location.href, 
-        sourceId: "",
-        productKey: "ad587cd52aec4da88bcf719a8b7435e8",
-        target: "cloud-tie-wrapper"
-      };
-    </script>
-    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+    
+      
+    
   
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+
+
+
 
 
 
@@ -950,7 +1202,47 @@
 
 
   
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
 
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+
+  
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+
+  
 
 
 
@@ -968,10 +1260,24 @@
   
 
   
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
   <!-- 页面点击小红心 -->
   <script type="text/javascript" src="/js/src/love.js"></script>
   <!-- 页面点击文字 -->
   <script type="text/javascript" src="/js/src/mouse.js"></script>
-
-</body>
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>
