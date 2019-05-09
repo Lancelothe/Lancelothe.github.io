@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/favicon_16x16.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/favicon_32x32.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/favicon_16x16.ico?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/uploads/favicon_32x32.ico?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.0.0',
+    sidebar: {"position":"right","display":"always","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="[TOC] elasticsearch-head启动：cd elasticsearch-head grunt server 或者 输入npm run start启动 # 打开浏览器 http://localhost:9100 ES单机集群搭建：修改完配置文件后，将压缩目录复制多份，然后修改对应配置文件的node.name、http.port、transport.tcp.port、discovery">
+<meta name="keywords" content="ES">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES集群相关">
+<meta property="og:url" content="http://yoursite.com/2019/03/04/es-2019-03-04-ES集群相关/index.html">
+<meta property="og:site_name" content="Lancelot&#39;s blog">
+<meta property="og:description" content="[TOC] elasticsearch-head启动：cd elasticsearch-head grunt server 或者 输入npm run start启动 # 打开浏览器 http://localhost:9100 ES单机集群搭建：修改完配置文件后，将压缩目录复制多份，然后修改对应配置文件的node.name、http.port、transport.tcp.port、discovery">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-09T16:29:58.766Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ES集群相关">
+<meta name="twitter:description" content="[TOC] elasticsearch-head启动：cd elasticsearch-head grunt server 或者 输入npm run start启动 # 打开浏览器 http://localhost:9100 ES单机集群搭建：修改完配置文件后，将压缩目录复制多份，然后修改对应配置文件的node.name、http.port、transport.tcp.port、discovery">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/04/es-2019-03-04-ES集群相关/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>ES集群相关 | Lancelot's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lancelot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">I can do all things!</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/04/es-2019-03-04-ES集群相关/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lancelot He">
+      <meta itemprop="description" content="I can do all things!">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lancelot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ES集群相关
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-04 23:14:43" itemprop="dateCreated datePublished" datetime="2019-03-04T23:14:43+08:00">2019-03-04</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-10 00:29:58" itemprop="dateModified" datetime="2019-05-10T00:29:58+08:00">2019-05-10</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ElasticSearch/" itemprop="url" rel="index"><span itemprop="name">ElasticSearch</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h3 id="elasticsearch-head启动："><a href="#elasticsearch-head启动：" class="headerlink" title="elasticsearch-head启动："></a>elasticsearch-head启动：</h3><pre><code>cd elasticsearch-head
+grunt server
+或者 输入npm run start启动
+# 打开浏览器 http://localhost:9100
+</code></pre><h3 id="ES单机集群搭建："><a href="#ES单机集群搭建：" class="headerlink" title="ES单机集群搭建："></a>ES单机集群搭建：</h3><p>修改完配置文件后，将压缩目录复制多份，然后修改对应配置文件的<code>node.name</code>、<code>http.port</code>、<code>transport.tcp.port</code>、<code>discovery.zen.ping.unicast.hosts</code>即可，<code>node.master</code>和<code>node.data</code>两个参数看需要修改，默认值都是<code>true</code>。</p>
+<ul>
+<li>脚本一件启动<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">./es-node-master/bin/elasticsearch -d</span><br><span class="line">./es-node-data-1/bin/elasticsearch -d</span><br><span class="line">./es-node-data-2/bin/elasticsearch -d</span><br><span class="line">./es-node-client/bin/elasticsearch -d</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="elasticsearch启动"><a href="#elasticsearch启动" class="headerlink" title="elasticsearch启动"></a>elasticsearch启动</h4><blockquote>
+<p>正常启动:<br>${es目录}/bin/elasticsearch<br>守护进程启动:<br>${es目录}/bin/elasticsearch  -d</p>
+</blockquote>
+<p><strong>PS：</strong></p>
+<ol>
+<li><code>http.port</code>、<code>transport.tcp.port</code>、<code>discovery.zen.ping.unicast.hosts</code>也可以不设置，es会自动选取合适的端口来启动，默认使用多播方式通讯，这种方式在本地或者VPC环境下可以使用，但是不建议。</li>
+<li><code>network.host</code>这个参数和redis的host参数一样，根据填写的IP来限制访问权限，例如127.0.0.1那么就只有本地可以访问，192等内网IP那么就只有内网能访问，写公网IP的话外网才能访问。当我们在远程服务器上搭建服务时，如果设置的不是外网IP，很可能就是无法访问的。遇到这个问题我们可以通过使用netstat命令：netstat -tunlp | grep elasticsearch来查看ip与端口的绑定使用情况来检查。</li>
+</ol>
+<p>参考：<a href="https://blog.csdn.net/qq_36666651/article/details/81704717" target="_blank" rel="noopener">elasticsearch本地集群搭建及远程服务器搭建注意事项 - wkNote - CSDN博客</a></p>
+<h3 id="启用X-pack："><a href="#启用X-pack：" class="headerlink" title="启用X-pack："></a>启用X-pack：</h3><p>（ELK Stack 6.3以后版本默认自带x-pack，不用手动安装）</p>
+<ol>
+<li>运行elasticsearch</li>
+<li>启用trial license（30天试用，后面有破解方法）<blockquote>
+<p>curl -H “Content-Type:application/json” -XPOST  <a href="http://127.0.0.1:9200/_xpack/license/start_trial?acknowledge=true" target="_blank" rel="noopener">http://127.0.0.1:9200/_xpack/license/start_trial?acknowledge=true</a></p>
+</blockquote>
+</li>
+<li>设置用户名密码<blockquote>
+<p>命令：bin/elasticsearch-setup-passwords interactive</p>
+</blockquote>
+</li>
+<li>elasticsearch.yml中开启安全验证配置<blockquote>
+<p>添加配置： <code>xpack.security.enabled: true</code></p>
+</blockquote>
+</li>
+</ol>
+<p>参考：<br><a href="https://blog.csdn.net/zou79189747/article/details/81164576" target="_blank" rel="noopener">elasticsearch6.3.1 启用x-pack - 11111 - CSDN博客</a><br><a href="https://blog.csdn.net/qq_25475209/article/details/81906701?tdsourcetag=s_pctim_aiomsg" target="_blank" rel="noopener">elasticsearch6.3.2之x-pack6.3.2破解安装并配合kibana使用 - qq_25475209的博客 - CSDN博客</a></p>
+<p>破解参考：<a href="https://www.plaza4me.com/article/20180825223849878" target="_blank" rel="noopener">elasticsearch6.3.2之x-pack6.3.2破解安装并配合kibana使用 - 我的广场</a></p>
+<h3 id="Kibana相关"><a href="#Kibana相关" class="headerlink" title="Kibana相关"></a>Kibana相关</h3><h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># 配置elasticsearch.yaml</span><br><span class="line"># 是否开启安全验证</span><br><span class="line">xpack.security.enabled: true</span><br><span class="line"># 是否开启监控</span><br><span class="line">xpack.monitoring.enabled: true</span><br><span class="line"># 是否开启图形</span><br><span class="line">xpack.graph.enabled: true</span><br><span class="line"># 是否开启watcher 仅仅es配置</span><br><span class="line">xpack.watcher.enabled: true</span><br><span class="line"></span><br><span class="line"># 配置kibana.yml</span><br><span class="line">server.port: 5601</span><br><span class="line">server.name: &quot;my-kibana&quot;</span><br><span class="line">elasticsearch.url: &quot;http://127.0.0.1:9200&quot;</span><br><span class="line"># 这里配用户名、密码</span><br><span class="line">elasticsearch.username: elastic</span><br><span class="line">elasticsearch.password: XXXXXXXXXXX</span><br><span class="line"># 为了防止启动报警告，所以增加一个随机的32位encryptionKey</span><br><span class="line">xpack.reporting.encryptionKey: 7d2e5883e72b7b0077305966442f51e3</span><br><span class="line">xpack.security.encryptionKey: 7d2e5883e72b7b0077305966442f51e4</span><br><span class="line"># 是否开启报表仅仅kibana配置</span><br><span class="line">xpack.reporting.enabled: true</span><br></pre></td></tr></table></figure>
+<p><strong>监控台Monitoring刚开始用Kibana账号登陆进去没有数据，说没有开启，但是点击Turn on后又报错，捣鼓了半天，最后用ElasticSearch账号密码进入监控台才有数据！后来第二天再试，用Kibana账号也有数据了，这里还不太清楚原因，或许是哪里配置的生效关系</strong></p>
+<h4 id="Kibana启动"><a href="#Kibana启动" class="headerlink" title="Kibana启动"></a>Kibana启动</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-H 参数解释  设置kibana  网络</span><br><span class="line">正常启动:</span><br><span class="line">    ./kibana -H 0.0.0.0</span><br><span class="line">守护进程启动:</span><br><span class="line">本次守护进程启动,主要用到了 nohup命令:</span><br><span class="line">在 kibana目录内运行!! (与kibana bin文件夹同级)</span><br><span class="line">    nohup ./bin/kibana -H 0.0.0.0 &gt; ./log/kibana.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+<p><strong>PS：</strong></p>
+<ol>
+<li>关于集群多节点配置x-pack。每个节点都需要安装x-pack。但是kibana只需要安装一次。</li>
+<li>x-pack的密码修改。(需要指定content-type)<blockquote>
+<p>curl -H “Content-Type: application/json” -XPUT -u elastic -p ‘内网ip:9303/_xpack/security/user/elastic/_password’ -d ‘{ “password” : “密码”}’</p>
+</blockquote>
+</li>
+</ol>
+<p>如果忘记elastic用户的密码，可以再创建一个用户超级角色的用户（用户admin，密码admin1）</p>
+<blockquote>
+<p>bin/x-pack/users useradd admin -p admin1 -r superuser</p>
+</blockquote>
+<p>上面的请求改一下:</p>
+<blockquote>
+<p>curl -H “Content-Type: application/json” -XPUT -u admin -p ‘内网ip:9303/_xpack/security/user/elastic/_password’ -d ‘{ “password” : “密码”}’</p>
+</blockquote>
+<h3 id="ES集群节点配置"><a href="#ES集群节点配置" class="headerlink" title="ES集群节点配置"></a>ES集群节点配置</h3><p>下面用到只是一些主要配置，还有更多的请看链接详解。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"># 这个参数必须设置  此参数是用来允许单机允许多个实例，默认不允许</span><br><span class="line">node.max_local_storage_nodes: 32</span><br><span class="line"># 集群名称，同一个集群里的此参数要一致</span><br><span class="line">cluster.name: my-es</span><br><span class="line"># 节点名称，同一集群的节点之间需要不一致</span><br><span class="line">node.name: node-2</span><br><span class="line">#node.attr.rack: r1</span><br><span class="line"># 设置候选主节点，默认 true</span><br><span class="line">node.master: true</span><br><span class="line"># 设置数据节点，默认 true</span><br><span class="line">node.data: true</span><br><span class="line"># 设置预处理节点，默认 true</span><br><span class="line">node.ingest: true</span><br><span class="line"></span><br><span class="line"># 设置默认索引分片个数，默认为5片。</span><br><span class="line">#index.number_of_shards: 5</span><br><span class="line"># 设置默认索引副本个数，默认为1个副本。如果采用默认设置，而你集群只配置了一台机器，那么集群的健康度为yellow，也就是所有的数据都是可用的，但是某些复制没有被分配（健康度可用 curl &apos;localhost:9200/_cat/health?v&apos; 查看， 分为绿色、黄色或红色。绿色代表一切正常，集群功能齐全，&gt;黄色意味着所有的数据都是可用的，但是某些复制没有被分配，红色则代表因为某些原因，某些数据不可用）</span><br><span class="line">#index.number_of_replicas: 1</span><br><span class="line"></span><br><span class="line"># 数据目录路径</span><br><span class="line">path.data: /Users/lancelot/Documents/lancelot/service/elasticsearch-cluster/es-node2/data</span><br><span class="line"># 日志目录路径</span><br><span class="line">path.logs: /Users/lancelot/Documents/lancelot/service/elasticsearch-cluster/es-node2/logs</span><br><span class="line"></span><br><span class="line"># 设置为true来锁住内存不进行swapping。因为当jvm开始swapping时es的效率 会降低，</span><br><span class="line"># 所以要保证它不swap，可以把ES_MIN_MEM和ES_MAX_MEM两个环境变量设置成同一个值，</span><br><span class="line"># 并且保证机器有足够的内存分配给es。 同时也要允许elasticsearch的进程可以锁住内存，</span><br><span class="line"># linux下启动es之前可以通过`ulimit -l unlimited`命令设置。</span><br><span class="line">#bootstrap.memory_lock: true</span><br><span class="line"></span><br><span class="line"># 设置绑定的ip地址，可以是ipv4或ipv6的，默认为0.0.0.0，绑定这台机器的任何一个ip。</span><br><span class="line">#network.bind_host: 127.0.0.1</span><br><span class="line"># 设置其它节点和该节点交互的ip地址，如果不设置它会自动判断，值必须是个真实的ip地址。(可以不配)</span><br><span class="line">#network.publish_host: 127.0.0.1</span><br><span class="line"># 此节点对外的ip  本地直接写127.0.0.1即可(这个参数是用来同时设置bind_host和publish_host上面两个参数)</span><br><span class="line">network.host: 127.0.0.1</span><br><span class="line"># 对外暴露的http访问端口</span><br><span class="line">http.port: 9202</span><br><span class="line"># 内部节点间通讯TCP端口，单播使用</span><br><span class="line">transport.tcp.port: 9302</span><br><span class="line"># 设置是否压缩tcp传输时的数据，默认为false，不压缩。</span><br><span class="line">#transport.tcp.compress: true</span><br><span class="line"># 是否使用http协议对外提供服务，默认为true，开启。</span><br><span class="line">#http.enabled: false</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 组播设置，默认true</span><br><span class="line">#discovery.zen.ping.multicast.enabled: false</span><br><span class="line"># 单播访问的地址 域名直接改成127.0.0.1即可  或者修改下本机host将127.0.0.1映射到多个域名，比如1个client 3个master  所以配了4个地址</span><br><span class="line">discovery.zen.ping.unicast.hosts: [&quot;127.0.0.1:9301&quot;, &quot;127.0.0.1:9302&quot;,&quot;127.0.0.1:9303&quot;]</span><br><span class="line"># 设置master选举需要赞同的最小节点数</span><br><span class="line"># 值得计算方式为 master候选节点数除2加1</span><br><span class="line"># 例如 node.master值为true的节点数量为5 值即为（5/2)+1 = 3</span><br><span class="line">discovery.zen.minimum_master_nodes: 2</span><br><span class="line"># 设置集群中自动发现其它节点时ping连接超时时间，默认为3秒，对于比较差的网络环境可以高点的值来防止自动发现时出错。</span><br><span class="line">#discovery.zen.ping.timeout: 3s</span><br><span class="line"></span><br><span class="line"># 设置集群中N个节点启动时进行数据恢复，默认为1。</span><br><span class="line">#gateway.recover_after_nodes: 3</span><br><span class="line"># 设置初始化数据恢复进程的超时时间，默认是5分钟。</span><br><span class="line">#gateway.recover_after_time: 5m</span><br><span class="line"># 设置这个集群中节点的数量，默认为2，一旦这N个节点启动，就会立即进行数据恢复。</span><br><span class="line">#gateway.expected_nodes: 2</span><br><span class="line"></span><br><span class="line"># 初始化数据恢复时，并发恢复线程的个数，默认为4。</span><br><span class="line">#cluster.routing.allocation.node_initial_primaries_recoveries: 4</span><br><span class="line"># 添加删除节点或负载均衡时并发恢复线程的个数，默认为4。</span><br><span class="line">#cluster.routing.allocation.node_concurrent_recoveries: 2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#action.destructive_requires_name: true</span><br><span class="line"></span><br><span class="line"># CORS跨域访问设置，使head插件可以访问es</span><br><span class="line">http.cors.enabled: true</span><br><span class="line">http.cors.allow-origin: &quot;*&quot;</span><br><span class="line"></span><br><span class="line"># 集群中其他节点</span><br><span class="line"># 修改对应配置文件的node.name、http.port、transport.tcp.port、discovery.zen.ping.unicast.hosts即可，node.master和node.data两个参数看需要修改，默认值都是true。</span><br></pre></td></tr></table></figure></p>
+<p>一. 获取License<br>网站：<a href="https://register.elastic.co/" target="_blank" rel="noopener">https://register.elastic.co/</a><br>二. 查看License<br>命令：curl -XGET -u elastic:changem ‘<a href="http://10.10.55.1:9200/_xpack/license&#39;" target="_blank" rel="noopener">http://10.10.55.1:9200/_xpack/license&#39;</a><br>三. 更新License<br>第一步注册完毕后，会收到一封邮件，内容会包含下载地址，下载完毕后运行命令：</p>
+<p>curl -XPUT -u elastic:changeme ‘<a href="http://10.10.55.1:9200/_xpack/license&#39;" target="_blank" rel="noopener">http://10.10.55.1:9200/_xpack/license&#39;</a>  -H “Content-Type: application/json” -d @license.json</p>
+<p>license文件下载：license_2018.json</p>
+<blockquote>
+<p>{“license”:{“uid”:”bee39742-cc50-4e83-9e49-17366d9a109c”,”type”:”basic”,”issue_date_in_millis”:1515628800000,”expiry_date_in_millis”:1547251199999,”max_nodes”:100,”issued_to”:”shan yl (XueQiu)”,”issuer”:”Web Form”,”signature”:”AAAAAwAAAA2PkBbsGKLXXURLaOugAAABmC9ZN0hjZDBGYnVyRXpCOW5Bb3FjZDAxOWpSbTVoMVZwUzRxVk1PSmkxaktJRVl5MUYvUWh3bHZVUTllbXNPbzBUemtnbWpBbmlWRmRZb25KNFlBR2x0TXc2K2p1Y1VtMG1UQU9TRGZVSGRwaEJGUjE3bXd3LzRqZ05iLzRteWFNekdxRGpIYlFwYkJiNUs0U1hTVlJKNVlXekMrSlVUdFIvV0FNeWdOYnlESDc3MWhlY3hSQmdKSjJ2ZTcvYlBFOHhPQlV3ZHdDQ0tHcG5uOElCaDJ4K1hob29xSG85N0kvTWV3THhlQk9NL01VMFRjNDZpZEVXeUtUMXIyMlIveFpJUkk2WUdveEZaME9XWitGUi9WNTZVQW1FMG1DenhZU0ZmeXlZakVEMjZFT2NvOWxpZGlqVmlHNC8rWVVUYzMwRGVySHpIdURzKzFiRDl4TmM1TUp2VTBOUlJZUlAyV0ZVL2kvVk10L0NsbXNFYVZwT3NSU082dFNNa2prQ0ZsclZ4NTltbU1CVE5lR09Bck93V2J1Y3c9PQAAAQCe8MNM2+qs5TKCC/soPeHSdYMxkdQt+uYGfqjFGowb5meW7xSTvmsxp8IQc5iOdwtFJqZq9cJakCz1PSmsDxasUCLVnWJ59qZA4RzqWoC4qUqY94W41Vocz3oZNpCUTU4tVi0yd24n8Q1w1dp1wv6Ujm2/OJ5vkuj2iIQk6csnr8Q2kPUyDcGb+xPK74NTEj6XEsB7D8yEA8ftPeCEff1QgsV9LPPvzCIaWLmyrL30P/CS95twG6hr/DAaGK2oPP9UIsE5U+9Q3b4Ly6urSJVbv0rLaPB4nrt4/JERRSqytgvhg5rX+zs1P0eQRLMPlBL/6Q7NwmQYb8NZWHrCI/du”,”start_date_in_millis”:1515628800000}}</p>
+</blockquote>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ES/" rel="tag"># ES</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/19/git-2019-02-19-在同一台电脑上使用两个Git账号/" rel="next" title="在同一台电脑上使用两个Git账号">
+                <i class="fa fa-chevron-left"></i> 在同一台电脑上使用两个Git账号
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/04/es-2019-04-04-ES遇到的问题/" rel="prev" title="ES遇到的问题">
+                ES遇到的问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Lancelot He">
+            
+              <p class="site-author-name" itemprop="name">Lancelot He</p>
+              <p class="site-description motion-element" itemprop="description">I can do all things!</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Lancelothe" title="GitHub &rarr; https://github.com/Lancelothe" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.zhihu.com/people/he-bo-hao-74/activities" title="知乎 &rarr; https://www.zhihu.com/people/he-bo-hao-74/activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>知乎</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#elasticsearch-head启动："><span class="nav-text">elasticsearch-head启动：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ES单机集群搭建："><span class="nav-text">ES单机集群搭建：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#elasticsearch启动"><span class="nav-text">elasticsearch启动</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启用X-pack："><span class="nav-text">启用X-pack：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kibana相关"><span class="nav-text">Kibana相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置"><span class="nav-text">配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Kibana启动"><span class="nav-text">Kibana启动</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ES集群节点配置"><span class="nav-text">ES集群节点配置</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lancelot He</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+  <!-- 页面点击文字 -->
+  <script type="text/javascript" src="/js/src/mouse.js"></script>
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

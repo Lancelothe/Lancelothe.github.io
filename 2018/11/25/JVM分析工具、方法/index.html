@@ -96,25 +96,24 @@
 
 
 
-  <meta name="description" content="今天总结一下在Linux系统中卸载默认的openjdk改为我们自己独立安装的oracle的Jdk版本。就像我们在Windows上安装的环境一样。   1.卸载&amp;amp;下载 2.解压安装 3.修改配置 4.选择使用JAVA的版本 5.测试   一、卸载&amp;amp;下载   #### 1、卸载自带的opendjk ####    rpm –qa|grep jdk    rpm –e –nodeps">
-<meta name="keywords" content="Jdk">
+  <meta name="description" content="命令JDK内置工具使用 - 冯立彬的博客 - CSDN博客 工具 Eclipse Memory Analyzer （MAT）  An internal error occurred during: “Parsing heap dump from XXX”错误~/tools/JVM Analyze/mat.app/Contents/Eclipse/MemoryAnalyzer.ini  Memory">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何在默认安装openjdk的Linux系统中安装独立JDK">
-<meta property="og:url" content="http://yoursite.com/2019/01/02/如何在默认安装openjdk的Linux系统中安装独立JDK/index.html">
+<meta property="og:title" content="JVM分析工具、方法">
+<meta property="og:url" content="http://yoursite.com/2018/11/25/JVM分析工具、方法/index.html">
 <meta property="og:site_name" content="Lancelot&#39;s blog">
-<meta property="og:description" content="今天总结一下在Linux系统中卸载默认的openjdk改为我们自己独立安装的oracle的Jdk版本。就像我们在Windows上安装的环境一样。   1.卸载&amp;amp;下载 2.解压安装 3.修改配置 4.选择使用JAVA的版本 5.测试   一、卸载&amp;amp;下载   #### 1、卸载自带的opendjk ####    rpm –qa|grep jdk    rpm –e –nodeps">
+<meta property="og:description" content="命令JDK内置工具使用 - 冯立彬的博客 - CSDN博客 工具 Eclipse Memory Analyzer （MAT）  An internal error occurred during: “Parsing heap dump from XXX”错误~/tools/JVM Analyze/mat.app/Contents/Eclipse/MemoryAnalyzer.ini  Memory">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-19T16:47:40.799Z">
+<meta property="og:updated_time" content="2019-05-09T15:22:49.069Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="如何在默认安装openjdk的Linux系统中安装独立JDK">
-<meta name="twitter:description" content="今天总结一下在Linux系统中卸载默认的openjdk改为我们自己独立安装的oracle的Jdk版本。就像我们在Windows上安装的环境一样。   1.卸载&amp;amp;下载 2.解压安装 3.修改配置 4.选择使用JAVA的版本 5.测试   一、卸载&amp;amp;下载   #### 1、卸载自带的opendjk ####    rpm –qa|grep jdk    rpm –e –nodeps">
+<meta name="twitter:title" content="JVM分析工具、方法">
+<meta name="twitter:description" content="命令JDK内置工具使用 - 冯立彬的博客 - CSDN博客 工具 Eclipse Memory Analyzer （MAT）  An internal error occurred during: “Parsing heap dump from XXX”错误~/tools/JVM Analyze/mat.app/Contents/Eclipse/MemoryAnalyzer.ini  Memory">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/01/02/如何在默认安装openjdk的Linux系统中安装独立JDK/">
+  <link rel="canonical" href="http://yoursite.com/2018/11/25/JVM分析工具、方法/">
 
 
 
@@ -124,7 +123,7 @@
   };
 </script>
 
-  <title>如何在默认安装openjdk的Linux系统中安装独立JDK | Lancelot's blog</title>
+  <title>JVM分析工具、方法 | Lancelot's blog</title>
   
 
 
@@ -344,7 +343,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/02/如何在默认安装openjdk的Linux系统中安装独立JDK/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/25/JVM分析工具、方法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Lancelot He">
@@ -361,7 +360,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">如何在默认安装openjdk的Linux系统中安装独立JDK
+          <h1 class="post-title" itemprop="name headline">JVM分析工具、方法
 
               
             
@@ -387,7 +386,7 @@
                 
               
 
-              <time title="创建时间：2019-01-02 12:58:01" itemprop="dateCreated datePublished" datetime="2019-01-02T12:58:01+08:00">2019-01-02</time>
+              <time title="创建时间：2018-11-25 23:10:44" itemprop="dateCreated datePublished" datetime="2018-11-25T23:10:44+08:00">2018-11-25</time>
             
 
             
@@ -404,7 +403,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-20 00:47:40" itemprop="dateModified" datetime="2019-02-20T00:47:40+08:00">2019-02-20</time>
+                <time title="修改时间：2019-05-09 23:22:49" itemprop="dateModified" datetime="2019-05-09T23:22:49+08:00">2019-05-09</time>
               
             
           </span>
@@ -422,6 +421,13 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/JVM/" itemprop="url" rel="index"><span itemprop="name">JVM</span></a></span>
 
                 
                 
@@ -456,39 +462,40 @@
       
 
       
-        <p>今天总结一下在Linux系统中卸载默认的openjdk改为我们自己独立安装的oracle的Jdk版本。就像我们在Windows上安装的环境一样。</p>
-<hr>
-<ul>
-<li><a href="#1">1.卸载&amp;下载</a></li>
-<li><a href="#2">2.解压安装</a></li>
-<li><a href="#3">3.修改配置</a></li>
-<li><a href="#4">4.选择使用JAVA的版本</a></li>
-<li><a href="#5">5.测试</a></li>
+        <h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><p><a href="https://blog.csdn.net/fenglibing/article/details/6411999" target="_blank" rel="noopener">JDK内置工具使用 - 冯立彬的博客 - CSDN博客</a></p>
+<h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><ul>
+<li><p>Eclipse Memory Analyzer （MAT）</p>
+<blockquote>
+<p>An internal error occurred during: “Parsing heap dump from XXX”错误<br>~/tools/JVM Analyze/mat.app/Contents/Eclipse/MemoryAnalyzer.ini</p>
+<ol>
+<li>MemoryAnalyzer.ini中的参数一般默认为-vmargs– Xmx1024m，这就够用了。假如你机器的内存不大，改大该参数的值，会导致MemoryAnalyzer启动时，报错:Failed to create the Java Virtual Machine.</li>
+<li>当你导出的dump文件的大小大于你配置的1024m（说明1中，提到的配置：-vmargs– Xmx1024m），MAT输出分析报告的时候，会报错：An internal error occurred during: “Parsing heap dump from XXX”。适当调大说明1中的参数即可。</li>
+</ol>
+</blockquote>
+</li>
+<li><p>jprofiler</p>
+</li>
+<li>IBM® HeapAnalyzer</li>
+<li>Censum</li>
+<li>Gcviewer</li>
+<li><a href="https://gceasy.io/index.jsp" target="_blank" rel="noopener">Universal JVM GC analyzer - Java Garbage collection log analysis made easy</a></li>
 </ul>
-<h2 id="1"> 一、卸载&amp;下载   </h2><br>#### 1、卸载自带的opendjk ####<br><br>    rpm –qa|grep jdk<br>    rpm –e –nodeps  jdk***    //将过滤出的结果进行卸载<br>#### 2、下载一个Sun的JDK（现在应该叫oracle的JDK）。 ####<br>下一个自解压的tar包。<br>这里我下载的是jdk-7u79-linux-x64.tar.gz<br><br>下载地址 : <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html" target="_blank" rel="noopener">点击这里</a><br><br><h2 id="2"> 二、解压安装 </h2>
-
-<p>1.解压jdk-7u79-linux-x64.tar.gz<br></p>
-<p>2.将解压后jdk-7u79-linux-x64.tar.gz复制到/usr/java下</p>
-<h2 id="3"> 三、修改配置 </h2><br>#### 方法1：修改/etc/profile 文件 ####<br>所有用户的 shell都有权使用这些环境变量<br><strong><1> 在 shell终端执行命令：vi /etc/profile</1></strong><br><strong><2> 在 profile文件末尾加入：</2></strong><br><br>    JAVA_HOME=/usr/jdk1.7.0_79<br>      JRE_HOME=/usr/local/java/jdk1.7.0_79/jre<br>      PATH=$JAVA_HOME/bin:$PATH<br>      CLASSPATH=.:$JAVA_HOME/lib/dt.jar: $JAVA_HOME/lib/tools.jar<br>      export JAVA_HOME,JRE_HOME,PATH,CLASSPATH<br><br><code>PS：上面我们说的修改配置系统环境变量是在Unix操作系统下面的。</code><p><br>下面来说说在DOS系统下面如何更改配置系统环境变量。<br>#### DOS: ####<br><br>1. 在系统变量里新建JAVA_HOME变量，变量值为：<code>D:\others\JAVA\JDK</code>（根据自己的安装路径填写）<br><br>2. 新建Classpath变量，在Classpath变量（已存在不用新建）添加变量值，变量值为：<br><code>.;%JAVA\_HOME%\lib;%JAVA_HOME%\lib\tools.jar;</code><br><br>3. 在path变量（已存在不用新建）添加变量值：<br><code>%JAVA\_HOME%\bin;%JAVA_HOME%\jre\bin（注意变量值之间用“;”隔开）</code><br><br><code>eg:;%JAVA\_HOME%\lib;%JAVA\_HOME%\lib\tools.jar;%JAVA\_HOME%\bin;%JAVA\_HOME%\jre\bin;</code><br><br>4. 测试是否配置成功<br>在dos中，输入命令java，回车后应该会出现java的各种命令；<br>javac  出现相关编译的命令；<br>java -version 出现jdk版本号<br>补充环境变量的解析:<br>JAVA_HOME:jdk的安装路径<br>Classpath:java加载类路径，只有类在classpath中java命令才能识别，在路径前加了个”.”表示当前路径。<br>path：系统在任何路径下都可以识别java,javac命令。<br><br><strong><3>重启系统</3></strong><br>ps: 如果你不想重新系统，可以用命令<code>source /etc/profile</code>使配置文件立即生效。否则只能重启系统才能使配置参数生效。然后我们可以通过<br><br>    echo $JAVA_HOME<br>    echo $PATH<br>    echo $CLASSPATH<br>查看配置的信息。<br>但是我最后还是重启了才真正生效。<br>#### 方法2：修改.bashrc文件 ####<br>如果你需要给某个用户权限使用这些环境变量，你只需要修改其个人用户主目录下的.bashrc就可以了,而不像第一种方法给所有用户权限。<br><strong><1>在 shell终端执行命令：vi ~/.bashrc</1></strong><br><strong><2>在.bashrc文件末尾加入：</2></strong><br><br>    set JAVA_HOME=/usr/jdk1.7.0_79<br>    export JAVA_HOME<br>    set PATH=$JAVA_HOME/bin:$PATH<br>    export PATH<br>    set CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar<br>    export CLASSPATH<br><strong><3>重新登录</3></strong><br><code>注意：Linux使用:(冒号)而不是;(分号)来分隔路径</code><br><br></p><h2 id="4"> 四、选择使用JAVA的版本 </h2>
-
-<ol>
-<li><p>更新参数使配置生效<br><br> <code>update-alternatives --install /usr/bin/java java /usr/jdk1.7.0\_79/bin/java 300</code><br><br> <code>update-alternatives --install /usr/bin/javac javac /usr/jdk1.7.0\_79/bin/javac 300</code></p>
-</li>
-<li><p>选择需要使用的版本<br>在终端输入命令：<code>update-alternatives –config java</code></p>
-</li>
-</ol>
-<p></p><h2 id="5"> 五、测试 </h2><br>进行完如上配置后，就可以进行测试了<br><br>在DOS或终端下输入 <code>java -version</code>，然后输出显示，显示出来的是当前系统JRE的最高版本<br>我这里显示的是：<p></p>
-<p><strong>ps：环境变量配置文件</strong><br>在Ubuntu中有如下几个文件可以设置环境变量</p><p></p>
-<ol>
-<li><p>/etc/profile:在登录时,操作系统定制用户环境时使用的第一个文件,此文件为系统的每个用户设置环境信息,当用户第一次登录时,该文件被执行。</p>
-</li>
-<li><p>/etc/environment:在登录时操作系统使用的第二个文件,系统在读取你自己的profile前,设置环境文件的环境变量。</p>
-</li>
-<li><p>~/.bash_profile:在登录时用到的第三个文件是.profile文件,每个用户都可使用该文件输入专用于自己使用的shell信息,当用户登录时,该文件仅仅执行一次!默认情况下,他设置一些环境变量,执行用户的.bashrc文件。/etc/bashrc:为每一个运行bash shell的用户执行此文件.当bash shell被打开时,该文件被读取.</p>
-</li>
-<li><p>~/.bashrc:该文件包含专用于你的bash shell的bash信息,当登录时以及每次打开新的shell时,该该文件被读取。<br>几个环境变量的优先级<br><strong>1&gt;2&gt;3</strong></p>
-</li>
-</ol>
+<p>用这些工具分析head dump文件，看看分析的结果。</p>
+<p>用gcLogViewer分析gc.log，记录下FullGC的几个点，再到gc.log中具体去看那段时间的gc情况，一般就可以分析出FullGC的原因。</p>
+<p><a href="https://blog.csdn.net/everlasting_188/article/details/51943095" target="_blank" rel="noopener">使用jstack和TDA进行java线程dump分析 - everlasting_188-java从业者 - CSDN博客</a><br><a href="https://rednaxelafx.iteye.com/blog/1049240" target="_blank" rel="noopener">通过jinfo工具在full GC前后做heap dump - Script Ahead, Code Behind - ITeye博客</a></p>
+<p><a href="https://fastthread.io/" target="_blank" rel="noopener">JVM Thread dump analyzer - 在线Java线程分析</a></p>
+<h3 id="几个比较实用的JVM进程分析命令"><a href="#几个比较实用的JVM进程分析命令" class="headerlink" title="几个比较实用的JVM进程分析命令"></a>几个比较实用的JVM进程分析命令</h3><h4 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h4><blockquote>
+<p>查看进程JVM参数<br>jcmd pid VM.flags<br>jinfo -flags pid  （结果比上面的命令较全一些）</p>
+</blockquote>
+<blockquote>
+<p>提前设置FullGC<br>jinfo -flag +HeapDumpBeforeFullGC pid<br>jinfo -flag +HeapDumpAfterFullGC pid<br>jinfo -flag HeapDumpPath=/home/app pid</p>
+</blockquote>
+<blockquote>
+<p>立即dump</p>
+</blockquote>
+<p>#将pid对应的jvm进程堆内存dump到filename文件<br>jmap -dump:[live,]format=b,file=<filename> <pid></pid></filename></p>
+<p>#显示堆中对象的统计信息，如类、实例数量等<br>jmap -histo <pid><br>jmap -permstat <pid> #以classloader为统计口径显示永久代内存状态，only for linux<br>jmap -histo:live pid  （会立即触发Full GC）<br>jmap -dump:file=文件名.dump pid<br>jmap -dump:format=b,file=d:/test.hprof pid</pid></pid></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">jmap -heap pid</span><br><span class="line"></span><br><span class="line">1. -XX:+HeapDumpOnOutOfMemoryError</span><br><span class="line">当OutOfMemoryError发生时自动生成 Heap Dump 文件。</span><br><span class="line">2. -XX:+HeapDumpBeforeFullGC</span><br><span class="line">当 JVM 执行 FullGC 前执行 dump。</span><br><span class="line">3. -XX:+HeapDumpAfterFullGC</span><br><span class="line">当 JVM 执行 FullGC 后执行 dump。</span><br><span class="line">4. -XX:+HeapDumpOnCtrlBreak</span><br><span class="line">交互式获取dump。在控制台按下快捷键Ctrl + Break时，JVM就会转存一下堆快照。</span><br><span class="line">5. -XX:HeapDumpPath=d:\test.hprof</span><br><span class="line">指定 dump 文件存储路径。</span><br><span class="line"></span><br><span class="line">注意：JVM 生成 Heap Dump 的时候，虚拟机是暂停一切服务的。如果是线上系统执行 Heap Dump 时需要注意。</span><br><span class="line"></span><br><span class="line">jps：显示本机所有jvm进程</span><br><span class="line">jps -q #只显示进程号</span><br><span class="line">jps -l  #显示主类全名或所在jar路径</span><br><span class="line">jps -m #显示传给main类的参数信息</span><br><span class="line">jps -v #显示进程启动时指定的jvm参数</span><br><span class="line"></span><br><span class="line">jinfo：查看或设置java虚拟机参数</span><br><span class="line">jinfo -flag MaxPermSize &lt;pid&gt; #显示该jvm进程的-XX:MaxPermSize参数值（无所谓是否在启动脚本中设置了该参数）</span><br><span class="line"></span><br><span class="line">jstat：虚拟机统计信息监视，可以监控类装载、内存gc情况、jit编译情况等</span><br><span class="line">jstat -class &lt;pid&gt; #监视类装载情况</span><br><span class="line">jstat -gc|gcdetail|gcutil|gccause &lt;pid&gt; #gc情况与内存使用</span><br><span class="line">jstat -gcnew|gcnewcapacity  &lt;pid&gt; #新生代gc情况</span><br><span class="line">jstat -gcold|gcoldcapacity &lt;pid&gt; #老年代gc情况</span><br><span class="line">jstat -gcpermdetail &lt;pid&gt; #持久带gc情况</span><br><span class="line">jstat -gc &lt;pid&gt; 100ms 4 #每隔100ms检测gc情况，一共检测4次(信息比下面这个命令详细)</span><br><span class="line">jstat -gcutil 193 1000 //信息是占比</span><br><span class="line">#每隔1000ms检测gc情况</span><br><span class="line">jstat -gc protocal://&lt;pid&gt;@hostname:port/servername #检测远程主机</span><br><span class="line"></span><br><span class="line">jmap：java内存映射工具，可查看堆内存信息</span><br><span class="line">jmap -dump:[live,]format=b,file=&lt;filename&gt; &lt;pid&gt; #将pid对应的jvm进程堆内存dump到filename文件</span><br><span class="line">jmap -histo &lt;pid&gt; #显示堆中对象的统计信息，如类、实例数量等</span><br><span class="line">jmap -permstat &lt;pid&gt; #以classloader为统计口径显示永久代内存状态，only for linux</span><br><span class="line"></span><br><span class="line">jmap -histo:live pid  （会立即触发Full GC）</span><br><span class="line">jmap -dump:file=文件名.dump pid</span><br><span class="line">jmap -dump:format=b,file=d:/test.hprof pid</span><br><span class="line"></span><br><span class="line">jhat：虚拟机堆dump文件查看分析工具，执行后会启动一个http服务器，用网页即可看见堆内对象的情况，亦可以使用OQL查询</span><br><span class="line">jhat &lt;pid&gt;</span><br><span class="line"></span><br><span class="line">jstack：java线程堆栈查看工具</span><br><span class="line">jstack -l &lt;pid&gt; #加l参数同时会显示锁信息</span><br><span class="line"></span><br><span class="line">jconsole：图形化的java进程监控工具</span><br><span class="line">提供查看系统CPU，进程内存、线程、对象等信息</span><br><span class="line"></span><br><span class="line">jvisualvm：图形化的java进程AllInOne处理工具</span><br><span class="line">除jconsole功能外，还提供堆dump与分析、动态对象性能分析、离线快照等功能，另外其可以通过plugin插件进行功能扩展</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -510,12 +517,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/Jdk/" rel="tag"># Jdk</a>
-          
-        </div>
-      
 
       
       
@@ -525,8 +526,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/01/01/利用Hexo-GitHub搭建免费的个人博客/" rel="next" title="利用Hexo + GitHub搭建免费的个人博客">
-                <i class="fa fa-chevron-left"></i> 利用Hexo + GitHub搭建免费的个人博客
+              <a href="/2018/10/30/位运算/" rel="next" title="位运算">
+                <i class="fa fa-chevron-left"></i> 位运算
               </a>
             
           </div>
@@ -535,8 +536,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/02/19/Java8新特性（一）-之-Lambda表达式/" rel="prev" title="Java8新特性（一） 之 Lambda表达式">
-                Java8新特性（一） 之 Lambda表达式 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/11/30/IntelliJ-IDEA使用/" rel="prev" title="IntelliJ IDEA使用">
+                IntelliJ IDEA使用 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -609,7 +610,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-count">15</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -626,7 +627,19 @@
                     
                       
                     
-                    <span class="site-state-item-count">2</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -649,7 +662,19 @@
                     
                       
                     
-                    <span class="site-state-item-count">5</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -711,7 +736,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1"><span class="nav-text"> 一、卸载&amp;下载   </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2"><span class="nav-text"> 二、解压安装 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3"><span class="nav-text"> 三、修改配置 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4"><span class="nav-text"> 四、选择使用JAVA的版本 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5"><span class="nav-text"> 五、测试 </span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#命令"><span class="nav-text">命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工具"><span class="nav-text">工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几个比较实用的JVM进程分析命令"><span class="nav-text">几个比较实用的JVM进程分析命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用命令"><span class="nav-text">常用命令</span></a></li></ol></li></ol></div>
             
 
           </div>

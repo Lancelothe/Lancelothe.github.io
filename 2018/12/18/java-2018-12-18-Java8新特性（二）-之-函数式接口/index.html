@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/favicon_16x16.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/favicon_32x32.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/favicon_16x16.ico?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/uploads/favicon_32x32.ico?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.0.0',
+    sidebar: {"position":"right","display":"always","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="函数式接口如果你的好奇心使你翻看Runnable接口源代码，你会发现该接口被一个@FunctionalInterface的注解修饰，这是Java 8中添加的新注解，用于表示 函数式接口。 函数式接口又是什么鬼？在Java 8中，把那些仅有一个抽象方法的接口称为函数式接口。如果一个接口被@FunctionalInterface注解标注，表示这个接口被设计成函数式接口，只能有一个抽象方法，如果你添加多">
+<meta name="keywords" content="Java8,Lambda">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java8新特性（二） 之 函数式接口">
+<meta property="og:url" content="http://yoursite.com/2018/12/18/java-2018-12-18-Java8新特性（二）-之-函数式接口/index.html">
+<meta property="og:site_name" content="Lancelot&#39;s blog">
+<meta property="og:description" content="函数式接口如果你的好奇心使你翻看Runnable接口源代码，你会发现该接口被一个@FunctionalInterface的注解修饰，这是Java 8中添加的新注解，用于表示 函数式接口。 函数式接口又是什么鬼？在Java 8中，把那些仅有一个抽象方法的接口称为函数式接口。如果一个接口被@FunctionalInterface注解标注，表示这个接口被设计成函数式接口，只能有一个抽象方法，如果你添加多">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-09T15:23:48.061Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java8新特性（二） 之 函数式接口">
+<meta name="twitter:description" content="函数式接口如果你的好奇心使你翻看Runnable接口源代码，你会发现该接口被一个@FunctionalInterface的注解修饰，这是Java 8中添加的新注解，用于表示 函数式接口。 函数式接口又是什么鬼？在Java 8中，把那些仅有一个抽象方法的接口称为函数式接口。如果一个接口被@FunctionalInterface注解标注，表示这个接口被设计成函数式接口，只能有一个抽象方法，如果你添加多">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/18/java-2018-12-18-Java8新特性（二）-之-函数式接口/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Java8新特性（二） 之 函数式接口 | Lancelot's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lancelot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">I can do all things!</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/18/java-2018-12-18-Java8新特性（二）-之-函数式接口/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lancelot He">
+      <meta itemprop="description" content="I can do all things!">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lancelot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java8新特性（二） 之 函数式接口
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-18 22:49:39" itemprop="dateCreated datePublished" datetime="2018-12-18T22:49:39+08:00">2018-12-18</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-09 23:23:48" itemprop="dateModified" datetime="2019-05-09T23:23:48+08:00">2019-05-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="函数式接口"><a href="#函数式接口" class="headerlink" title="函数式接口"></a>函数式接口</h3><p>如果你的好奇心使你翻看<code>Runnable</code>接口源代码，你会发现该接口被一个<code>@FunctionalInterface</code>的注解修饰，这是Java 8中添加的新注解，用于表示 <strong>函数式接口</strong>。</p>
+<p>函数式接口又是什么鬼？在Java 8中，把那些仅有一个抽象方法的接口称为函数式接口。如果一个接口被<code>@FunctionalInterface</code>注解标注，表示这个接口被设计成函数式接口，只能有一个抽象方法，如果你添加多个抽象方法，编译时会提示“Multiple non-overriding abstract methods found in interface XXX”之类的错误。</p>
+<p>标注为FunctionalInterface的接口被称为函数式接口，该接口只能有一个自定义方法，但是可以包括从object类继承而来的方法。如果一个接口只有一个方法，则编译器会认为这就是一个函数式接口。是否是一个函数式接口，需要注意的有以下几点：</p>
+<ul>
+<li>该注解只能标记在”有且仅有一个抽象方法”的接口上。</li>
+<li>JDK8接口中的静态方法和默认方法，都不算是抽象方法。</li>
+<li>接口默认继承java.lang.Object，所以如果接口显示声明覆盖了Object中方法，那么也不算抽象方法。</li>
+<li>该注解不是必须的，如果一个接口符合”函数式接口”定义，那么加不加该注解都没有影响。加上该注解能够更好地让编译器进行检查。如果编写的不是函数式接口，但是加上了@FunctionInterface，那么编译器会报错。</li>
+<li>在一个接口中定义两个自定义的方法，就会产生Invalid ‘@FunctionalInterface’ annotation; FunctionalInterfaceTest is not a functional interface错误.</li>
+</ul>
+<p>函数式方法又能做什么？Java8允许你以Lambda表达式的方式为函数式接口提供实现，<strong>通俗的说，你可以将整个Lambda表达式作为接口的实现类</strong>。</p>
+<p>除了<code>Runnable</code>之外，Java 8中内置了许多函数式接口供开发者使用，这些接口位于<code>java.util.function</code>包中。如：</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>result</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Consumer</td>
+<td>Consumer<t></t></td>
+<td>T -&gt; void</td>
+<td>接收T对象，不返回值</td>
+</tr>
+<tr>
+<td>Predicate</td>
+<td>Predicate<t></t></td>
+<td>T -&gt; boolean</td>
+<td>接收T对象并返回boolean</td>
+</tr>
+<tr>
+<td>Function</td>
+<td>Function&lt;T, R&gt;</td>
+<td>T -&gt; R</td>
+<td>接收T对象，返回R对象</td>
+</tr>
+<tr>
+<td>Supplier</td>
+<td>Supplier<t></t></td>
+<td>void -&gt; T</td>
+<td>提供T对象（例如工厂），不接收值</td>
+</tr>
+<tr>
+<td>UnaryOperator</td>
+<td>UnaryOperator</td>
+<td>T -&gt; T</td>
+<td>接收T对象，返回T对象</td>
+</tr>
+<tr>
+<td>BinaryOperator</td>
+<td>BinaryOperator</td>
+<td>T,T -&gt; T</td>
+<td>接收两个T对象，返回T对象</td>
+</tr>
+</tbody>
+</table>
+<p>如果输入参数是基本类型，为了避免自动拆箱装箱，可以使用其他基本类型的函数接口。</p>
+<h4 id="Function"><a href="#Function" class="headerlink" title="Function"></a><code>Function</code></h4><p><code>interface Function&lt;T, R&gt;</code> 接口包含一个<code>apply</code>方法、两个默认方法（<code>compose</code>、<code>andThen</code>）和一个静态方法<code>identity</code>。<br><code>apply</code>是接口的基本方法。<br><code>compose</code>、<code>andThen</code>是一对儿方法，他们的区别在于执行的顺序不同。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//返回一个先执行before函数对象apply方法再执行当前函数对象apply方法的函数对象</span></span><br><span class="line"><span class="keyword">default</span> &lt;V&gt; <span class="function">Function&lt;V, R&gt; <span class="title">compose</span><span class="params">(Function&lt;? <span class="keyword">super</span> V, ? extends T&gt; before)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(before);</span><br><span class="line">        <span class="keyword">return</span> (V v) -&gt; apply(before.apply(v));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//返回一个先执行当前函数对象apply方法再执行after函数对象apply方法的函数对象。</span></span><br><span class="line"><span class="keyword">default</span> &lt;V&gt; <span class="function">Function&lt;T, V&gt; <span class="title">andThen</span><span class="params">(Function&lt;? <span class="keyword">super</span> R, ? extends V&gt; after)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(after);</span><br><span class="line">        <span class="keyword">return</span> (T t) -&gt; after.apply(apply(t));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 根据上面的解释想一下执行结果</span></span><br><span class="line">Function&lt;Integer, Integer&gt; name = e -&gt; e * <span class="number">2</span>;</span><br><span class="line">Function&lt;Integer, Integer&gt; square = e -&gt; e * e;</span><br><span class="line"><span class="keyword">int</span> value = name.andThen(square).apply(<span class="number">3</span>);</span><br><span class="line"><span class="keyword">int</span> value2 = name.compose(square).apply(<span class="number">3</span>);</span><br><span class="line"><span class="comment">//返回一个执行了apply()方法之后只会返回输入参数的函数对象</span></span><br><span class="line">Object identity = Function.identity().apply(<span class="string">"Test"</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="Consumer"><a href="#Consumer" class="headerlink" title="Consumer"></a><code>Consumer</code></h4><p><code>interface Consumer&lt;T&gt;</code><br>接口包含一个<code>void accept(T t);</code>方法、默认方法<code>andThen</code>.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">default</span> Consumer&lt;T&gt; <span class="title">andThen</span><span class="params">(Consumer&lt;? <span class="keyword">super</span> T&gt; after)</span> </span>&#123;</span><br><span class="line">    Objects.requireNonNull(after);</span><br><span class="line">    <span class="keyword">return</span> (T t) -&gt; &#123; accept(t); after.accept(t); &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>只有一个默认方法也是和它的返回类型有关系，因为返回的是void。</p>
+<h4 id="Predicate"><a href="#Predicate" class="headerlink" title="Predicate"></a><code>Predicate</code></h4><p><code>interface Predicate&lt;T&gt;</code>接口包含一个<code>boolean test(T t);</code>方法，三个默认方法（<code>and</code>，<code>negate</code>,<code>or</code>），还有一个静态方法。<br>我们也知道Predicate接口是返回boolean类型的，所以一看就知道是条件判断的。<br>举几个栗子吧：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">String name = <span class="string">"hello"</span>;</span><br><span class="line">Predicate&lt;String&gt; predicate = x -&gt; x.equals(<span class="string">"hello"</span>);</span><br><span class="line">Predicate&lt;String&gt; predicate2 = x -&gt; x.length() &lt; <span class="number">2</span>;</span><br><span class="line"><span class="comment">// and 多个Predicate条件并的关系判断，第一个为false就不往下走了，满足短路原则</span></span><br><span class="line">System.out.println(predicate.and(predicate2).test(name));</span><br><span class="line"><span class="comment">// or 多个Predicate条件或的关系判断，同样满足短路原则</span></span><br><span class="line">System.out.println(predicate.or(predicate2).test(name));</span><br><span class="line"><span class="comment">// negate 取反的意思，就是否的条件判断</span></span><br><span class="line">System.out.println(predicate.and(predicate2.negate()).test(name));</span><br><span class="line"><span class="comment">// isEqual 静态方法，判断是否相等</span></span><br><span class="line">System.out.println(Predicate.isEqual(name).test(name));</span><br></pre></td></tr></table></figure></p>
+<h4 id="Supplier"><a href="#Supplier" class="headerlink" title="Supplier"></a><code>Supplier</code></h4><p><code>Supplier</code>只有一个get()方法。<br>我们来看看几个栗子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Supplier&lt;String&gt; supplier = () -&gt; <span class="string">"hello world"</span>;</span><br><span class="line"><span class="comment">//get方法不接受参数，返回一个结果</span></span><br><span class="line">System.out.println(<span class="string">"supplier = ["</span> + supplier.get() + <span class="string">"]"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//替代不接受参数的工厂方法</span></span><br><span class="line">Supplier&lt;Student&gt; studentSupplier = () -&gt; <span class="keyword">new</span> Student();</span><br><span class="line">System.out.println(studentSupplier.get());</span><br><span class="line"></span><br><span class="line"><span class="comment">//因为Student的构造方法不接受参数，返回一个结果，符合Supplier接口的要求，可以简写如下：</span></span><br><span class="line">Supplier&lt;Student&gt; studentSupplier2 = Student::<span class="keyword">new</span>;</span><br></pre></td></tr></table></figure></p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>函数式接口其实差别不大，只是参数和返回的不同，只要想明白其中的一种，其他的也就懂了。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://blog.csdn.net/huo065000/article/details/78964382" target="_blank" rel="noopener">JDK8新特性-java.util.function-Function接口
+</a><br><a href="https://blog.csdn.net/hxg117/article/details/77029930" target="_blank" rel="noopener">Java8的一些新特性 java.util.function包
+</a><br><a href="https://blog.csdn.net/pzxwhc/article/details/48314039" target="_blank" rel="noopener">Java JVM（七）：Function，Consumer，Predicate 接口
+</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java8/" rel="tag"># Java8</a>
+          
+            <a href="/tags/Lambda/" rel="tag"># Lambda</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/15/java-2018-12-15-Java8新特性（一）-之-Lambda表达式/" rel="next" title="Java8新特性（一） 之 Lambda表达式">
+                <i class="fa fa-chevron-left"></i> Java8新特性（一） 之 Lambda表达式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/25/java-2018-12-25-Java8新特性（三）-之-Stream-API/" rel="prev" title="Java8新特性（三） 之 Stream API">
+                Java8新特性（三） 之 Stream API <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Lancelot He">
+            
+              <p class="site-author-name" itemprop="name">Lancelot He</p>
+              <p class="site-description motion-element" itemprop="description">I can do all things!</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Lancelothe" title="GitHub &rarr; https://github.com/Lancelothe" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.zhihu.com/people/he-bo-hao-74/activities" title="知乎 &rarr; https://www.zhihu.com/people/he-bo-hao-74/activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>知乎</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数式接口"><span class="nav-text">函数式接口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Function"><span class="nav-text">Function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Consumer"><span class="nav-text">Consumer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Predicate"><span class="nav-text">Predicate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Supplier"><span class="nav-text">Supplier</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lancelot He</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+  <!-- 页面点击文字 -->
+  <script type="text/javascript" src="/js/src/mouse.js"></script>
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

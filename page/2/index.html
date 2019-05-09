@@ -1,0 +1,1761 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/favicon_16x16.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/favicon_32x32.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/favicon_16x16.ico?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/uploads/favicon_32x32.ico?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.0.0',
+    sidebar: {"position":"right","display":"always","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="I can do all things!">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Lancelot&#39;s blog">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta property="og:site_name" content="Lancelot&#39;s blog">
+<meta property="og:description" content="I can do all things!">
+<meta property="og:locale" content="zh-CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Lancelot&#39;s blog">
+<meta name="twitter:description" content="I can do all things!">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/page/2/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Lancelot's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right 
+  page-home">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lancelot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">I can do all things!</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/16/java-2019-01-16-Java8新特性（五）之-Date-Time-API/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lancelot He">
+      <meta itemprop="description" content="I can do all things!">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lancelot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/01/16/java-2019-01-16-Java8新特性（五）之-Date-Time-API/" class="post-title-link" itemprop="url">Java8新特性（五）之 Date Time API</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-16 23:06:43" itemprop="dateCreated datePublished" datetime="2019-01-16T23:06:43+08:00">2019-01-16</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-09 23:42:28" itemprop="dateModified" datetime="2019-05-09T23:42:28+08:00">2019-05-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Java8新增的就是LocalDate、LocalTime、LocalDateTime、Instant、Duration、Period几个大类。</p>
+<p>之前用joda能做到的，现在用Java8里面的api几乎都能做到，语法也很相似。</p>
+<h2 id="LocalDateTime的一些用法"><a href="#LocalDateTime的一些用法" class="headerlink" title="LocalDateTime的一些用法"></a>LocalDateTime的一些用法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// 取时间戳</span><br><span class="line">long localDateTime = LocalDateTime.of(LocalDate.now().minusDays(1), LocalTime.MIN).toInstant(ZoneOffset.UTC).toEpochMilli();</span><br><span class="line"></span><br><span class="line">// 获取当天零点时间</span><br><span class="line">LocalDateTime today_start = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);//当天零点</span><br><span class="line">String td_st_str =</span><br><span class="line">today_start.format(DateTimeFormatter.ofPattern(&quot;yyyyMMddHHmmss&quot;));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 获取当天结束时间</span><br><span class="line">LocalDateTime today_end = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);//当天零点</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 设置2018年1月1日</span><br><span class="line">LocalDateTime.of(2018, 1, 1, 0, 0).toLocalDate();</span><br><span class="line">// 获取2018年1月1日时间戳</span><br><span class="line">LocalDateTime.of(2018, 1, 1, 0, 0).toInstant(ZoneOffset.of(&quot;+8&quot;)).toEpochMilli();</span><br><span class="line">// 此时减一年时间戳1</span><br><span class="line">LocalDateTime.of(LocalDate.now().minusYears(1), LocalTime.MIN).toInstant(ZoneOffset.of(&quot;+8&quot;)).toEpochMilli();</span><br><span class="line">// 此时减一年时间戳2</span><br><span class="line">long lastYear = LocalDateTime.now().minusYears(1).withHour(0).withMinute(0).withSecond(0).withNano(0).toInstant(ZoneOffset.of(&quot;+8&quot;)).toEpochMilli();</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.jianshu.com/p/b4629857fc6f" target="_blank" rel="noopener">LocalDate、LocalDateTime与timestamp、Date的转换 - 简书</a></p>
+<h2 id="Date和LocalDate互转"><a href="#Date和LocalDate互转" class="headerlink" title="Date和LocalDate互转"></a>Date和LocalDate互转</h2><p>Date对象表示特定的日期和时间，而LocalDate(Java8)对象只包含没有任何时间信息的日期。<br>因此，如果我们只关心日期而不是时间信息，则可以在Date和LocalDate之间进行转换。</p>
+<h3 id="Date转LocalDate"><a href="#Date转LocalDate" class="headerlink" title="Date转LocalDate"></a>Date转LocalDate</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Date date = new Date();</span><br><span class="line">Instant instant = date.toInstant();</span><br><span class="line">ZoneId zoneId = ZoneId.systemDefault();</span><br><span class="line"></span><br><span class="line">// atZone()方法返回在指定时区从此Instant生成的ZonedDateTime。</span><br><span class="line">LocalDate localDate = instant.atZone(zoneId).toLocalDate();</span><br><span class="line">System.out.println(&quot;Date = &quot; + date);</span><br><span class="line">System.out.println(&quot;LocalDate = &quot; + localDate);</span><br></pre></td></tr></table></figure>
+<h3 id="LocalDate转Date"><a href="#LocalDate转Date" class="headerlink" title="LocalDate转Date"></a>LocalDate转Date</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ZoneId zoneId = ZoneId.systemDefault();</span><br><span class="line">LocalDate localDate = LocalDate.now();</span><br><span class="line">ZonedDateTime zdt = localDate.atStartOfDay(zoneId);</span><br><span class="line"></span><br><span class="line">Date date = Date.from(zdt.toInstant());</span><br><span class="line"></span><br><span class="line">System.out.println(&quot;LocalDate = &quot; + localDate);</span><br><span class="line">System.out.println(&quot;Date = &quot; + date);</span><br></pre></td></tr></table></figure>
+<h2 id="LocalDate和String互转"><a href="#LocalDate和String互转" class="headerlink" title="LocalDate和String互转"></a>LocalDate和String互转</h2><h3 id="LocalDate转String"><a href="#LocalDate转String" class="headerlink" title="LocalDate转String"></a>LocalDate转String</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LocalDate localDate = LocalDate.now();</span><br><span class="line">String dateStr = localDate.format(DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd&quot;));</span><br></pre></td></tr></table></figure>
+<h3 id="LocalDateTime转String"><a href="#LocalDateTime转String" class="headerlink" title="LocalDateTime转String"></a>LocalDateTime转String</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">LocalDateTime dateTime = LocalDateTime.now();</span><br><span class="line"></span><br><span class="line">//使用预定义实例来转换</span><br><span class="line">DateTimeFormatter fmt = DateTimeFormatter.ISO_LOCAL_DATE;</span><br><span class="line">String dateStr = dateTime.format(fmt);</span><br><span class="line">System.out.println(&quot;LocalDateTime转String[预定义]:&quot;+dateStr);</span><br><span class="line"></span><br><span class="line">//使用pattern来转换</span><br><span class="line">//12小时制与24小时制输出由hh的大小写决定</span><br><span class="line">DateTimeFormatter fmt12 = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd hh:mm:ss:SSS&quot;);</span><br><span class="line">String dateStr12 = dateTime.format(fmt12);</span><br><span class="line">System.out.println(&quot;LocalDateTime转String[pattern](12小时制):&quot;+dateStr12);</span><br><span class="line"></span><br><span class="line">DateTimeFormatter fmt24 = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm:ss:SSS&quot;);</span><br><span class="line">String dateStr24 = dateTime.format(fmt24);</span><br><span class="line">System.out.println(&quot;LocalDateTime转String[pattern](24小时制):&quot;+dateStr24);</span><br><span class="line"></span><br><span class="line">//如果想要给12小时制时间加上am/pm,这样子做：</span><br><span class="line">fmt12 = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd hh:mm:ss:SSS a&quot;);</span><br><span class="line">dateStr12 = dateTime.format(fmt12);</span><br><span class="line">System.out.println(&quot;LocalDateTime转String[pattern](12小时制带am/pm):&quot;+dateStr12);</span><br></pre></td></tr></table></figure>
+<h3 id="String转LocalDate和LocalDateTime"><a href="#String转LocalDate和LocalDateTime" class="headerlink" title="String转LocalDate和LocalDateTime"></a>String转LocalDate和LocalDateTime</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">String str = &quot;2017-11-21 14:41:06:612&quot;;</span><br><span class="line">DateTimeFormatter fmt = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm:ss:SSS&quot;);</span><br><span class="line">LocalDate date = LocalDate.parse(str, fmt);</span><br><span class="line">LocalDateTime time = LocalDateTime.parse(str, fmt);</span><br><span class="line">System.out.println(&quot;date:&quot;+date);</span><br><span class="line">System.out.println(&quot;time:&quot;+time);</span><br></pre></td></tr></table></figure>
+<h2 id="时区"><a href="#时区" class="headerlink" title="时区"></a>时区</h2><p>Java 8中的时区操作被很大程度上简化了，新的时区类<code>java.time.ZoneId</code>是原有的<code>java.util.TimeZone</code>类的替代品。<code>ZoneId</code>对象可以通过<code>ZoneId.of()</code>方法创建，也可以通过<code>ZoneId.systemDefault()</code>获取系统默认时区：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ZoneId shanghaiZoneId = ZoneId.of(<span class="string">"Asia/Shanghai"</span>);</span><br><span class="line">ZoneId systemZoneId = ZoneId.systemDefault();</span><br></pre></td></tr></table></figure>
+<p><code>of()</code>方法接收一个“区域/城市”的字符串作为参数，你可以通过<code>getAvailableZoneIds()</code>方法获取所有合法的“区域/城市”字符串：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set&lt;String&gt; zoneIds = ZoneId.getAvailableZoneIds();</span><br></pre></td></tr></table></figure>
+<p>对于老的时区类<code>TimeZone</code>，Java 8也提供了转化方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZoneId oldToNewZoneId = TimeZone.getDefault().toZoneId();</span><br></pre></td></tr></table></figure>
+<p>有了<code>ZoneId</code>，我们就可以将一个<code>LocalDate</code>、<code>LocalTime</code>或<code>LocalDateTime</code>对象转化为<code>ZonedDateTime</code>对象：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LocalDateTime localDateTime = LocalDateTime.now();</span><br><span class="line">ZonedDateTime zonedDateTime = ZonedDateTime.of(localDateTime, shanghaiZoneId);</span><br></pre></td></tr></table></figure>
+<p>将<code>zonedDateTime</code>打印到控制台为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2017-01-05T15:26:56.147+08:00[Asia/Shanghai]</span><br></pre></td></tr></table></figure>
+<p><code>ZonedDateTime</code>对象由两部分构成，<code>LocalDateTime</code>和<code>ZoneId</code>，其中<code>2017-01-05T15:26:56.147</code>部分为<code>LocalDateTime</code>，<code>+08:00[Asia/Shanghai]</code>部分为<code>ZoneId</code>。</p>
+<p>另一种表示时区的方式是使用<code>ZoneOffset</code>，它是以当前时间和<strong>世界标准时间（UTC）/格林威治时间（GMT）</strong>的偏差来计算，例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ZoneOffset zoneOffset = ZoneOffset.of(<span class="string">"+09:00"</span>);</span><br><span class="line">LocalDateTime localDateTime = LocalDateTime.now();</span><br><span class="line">OffsetDateTime offsetDateTime = OffsetDateTime.of(localDateTime, zoneOffset);</span><br></pre></td></tr></table></figure>
+<h2 id="DateTimeFormatter详解"><a href="#DateTimeFormatter详解" class="headerlink" title="DateTimeFormatter详解"></a>DateTimeFormatter详解</h2><p>DateTimeFormatter我们更多的是直接使用pattern来做转换，<br>其实这个类本身已经提供了一些预定义好的实例供我们使用。<br>下面把两者的具体释义和示例都贴出来供大家参考。</p>
+<p>预定义<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Predefined Formatters                       Formatter Description                                               Example</span><br><span class="line">----------------------                      ----------------------                                              ------------</span><br><span class="line">ofLocalizedDate(dateStyle)                  Formatter with date style from the locale                           &apos;2011-12-03&apos;</span><br><span class="line">ofLocalizedTime(timeStyle)                  Formatter with time style from the locale                           &apos;10:15:30&apos;</span><br><span class="line">ofLocalizedDateTime(dateTimeStyle)          Formatter with a style for date and time from the locale            &apos;3 Jun 2008 11:05:30&apos;</span><br><span class="line">ofLocalizedDateTime(dateStyle,timeStyle)    Formatter with date and time styles from the locale                 &apos;3 Jun 2008 11:05&apos;</span><br><span class="line">BASIC_ISO_DATE                              Basic ISO date                                                      &apos;20111203&apos;</span><br><span class="line">ISO_LOCAL_DATE                              ISO Local Date                                                      &apos;2011-12-03&apos;</span><br><span class="line">ISO_OFFSET_DATE                             ISO Date with offset                                                &apos;2011-12-03+01:00&apos;</span><br><span class="line">ISO_DATE                                    ISO Date with or without offset                                     &apos;2011-12-03+01:00&apos;; &apos;2011-12-03&apos;</span><br><span class="line">ISO_LOCAL_TIME                              Time without offset                                                 &apos;10:15:30&apos;</span><br><span class="line">ISO_OFFSET_TIME                             Time with offset                                                    &apos;10:15:30+01:00&apos;</span><br><span class="line">ISO_TIME                                    Time with or without offset                                         &apos;10:15:30+01:00&apos;; &apos;10:15:30&apos;</span><br><span class="line">ISO_LOCAL_DATE_TIME                         ISO Local Date and Time                                             &apos;2011-12-03T10:15:30&apos;</span><br><span class="line">ISO_OFFSET_DATE_TIME                        Date Time with Offset                                               &apos;2011-12-03T10:15:30+01:00&apos;</span><br><span class="line">ISO_ZONED_DATE_TIME                         Zoned Date Time                                                     &apos;2011-12-03T10:15:30+01:00[Europe/Paris]&apos;</span><br><span class="line">ISO_DATE_TIME                               Date and time with ZoneId                                           &apos;2011-12-03T10:15:30+01:00[Europe/Paris]&apos;</span><br><span class="line">ISO_ORDINAL_DATE                            Year and day of year                                                &apos;2012-337&apos;</span><br><span class="line">ISO_WEEK_DATE                               Year and Week                                                       &apos;2012-W48-6&apos;</span><br><span class="line">ISO_INSTANT                                 Date and Time of an Instant                                         &apos;2011-12-03T10:15:30Z&apos;</span><br><span class="line">RFC_1123_DATE_TIME                          RFC 1123 / RFC 822                                                  &apos;Tue, 3 Jun 2008 11:05:30 GMT&apos;</span><br></pre></td></tr></table></figure></p>
+<p>Pattern<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">All letters &apos;A&apos; to &apos;Z&apos; and &apos;a&apos; to &apos;z&apos; are reserved as pattern letters. The following pattern letters are defined:</span><br><span class="line"></span><br><span class="line">  Symbol  Meaning                     Presentation      Examples</span><br><span class="line">  ------  -------                     ------------      -------</span><br><span class="line">   G       era                         text              AD; Anno Domini; A</span><br><span class="line">   u       year                        year              2004; 04</span><br><span class="line">   y       year-of-era                 year              2004; 04</span><br><span class="line">   D       day-of-year                 number            189</span><br><span class="line">   M/L     month-of-year               number/text       7; 07; Jul; July; J</span><br><span class="line">   d       day-of-month                number            10</span><br><span class="line"></span><br><span class="line">   Q/q     quarter-of-year             number/text       3; 03; Q3; 3rd quarter</span><br><span class="line">   Y       week-based-year             year              1996; 96</span><br><span class="line">   w       week-of-week-based-year     number            27</span><br><span class="line">   W       week-of-month               number            4</span><br><span class="line">   E       day-of-week                 text              Tue; Tuesday; T</span><br><span class="line">   e/c     localized day-of-week       number/text       2; 02; Tue; Tuesday; T</span><br><span class="line">   F       week-of-month               number            3</span><br><span class="line"></span><br><span class="line">   a       am-pm-of-day                text              PM</span><br><span class="line">   h       clock-hour-of-am-pm (1-12)  number            12</span><br><span class="line">   K       hour-of-am-pm (0-11)        number            0</span><br><span class="line">   k       clock-hour-of-am-pm (1-24)  number            0</span><br><span class="line"></span><br><span class="line">   H       hour-of-day (0-23)          number            0</span><br><span class="line">   m       minute-of-hour              number            30</span><br><span class="line">   s       second-of-minute            number            55</span><br><span class="line">   S       fraction-of-second          fraction          978</span><br><span class="line">   A       milli-of-day                number            1234</span><br><span class="line">   n       nano-of-second              number            987654321</span><br><span class="line">   N       nano-of-day                 number            1234000000</span><br><span class="line"></span><br><span class="line">   V       time-zone ID                zone-id           America/Los_Angeles; Z; -08:30</span><br><span class="line">   z       time-zone name              zone-name         Pacific Standard Time; PST</span><br><span class="line">   O       localized zone-offset       offset-O          GMT+8; GMT+08:00; UTC-08:00;</span><br><span class="line">   X       zone-offset &apos;Z&apos; for zero    offset-X          Z; -08; -0830; -08:30; -083015; -08:30:15;</span><br><span class="line">   x       zone-offset                 offset-x          +0000; -08; -0830; -08:30; -083015; -08:30:15;</span><br><span class="line">   Z       zone-offset                 offset-Z          +0000; -0800; -08:00;</span><br><span class="line"></span><br><span class="line">   p       pad next                    pad modifier      1</span><br><span class="line"></span><br><span class="line">   &apos;       escape for text             delimiter</span><br><span class="line">   &apos;&apos;      single quote                literal           &apos;</span><br><span class="line">   [       optional section start</span><br><span class="line">   ]       optional section end</span><br><span class="line">   #       reserved for future use</span><br><span class="line">   &#123;       reserved for future use</span><br><span class="line">   &#125;       reserved for future use</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/15/java-2019-01-15-Java8新特性（四）之-Optional-类/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lancelot He">
+      <meta itemprop="description" content="I can do all things!">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lancelot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/01/15/java-2019-01-15-Java8新特性（四）之-Optional-类/" class="post-title-link" itemprop="url">Java8新特性（四）之 Optional 类</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-15 23:02:28" itemprop="dateCreated datePublished" datetime="2019-01-15T23:02:28+08:00">2019-01-15</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-09 23:28:56" itemprop="dateModified" datetime="2019-05-09T23:28:56+08:00">2019-05-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>本篇文章将详细介绍Optional类，以及如何用它消除代码中的null检查。Optional是为了防止NullPointerException，使代码更优雅。</p>
+<h2 id="避免使用null检查"><a href="#避免使用null检查" class="headerlink" title="避免使用null检查"></a>避免使用<code>null</code>检查</h2><p>作为Java开发人员，几乎所有人都遇到过<code>NullPointerException</code>异常，大多数人遇到<code>NullPointerException</code>异常时都会在异常出现的地方加上<code>if</code>代码块来判断值不为空，比如下面的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">bindUserToRole</span><span class="params">(User user)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (user != <span class="keyword">null</span>) &#123;</span><br><span class="line">        String roleId = user.getRoleId();</span><br><span class="line">        <span class="keyword">if</span> (roleId != <span class="keyword">null</span>) &#123;</span><br><span class="line">            Role role = roleDao.findOne(roleId);</span><br><span class="line">            <span class="keyword">if</span> (role != <span class="keyword">null</span>) &#123;</span><br><span class="line">                role.setUserId(user.getUserId());</span><br><span class="line">                roleDao.save(role);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是比较普遍的做法，为了避免出现<code>NullPointerException</code>异常，手动对可能为<code>null</code>值进行了处理，不过代码看起来非常糟糕，业务逻辑被淹没在<code>if</code>逻辑判断中，也许下面的代码看起来可读性稍好一些：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">bindUserToRole</span><span class="params">(User user)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (user == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    String roleId = user.getRoleId();</span><br><span class="line">    <span class="keyword">if</span> (roleId == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Role = roleDao.findOne(roleId);</span><br><span class="line">    <span class="keyword">if</span> (role != <span class="keyword">null</span>) &#123;</span><br><span class="line">        role.setUserId(user.getUserId());</span><br><span class="line">        roleDao.save(role);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码避免了深层的<code>if</code>语句嵌套，但本质上是一样的，方法内有三个不同的返回点，出错后调试也不容易，因为你不知道是那个值导致了<code>NullPointerException</code>异常。</p>
+<p>基于上面的原因，Java 8中引入了一个新的类<code>Optional</code>，用以避免使用<code>null</code>值引发的种种问题。</p>
+<h2 id="Optional类"><a href="#Optional类" class="headerlink" title="Optional类"></a><code>Optional</code>类</h2><p><code>java.util.Optional&lt;T&gt;</code>类是一个封装了<code>Optional</code>值的容器对象，<code>Optional</code>值可以为<code>null</code>，如果值存在，调用<code>isPresent()</code>方法返回<code>true</code>，调用<code>get()</code>方法可以获取值。</p>
+<h3 id="创建Optional对象"><a href="#创建Optional对象" class="headerlink" title="创建Optional对象"></a>创建<code>Optional</code>对象</h3><p><code>Optional</code>类提供类三个方法用于实例化一个<code>Optional</code>对象，它们分别为<code>empty()</code>、<code>of()</code>、<code>ofNullable()</code>，这三个方法都是静态方法，可以直接调用。</p>
+<hr>
+<p><code>empty()</code>方法用于创建一个没有值的<code>Optional</code>对象：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Optional&lt;String&gt; emptyOpt = Optional.empty();</span><br></pre></td></tr></table></figure>
+<p><code>empty()</code>方法创建的对象没有值，如果对<code>emptyOpt</code>变量调用<code>isPresent()</code>方法会返回<code>false</code>，调用<code>get()</code>方法抛出<code>NullPointerException</code>异常。</p>
+<hr>
+<p><code>of()</code>方法使用一个非空的值创建<code>Optional</code>对象：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String str = <span class="string">"Hello World"</span>;</span><br><span class="line">Optional&lt;String&gt; notNullOpt = Optional.of(str);</span><br></pre></td></tr></table></figure>
+<hr>
+<p><code>ofNullable()</code>方法接收一个可以为<code>null</code>的值：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Optional&lt;String&gt; nullableOpt = Optional.ofNullable(str);</span><br></pre></td></tr></table></figure>
+<p>如果<code>str</code>的值为<code>null</code>，得到的<code>nullableOpt</code>是一个没有值的<code>Optional</code>对象。</p>
+<h3 id="提取Optional对象中的值"><a href="#提取Optional对象中的值" class="headerlink" title="提取Optional对象中的值"></a>提取<code>Optional</code>对象中的值</h3><p>如果我们要获取<code>User</code>对象中的<code>roleId</code>属性值，常见的方式是直接获取：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String roleId = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">if</span> (user != <span class="keyword">null</span>) &#123;</span><br><span class="line">    roleId = user.getRoleId();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用<code>Optional</code>中提供的<code>map()</code>方法可以以更简单的方式实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Optional&lt;User&gt; userOpt = Optional.ofNullable(user);</span><br><span class="line">Optional&lt;String&gt; roleIdOpt = userOpt.map(User::getRoleId);</span><br></pre></td></tr></table></figure>
+<h3 id="使用orElse-方法获取值"><a href="#使用orElse-方法获取值" class="headerlink" title="使用orElse()方法获取值"></a>使用<code>orElse()</code>方法获取值</h3><p><code>Optional</code>类还包含其他方法用于获取值，这些方法分别为：</p>
+<ul>
+<li><code>orElse()</code>：如果有值就返回，否则返回一个给定的值作为默认值；</li>
+<li><code>orElseGet()</code>：与<code>orElse()</code>方法作用类似，区别在于生成默认值的方式不同。该方法接受一个<code>Supplier&lt;? extends T&gt;</code>函数式接口参数，用于生成默认值；</li>
+<li><code>orElseThrow()</code>：与前面介绍的<code>get()</code>方法类似，当值为<code>null</code>时调用这两个方法都会抛出<code>NullPointerException</code>异常，区别在于该方法可以指定抛出的异常类型。</li>
+</ul>
+<p>下面来看看这三个方法的具体用法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">String str = <span class="string">"Hello World"</span>;</span><br><span class="line">Optional&lt;String&gt; strOpt = Optional.of(str);</span><br><span class="line">String orElseResult = strOpt.orElse(<span class="string">"Hello Shanghai"</span>);</span><br><span class="line">String orElseGet = strOpt.orElseGet(() -&gt; <span class="string">"Hello Shanghai"</span>);</span><br><span class="line">String orElseThrow = strOpt.orElseThrow(</span><br><span class="line">        () -&gt; <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Argument 'str' cannot be null or blank."</span>));</span><br></pre></td></tr></table></figure>
+<p>此外，<code>Optional</code>类还提供了一个<code>ifPresent()</code>方法，该方法接收一个<code>Consumer&lt;? super T&gt;</code>函数式接口，一般用于将信息打印到控制台：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Optional&lt;String&gt; strOpt = Optional.of(<span class="string">"Hello World"</span>);</span><br><span class="line">strOpt.ifPresent(System.out::println);</span><br></pre></td></tr></table></figure>
+<h3 id="使用filter-方法过滤"><a href="#使用filter-方法过滤" class="headerlink" title="使用filter()方法过滤"></a>使用<code>filter()</code>方法过滤</h3><p><code>filter()</code>方法可用于判断<code>Optional</code>对象是否满足给定条件，一般用于条件过滤：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Optional&lt;String&gt; optional = Optional.of(<span class="string">"lw900925@163.com"</span>);</span><br><span class="line">optional = optional.filter(str -&gt; str.contains(<span class="string">"164"</span>));</span><br></pre></td></tr></table></figure>
+<p>在上面的代码中，如果<code>filter()</code>方法中的Lambda表达式成立，<code>filter()</code>方法会返回当前<code>Optional</code>对象值，否则，返回一个值为空的<code>Optional</code>对象。</p>
+<h2 id="如何正确使用Optional"><a href="#如何正确使用Optional" class="headerlink" title="如何正确使用Optional"></a>如何正确使用<code>Optional</code></h2><p>通过上面的例子可以看出，<code>Optional</code>类可以优雅的避免<code>NullPointerException</code>带来的各种问题，不过，你是否真正掌握了<code>Optional</code>的用法？假设你试图使用<code>Optional</code>来避免可能出现的<code>NullPointerException</code>异常，编写了如下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Optional&lt;User&gt; userOpt = Optional.ofNullable(user);</span><br><span class="line"><span class="keyword">if</span> (userOpt.isPresent()) &#123;</span><br><span class="line">    User user = userOpt.get();</span><br><span class="line">    <span class="comment">// do something...</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// do something...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>坦白说，上面的代码与我们之前的使用<code>if</code>语句判断空值没有任何区别，没有起到<code>Optional</code>的正真作用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (user != <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="comment">// do something...</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// do something...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当我们从之前版本切换到Java 8的时候，不应该还按照之前的思维方式处理<code>null</code>值，Java 8提倡函数式编程，新增的许多API都可以用函数式编程表示，<code>Optional</code>类也是其中之一。这里有几条关于<code>Optional</code>使用的建议：</p>
+<ol>
+<li>尽量避免在程序中直接调用<code>Optional</code>对象的<code>get()</code>和<code>isPresent()</code>方法；</li>
+<li>避免使用<code>Optional</code>类型声明实体类的属性；</li>
+</ol>
+<p>第一条建议中直接调用<code>get()</code>方法是很危险的做法，如果<code>Optional</code>的值为空，那么毫无疑问会抛出<code>NullPointerException</code>异常，而为了调用<code>get()</code>方法而使用<code>isPresent()</code>方法作为空值检查，这种做法与传统的用<code>if</code>语句块做空值检查没有任何区别。</p>
+<p>第二条建议避免使用<code>Optional</code>作为实体类的属性，它在设计的时候就没有考虑过用来作为类的属性，如果你查看<code>Optional</code>的源代码，你会发现它没有实现<code>java.io.Serializable</code>接口，这在某些情况下是很重要的（比如你的项目中使用了某些序列化框架），使用了<code>Optional</code>作为实体类的属性，意味着他们不能被序列化。</p>
+<p>下面我们通过一些例子讲解<code>Optional</code>的正确用法：</p>
+<h3 id="正确创建Optional对象"><a href="#正确创建Optional对象" class="headerlink" title="正确创建Optional对象"></a>正确创建<code>Optional</code>对象</h3><p>上面提到创建<code>Optional</code>对象有三个方法，<code>empty()</code>方法比较简单，没什么特别要说明的。主要是<code>of()</code>和<code>ofNullable()</code>方法。当你很确定一个对象不可能为<code>null</code>的时候，应该使用<code>of()</code>方法，否则，尽可能使用<code>ofNullable()</code>方法，比如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">(Role role)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 当Optional的值通过常量获得或者通过关键字new初始化，可以直接使用of()方法</span></span><br><span class="line">    Optional&lt;String&gt; strOpt = Optional.of(<span class="string">"Hello World"</span>);</span><br><span class="line">    Optional&lt;User&gt; userOpt = Optional.of(<span class="keyword">new</span> User());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 方法参数中role值不确定是否为null，使用ofNullable()方法创建</span></span><br><span class="line">    Optional&lt;Role&gt; roleOpt = Optional.ofNullable(role);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="orElse-方法的使用"><a href="#orElse-方法的使用" class="headerlink" title="orElse()方法的使用"></a><code>orElse()</code>方法的使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> str != <span class="keyword">null</span> ? str : <span class="string">"Hello World"</span></span><br></pre></td></tr></table></figure>
+<p>上面的代码表示判断字符串<code>str</code>是否为空，不为空就返回，否则，返回一个常量。使用<code>Optional</code>类可以表示为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> strOpt.orElse(<span class="string">"Hello World"</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="简化if-else"><a href="#简化if-else" class="headerlink" title="简化if-else"></a>简化<code>if-else</code></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">User user = ...</span><br><span class="line"><span class="keyword">if</span> (user != <span class="keyword">null</span>) &#123;</span><br><span class="line">    String userName = user.getUserName();</span><br><span class="line">    <span class="keyword">if</span> (userName != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> userName.toUpperCase();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码可以简化成：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">User user = ...</span><br><span class="line">Optional&lt;User&gt; userOpt = Optional.ofNullable(user);</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> userOpt.map(User::getUserName)</span><br><span class="line">            .map(String::toUpperCase)</span><br><span class="line">            .orElse(<span class="keyword">null</span>);</span><br></pre></td></tr></table></figure>
+<p>总结一下，新的<code>Optional</code>类让我们可以以函数式编程的方式处理<code>null</code>值，抛弃了Java 8之前需要嵌套大量<code>if-else</code>代码块，使代码可读性有了很大的提高。</p>
+<h2 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h2><p><a href="https://blog.csdn.net/liubingyu12345/article/details/78183638" target="_blank" rel="noopener">使用OPtional的orElse()问题 - liubingyu12345的博客 - CSDN博客</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/18/java-2018-12-18-Java8新特性（二）-之-函数式接口/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lancelot He">
+      <meta itemprop="description" content="I can do all things!">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lancelot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/12/18/java-2018-12-18-Java8新特性（二）-之-函数式接口/" class="post-title-link" itemprop="url">Java8新特性（二） 之 函数式接口</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-18 22:49:39" itemprop="dateCreated datePublished" datetime="2018-12-18T22:49:39+08:00">2018-12-18</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-09 23:23:48" itemprop="dateModified" datetime="2019-05-09T23:23:48+08:00">2019-05-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="函数式接口"><a href="#函数式接口" class="headerlink" title="函数式接口"></a>函数式接口</h3><p>如果你的好奇心使你翻看<code>Runnable</code>接口源代码，你会发现该接口被一个<code>@FunctionalInterface</code>的注解修饰，这是Java 8中添加的新注解，用于表示 <strong>函数式接口</strong>。</p>
+<p>函数式接口又是什么鬼？在Java 8中，把那些仅有一个抽象方法的接口称为函数式接口。如果一个接口被<code>@FunctionalInterface</code>注解标注，表示这个接口被设计成函数式接口，只能有一个抽象方法，如果你添加多个抽象方法，编译时会提示“Multiple non-overriding abstract methods found in interface XXX”之类的错误。</p>
+<p>标注为FunctionalInterface的接口被称为函数式接口，该接口只能有一个自定义方法，但是可以包括从object类继承而来的方法。如果一个接口只有一个方法，则编译器会认为这就是一个函数式接口。是否是一个函数式接口，需要注意的有以下几点：</p>
+<ul>
+<li>该注解只能标记在”有且仅有一个抽象方法”的接口上。</li>
+<li>JDK8接口中的静态方法和默认方法，都不算是抽象方法。</li>
+<li>接口默认继承java.lang.Object，所以如果接口显示声明覆盖了Object中方法，那么也不算抽象方法。</li>
+<li>该注解不是必须的，如果一个接口符合”函数式接口”定义，那么加不加该注解都没有影响。加上该注解能够更好地让编译器进行检查。如果编写的不是函数式接口，但是加上了@FunctionInterface，那么编译器会报错。</li>
+<li>在一个接口中定义两个自定义的方法，就会产生Invalid ‘@FunctionalInterface’ annotation; FunctionalInterfaceTest is not a functional interface错误.</li>
+</ul>
+<p>函数式方法又能做什么？Java8允许你以Lambda表达式的方式为函数式接口提供实现，<strong>通俗的说，你可以将整个Lambda表达式作为接口的实现类</strong>。</p>
+<p>除了<code>Runnable</code>之外，Java 8中内置了许多函数式接口供开发者使用，这些接口位于<code>java.util.function</code>包中。如：</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>result</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Consumer</td>
+<td>Consumer<t></t></td>
+<td>T -&gt; void</td>
+<td>接收T对象，不返回值</td>
+</tr>
+<tr>
+<td>Predicate</td>
+<td>Predicate<t></t></td>
+<td>T -&gt; boolean</td>
+<td>接收T对象并返回boolean</td>
+</tr>
+<tr>
+<td>Function</td>
+<td>Function&lt;T, R&gt;</td>
+<td>T -&gt; R</td>
+<td>接收T对象，返回R对象</td>
+</tr>
+<tr>
+<td>Supplier</td>
+<td>Supplier<t></t></td>
+<td>void -&gt; T</td>
+<td>提供T对象（例如工厂），不接收值</td>
+</tr>
+<tr>
+<td>UnaryOperator</td>
+<td>UnaryOperator</td>
+<td>T -&gt; T</td>
+<td>接收T对象，返回T对象</td>
+</tr>
+<tr>
+<td>BinaryOperator</td>
+<td>BinaryOperator</td>
+<td>T,T -&gt; T</td>
+<td>接收两个T对象，返回T对象</td>
+</tr>
+</tbody>
+</table>
+<p>如果输入参数是基本类型，为了避免自动拆箱装箱，可以使用其他基本类型的函数接口。</p>
+<h4 id="Function"><a href="#Function" class="headerlink" title="Function"></a><code>Function</code></h4><p><code>interface Function&lt;T, R&gt;</code> 接口包含一个<code>apply</code>方法、两个默认方法（<code>compose</code>、<code>andThen</code>）和一个静态方法<code>identity</code>。<br><code>apply</code>是接口的基本方法。<br><code>compose</code>、<code>andThen</code>是一对儿方法，他们的区别在于执行的顺序不同。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//返回一个先执行before函数对象apply方法再执行当前函数对象apply方法的函数对象</span></span><br><span class="line"><span class="keyword">default</span> &lt;V&gt; <span class="function">Function&lt;V, R&gt; <span class="title">compose</span><span class="params">(Function&lt;? <span class="keyword">super</span> V, ? extends T&gt; before)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(before);</span><br><span class="line">        <span class="keyword">return</span> (V v) -&gt; apply(before.apply(v));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//返回一个先执行当前函数对象apply方法再执行after函数对象apply方法的函数对象。</span></span><br><span class="line"><span class="keyword">default</span> &lt;V&gt; <span class="function">Function&lt;T, V&gt; <span class="title">andThen</span><span class="params">(Function&lt;? <span class="keyword">super</span> R, ? extends V&gt; after)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(after);</span><br><span class="line">        <span class="keyword">return</span> (T t) -&gt; after.apply(apply(t));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 根据上面的解释想一下执行结果</span></span><br><span class="line">Function&lt;Integer, Integer&gt; name = e -&gt; e * <span class="number">2</span>;</span><br><span class="line">Function&lt;Integer, Integer&gt; square = e -&gt; e * e;</span><br><span class="line"><span class="keyword">int</span> value = name.andThen(square).apply(<span class="number">3</span>);</span><br><span class="line"><span class="keyword">int</span> value2 = name.compose(square).apply(<span class="number">3</span>);</span><br><span class="line"><span class="comment">//返回一个执行了apply()方法之后只会返回输入参数的函数对象</span></span><br><span class="line">Object identity = Function.identity().apply(<span class="string">"Test"</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="Consumer"><a href="#Consumer" class="headerlink" title="Consumer"></a><code>Consumer</code></h4><p><code>interface Consumer&lt;T&gt;</code><br>接口包含一个<code>void accept(T t);</code>方法、默认方法<code>andThen</code>.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">default</span> Consumer&lt;T&gt; <span class="title">andThen</span><span class="params">(Consumer&lt;? <span class="keyword">super</span> T&gt; after)</span> </span>&#123;</span><br><span class="line">    Objects.requireNonNull(after);</span><br><span class="line">    <span class="keyword">return</span> (T t) -&gt; &#123; accept(t); after.accept(t); &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>只有一个默认方法也是和它的返回类型有关系，因为返回的是void。</p>
+<h4 id="Predicate"><a href="#Predicate" class="headerlink" title="Predicate"></a><code>Predicate</code></h4><p><code>interface Predicate&lt;T&gt;</code>接口包含一个<code>boolean test(T t);</code>方法，三个默认方法（<code>and</code>，<code>negate</code>,<code>or</code>），还有一个静态方法。<br>我们也知道Predicate接口是返回boolean类型的，所以一看就知道是条件判断的。<br>举几个栗子吧：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">String name = <span class="string">"hello"</span>;</span><br><span class="line">Predicate&lt;String&gt; predicate = x -&gt; x.equals(<span class="string">"hello"</span>);</span><br><span class="line">Predicate&lt;String&gt; predicate2 = x -&gt; x.length() &lt; <span class="number">2</span>;</span><br><span class="line"><span class="comment">// and 多个Predicate条件并的关系判断，第一个为false就不往下走了，满足短路原则</span></span><br><span class="line">System.out.println(predicate.and(predicate2).test(name));</span><br><span class="line"><span class="comment">// or 多个Predicate条件或的关系判断，同样满足短路原则</span></span><br><span class="line">System.out.println(predicate.or(predicate2).test(name));</span><br><span class="line"><span class="comment">// negate 取反的意思，就是否的条件判断</span></span><br><span class="line">System.out.println(predicate.and(predicate2.negate()).test(name));</span><br><span class="line"><span class="comment">// isEqual 静态方法，判断是否相等</span></span><br><span class="line">System.out.println(Predicate.isEqual(name).test(name));</span><br></pre></td></tr></table></figure></p>
+<h4 id="Supplier"><a href="#Supplier" class="headerlink" title="Supplier"></a><code>Supplier</code></h4><p><code>Supplier</code>只有一个get()方法。<br>我们来看看几个栗子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Supplier&lt;String&gt; supplier = () -&gt; <span class="string">"hello world"</span>;</span><br><span class="line"><span class="comment">//get方法不接受参数，返回一个结果</span></span><br><span class="line">System.out.println(<span class="string">"supplier = ["</span> + supplier.get() + <span class="string">"]"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//替代不接受参数的工厂方法</span></span><br><span class="line">Supplier&lt;Student&gt; studentSupplier = () -&gt; <span class="keyword">new</span> Student();</span><br><span class="line">System.out.println(studentSupplier.get());</span><br><span class="line"></span><br><span class="line"><span class="comment">//因为Student的构造方法不接受参数，返回一个结果，符合Supplier接口的要求，可以简写如下：</span></span><br><span class="line">Supplier&lt;Student&gt; studentSupplier2 = Student::<span class="keyword">new</span>;</span><br></pre></td></tr></table></figure></p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>函数式接口其实差别不大，只是参数和返回的不同，只要想明白其中的一种，其他的也就懂了。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://blog.csdn.net/huo065000/article/details/78964382" target="_blank" rel="noopener">JDK8新特性-java.util.function-Function接口
+</a><br><a href="https://blog.csdn.net/hxg117/article/details/77029930" target="_blank" rel="noopener">Java8的一些新特性 java.util.function包
+</a><br><a href="https://blog.csdn.net/pzxwhc/article/details/48314039" target="_blank" rel="noopener">Java JVM（七）：Function，Consumer，Predicate 接口
+</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/15/java-2018-12-15-Java8新特性（一）-之-Lambda表达式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lancelot He">
+      <meta itemprop="description" content="I can do all things!">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lancelot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/12/15/java-2018-12-15-Java8新特性（一）-之-Lambda表达式/" class="post-title-link" itemprop="url">Java8新特性（一） 之 Lambda表达式</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-15 23:30:53" itemprop="dateCreated datePublished" datetime="2018-12-15T23:30:53+08:00">2018-12-15</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-09 23:23:16" itemprop="dateModified" datetime="2019-05-09T23:23:16+08:00">2019-05-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Lambda表达式是什么"><a href="#Lambda表达式是什么" class="headerlink" title="Lambda表达式是什么"></a>Lambda表达式是什么</h2><p>Lambda表达式（lambda expression）是一个匿名函数，由数学中的λ演算而得名。在Java 8中可以把Lambda表达式理解为匿名函数，它没有名称，但是有参数列表、函数主体、返回类型等。</p>
+<p>Lambda表达式的语法如下：</p>
+<blockquote>
+<p>(parameters) -&gt; { statements; }</p>
+</blockquote>
+<p>为什么要使用Lambda表达式？前面你也看到了，在Java中使用内部类显得十分冗长，要编写很多样板代码，Lambda表达式正是为了简化这些步骤出现的，它使代码变得清晰易懂。</p>
+<h2 id="如何使用Lambda表达式"><a href="#如何使用Lambda表达式" class="headerlink" title="如何使用Lambda表达式"></a>如何使用Lambda表达式</h2><p>Lambda表达式是为了简化内部类的，你可以把它当成是内部类的一种简写方式，只要是有内部类的代码块，都可以转化成Lambda表达式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Comparator排序</span></span><br><span class="line">List&lt;Integer&gt; list = Arrays.asList(<span class="number">3</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">2</span>);</span><br><span class="line">list.sort(<span class="keyword">new</span> Comparator&lt;Integer&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Integer o1, Integer o2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> o1.compareTo(o2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用Lambda表达式简化</span></span><br><span class="line">list.sort((o1, o2) -&gt; o1.compareTo(o2));</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Runnable代码块</span></span><br><span class="line">Thread thread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Hello Man!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用Lambda表达式简化</span></span><br><span class="line">Thread thread = <span class="keyword">new</span> Thread(() -&gt; System.out.println(<span class="string">"Hello Man!"</span>));</span><br></pre></td></tr></table></figure>
+<p>可以看出，只要是内部类的代码块，就可以使用Lambda表达式简化，并且简化后的代码清晰易懂。</p>
+<h3 id="方法引用"><a href="#方法引用" class="headerlink" title="方法引用"></a>方法引用</h3><p>甚至，Comparator排序的Lambda表达式还可以进一步简化：</p>
+<blockquote>
+<p>list.sort(Integer::compareTo);</p>
+</blockquote>
+<p>这种写法被称为 <strong>方法引用</strong>，方法引用是Lambda表达式的简便写法。如果你的Lambda表达式只是调用这个方法，最好使用名称调用，而不是描述如何调用，这样可以提高代码的可读性。</p>
+<p>方法引用使用<code>::</code>分隔符，分隔符的前半部分表示引用类型，后面半部分表示引用的方法名称。例如：<code>Integer::compareTo</code>表示引用类型为<code>Integer</code>，引用名称为<code>compareTo</code>的方法。</p>
+<p>对于 Lambda 表达式到方法引用的简化，我们提供以下规则：</p>
+<table>
+<thead>
+<tr>
+<th>Lambda 表达式</th>
+<th>方法引用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(args) -&gt; ClassName.staticMethod(args)</td>
+<td>ClassName::staticMethod</td>
+</tr>
+<tr>
+<td>(arg0, …) -&gt; arg0.instanceMethod(…)</td>
+<td>ClassName::instanceMethod</td>
+</tr>
+<tr>
+<td>(args) -&gt; expression.instanceMethod(args)</td>
+<td>expression::instanceMethod</td>
+</tr>
+</tbody>
+</table>
+<p>特别的，对于构造函数的方法引用：  <code>ClassName::new</code><br>类似使用方法引用的例子还有打印集合中的元素到控制台中：<br><code>list.forEach(System.out::println);</code></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/30/IntelliJ-IDEA使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lancelot He">
+      <meta itemprop="description" content="I can do all things!">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lancelot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/11/30/IntelliJ-IDEA使用/" class="post-title-link" itemprop="url">IntelliJ IDEA使用</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-11-30 22:10:28" itemprop="dateCreated datePublished" datetime="2018-11-30T22:10:28+08:00">2018-11-30</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-09 23:20:17" itemprop="dateModified" datetime="2019-05-09T23:20:17+08:00">2019-05-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/工具/" itemprop="url" rel="index"><span itemprop="name">工具</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="好用的插件"><a href="#好用的插件" class="headerlink" title="好用的插件"></a>好用的插件</h4><ul>
+<li><strong>lokbok</strong><br>项目中经常使用bean，entity等类，绝大部分数据类类中都需要get、set、toString、equals和hashCode方法，虽然eclipse和idea开发环境下都有自动生成的快捷方式，但自动生成这些代码后，如果bean中的属性一旦有修改、删除或增加时，需要重新生成或删除get/set等方法，给代码维护增加负担。而使用了lombok则不一样，使用了lombok的注解(@Setter,@Getter,@ToString,@@RequiredArgsConstructor,@EqualsAndHashCode或@Data)之后，就不需要编写或生成get/set等方法，很大程度上减少了代码量，而且减少了代码维护的负担。故强烈建议项目中使用lombok，去掉bean中get、set、toString、equals和hashCode等方法的代码。</li>
+</ul>
+<ol>
+<li>IDEA安装插件lombok</li>
+<li><p>添加lombok的maven的pom.xml依赖：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;lombok&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;1.16.10&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.lombok.demo;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.EqualsAndHashCode;</span><br><span class="line"><span class="keyword">import</span> lombok.Getter;</span><br><span class="line"><span class="keyword">import</span> lombok.Setter;</span><br><span class="line"><span class="keyword">import</span> lombok.ToString;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by zhangzh on 2017/2/8.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@ToString</span></span><br><span class="line"><span class="meta">@EqualsAndHashCode</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">private</span> String male;</span><br><span class="line">    <span class="keyword">private</span> String studentNo;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>更多注解等你发现，比如：<code>@Data</code>, <code>@Log</code></p>
+<h3 id="参数优化"><a href="#参数优化" class="headerlink" title="参数优化"></a>参数优化</h3><p>Mac 下的地址</p>
+<blockquote>
+<p>vim /Applications/IntelliJ\ IDEA.app/Contents/bin/idea.vmoptions<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">-Xms128m</span><br><span class="line">-Xmx750m</span><br><span class="line">-XX:ReservedCodeCacheSize=240m</span><br><span class="line">-XX:+UseCompressedOops</span><br><span class="line">-Dfile.encoding=UTF-8</span><br><span class="line">-XX:+UseConcMarkSweepGC</span><br><span class="line">-XX:SoftRefLRUPolicyMSPerMB=50</span><br><span class="line">-ea</span><br><span class="line">-Dsun.io.useCanonCaches=false</span><br><span class="line">-Djava.net.preferIPv4Stack=true</span><br><span class="line">-Djdk.http.auth.tunneling.disabledSchemes=&quot;&quot;</span><br><span class="line">-XX:+HeapDumpOnOutOfMemoryError</span><br><span class="line">-XX:-OmitStackTraceInFastThrow</span><br><span class="line">-Xverify:none</span><br><span class="line"></span><br><span class="line">-XX:ErrorFile=$USER_HOME/java_error_in_idea_%p.log</span><br><span class="line">-XX:HeapDumpPath=$USER_HOME/java_error_in_idea.hprof</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>更新下面文件后重启，不会太卡了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">-Xms2200m</span><br><span class="line">-Xmx2200m</span><br><span class="line">-XX:ReservedCodeCacheSize=680m</span><br><span class="line">-XX:+UseCompressedOops</span><br><span class="line">-Dfile.encoding=UTF-8</span><br><span class="line">-XX:+UseConcMarkSweepGC</span><br><span class="line">-XX:SoftRefLRUPolicyMSPerMB=50</span><br><span class="line">-ea</span><br><span class="line">-Dsun.io.useCanonCaches=false</span><br><span class="line">-Djava.net.preferIPv4Stack=true</span><br><span class="line">-XX:+HeapDumpOnOutOfMemoryError</span><br><span class="line">-XX:-OmitStackTraceInFastThrow</span><br><span class="line">-Xverify:none</span><br><span class="line">-XX:ErrorFile=$USER_HOME/java_error_in_idea_%p.log</span><br><span class="line">-XX:HeapDumpPath=$USER_HOME/java_error_in_idea.hprof</span><br><span class="line">-Xbootclasspath/a:../lib/boot.jar</span><br></pre></td></tr></table></figure></p>
+<p>或者<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">-Xms4400m</span><br><span class="line">-Xmx4400m</span><br><span class="line">-Xmn1000m</span><br><span class="line">-XX:PermSize=768m</span><br><span class="line">-XX:MaxPermSize=768m</span><br><span class="line">-Xss512K</span><br><span class="line">-XX:ReservedCodeCacheSize=128m</span><br><span class="line">-XX:SurvivorRatio=1</span><br><span class="line">-XX:+UseParNewGC</span><br><span class="line">-XX:+UseConcMarkSweepGC</span><br><span class="line">-XX:+UseCMSCompactAtFullCollection</span><br><span class="line">-XX:+UseCMSInitiatingOccupancyOnly</span><br><span class="line">-XX:CMSInitiatingOccupancyFraction=70</span><br><span class="line">-XX:+CMSParallelRemarkEnabled</span><br><span class="line">-XX:+CMSClassUnloadingEnabled</span><br><span class="line">-XX:CMSFullGCsBeforeCompaction=0</span><br><span class="line">-XX:LargePageSizeInBytes=200M</span><br><span class="line">-Dsun.io.useCanonCaches=false</span><br><span class="line">-Djava.net.preferIPv4Stack=true</span><br><span class="line">-Dsun.rmi.dgc.client.gcInterval=10800000</span><br><span class="line">-Dsun.rmi.dgc.server.gcInterval=10800000</span><br><span class="line">-XX:SoftRefLRUPolicyMSPerMB=0</span><br><span class="line">-XX:+DisableExplicitGC</span><br><span class="line">-XX:+PrintClassHistogram</span><br><span class="line">-XX:+PrintGCDetails</span><br><span class="line">-XX:+PrintGCTimeStamp</span><br><span class="line">-XX:+PrintHeapAtGC</span><br><span class="line">-Xloggc:gc.log</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Lancelot He">
+            
+              <p class="site-author-name" itemprop="name">Lancelot He</p>
+              <p class="site-description motion-element" itemprop="description">I can do all things!</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Lancelothe" title="GitHub &rarr; https://github.com/Lancelothe" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.zhihu.com/people/he-bo-hao-74/activities" title="知乎 &rarr; https://www.zhihu.com/people/he-bo-hao-74/activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>知乎</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lancelot He</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+
+  
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+  <!-- 页面点击文字 -->
+  <script type="text/javascript" src="/js/src/mouse.js"></script>
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

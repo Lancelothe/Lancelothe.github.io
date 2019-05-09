@@ -343,7 +343,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/19/Java8新特性（一）-之-Lambda表达式/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/25/java-2018-12-25-Java8新特性（三）-之-Stream-API/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Lancelot He">
@@ -363,7 +363,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/02/19/Java8新特性（一）-之-Lambda表达式/" class="post-title-link" itemprop="url">Java8新特性（一） 之 Lambda表达式</a>
+                <a href="/2018/12/25/java-2018-12-25-Java8新特性（三）-之-Stream-API/" class="post-title-link" itemprop="url">Java8新特性（三） 之 Stream API</a>
               
             
           </h1>
@@ -388,7 +388,7 @@
                 
               
 
-              <time title="创建时间：2019-02-19 23:30:53" itemprop="dateCreated datePublished" datetime="2019-02-19T23:30:53+08:00">2019-02-19</time>
+              <time title="创建时间：2018-12-25 22:50:10" itemprop="dateCreated datePublished" datetime="2018-12-25T22:50:10+08:00">2018-12-25</time>
             
 
             
@@ -405,7 +405,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-20 01:07:31" itemprop="dateModified" datetime="2019-02-20T01:07:31+08:00">2019-02-20</time>
+                <time title="修改时间：2019-05-10 00:02:43" itemprop="dateModified" datetime="2019-05-10T00:02:43+08:00">2019-05-10</time>
               
             
           </span>
@@ -459,46 +459,348 @@
       
         
           
-            <h2 id="Lambda表达式是什么"><a href="#Lambda表达式是什么" class="headerlink" title="Lambda表达式是什么"></a>Lambda表达式是什么</h2><p>Lambda表达式（lambda expression）是一个匿名函数，由数学中的λ演算而得名。在Java 8中可以把Lambda表达式理解为匿名函数，它没有名称，但是有参数列表、函数主体、返回类型等。</p>
-<p>Lambda表达式的语法如下：</p>
+            <h2 id="Stream-API"><a href="#Stream-API" class="headerlink" title="Stream API"></a>Stream API</h2><p>本文继续介绍Java 8的另一个新特性——Stream API。Stream API是对Java中集合操作的增强，可以利用它进行各种过滤、排序、分组、聚合等操作。Stream API配合Lambda表达式可以加大的提高代码可读性和编码效率，Stream API也支持并行操作，我们不用再花费很多精力来编写容易出错的多线程代码了，Stream API已经替我们做好了，并且充分利用多核CPU的优势。借助Stream API和Lambda，开发人员可以很容易的编写出高性能的并发处理程序。</p>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Stream API是Java 8中加入的一套新的API，主要用于处理集合操作，不过它的处理方式与传统的方式不同，称为“数据流处理”。流（Stream）类似于关系数据库的查询操作，是一种声明式操作。比如要从数据库中获取所有年龄大于20岁的用户的名称，并按照用户的创建时间进行排序，用一条SQL语句就可以搞定，不过使用Java程序实现就会显得有些繁琐，这时候可以使用流：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; userNames =</span><br><span class="line">        users.stream()</span><br><span class="line">        .filter(user -&gt; user.getAge() &gt; <span class="number">20</span>)</span><br><span class="line">        .sorted(comparing(User::getCreationDate))</span><br><span class="line">        .map(User::getUserName)</span><br><span class="line">        .collect(toList());</span><br></pre></td></tr></table></figure>
+<p>在这个大数据的时代，数据变得越来越多样化，很多时候我们会面对海量数据，并对其做一些复杂的操作（比如统计，分组），依照传统的遍历方式<code>（for-each）</code>，每次只能处理集合中的一个元素，并且是按顺序处理，这种方法是极其低效的。你也许会想到并行处理，但是编写多线程代码并非易事，很容易出错并且维护困难。不过在Java 8之后，你可以使用Stream API来解决这一问题。</p>
+<p>Stream API将迭代操作封装到了内部，它会自动的选择最优的迭代方式，并且使用并行方式处理时，将集合分成多段，每一段分别使用不同的线程处理，最后将处理结果合并输出。</p>
+<p>需要注意的是，<strong>流只能遍历一次</strong>，遍历结束后，这个流就被关闭掉了。如果要重新遍历，可以从数据源（集合）中重新获取一个流。如果你对一个流遍历两次，就会抛出<code>java.lang.IllegalStateException异常</code>：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = Arrays.asList(<span class="string">"A"</span>, <span class="string">"B"</span>, <span class="string">"C"</span>, <span class="string">"D"</span>);</span><br><span class="line">Stream&lt;String&gt; stream = list.stream();</span><br><span class="line">stream.forEach(System.out::println);</span><br><span class="line">stream.forEach(System.out::println); <span class="comment">// 这里会抛出java.lang.IllegalStateException异常，因为流已经被关闭</span></span><br></pre></td></tr></table></figure></p>
+<p>流通常由三部分构成：<br><img src="/images/markdown-img-paste-20181220151915981.png" alt="stream_1"></p>
+<ol>
+<li>数据源：数据源一般用于流的获取，比如本文开头那个过滤用户的例子中users.stream()方法。</li>
+<li>中间处理：中间处理包括对流中元素的一系列处理，如：过滤（filter()），映射（map()），排序（sorted()）。</li>
+<li>终端处理：终端处理会生成结果，结果可以是任何不是流值，如List<string>；也可以不返回结果，如stream.forEach(System.out::println)就是将结果打印到控制台中，并没有返回。<br><img src="/images/markdown-img-paste-20181220152359823.png" alt><br>Stream中的操作可以分为两大类：中间操作与结束操作，中间操作只是对操作进行了记录，只有结束操作才会触发实际的计算（即惰性求值），这也是Stream在迭代大集合时高效的原因之一。<br>中间操作又可以分为无状态（Stateless）操作与有状态（Stateful）操作，前者是指元素的处理不受之前元素的影响；后者是指该操作只有拿到所有元素之后才能继续下去。结束操作又可以分为短路与非短路操作，这个应该很好理解，前者是指遇到某些符合条件的元素就可以得到最终结果；而后者是指必须处理所有元素才能得到最终结果。</string></li>
+</ol>
+<p>中间操作也称为惰性操作。<br>终端操作也称为急切操作。<br>惰性操作不处理元素，直到在流上调用热切操作。<br>流上的中间操作产生另一流。<br>Streams链接操作以创建流管道。</p>
+<h3 id="创建流"><a href="#创建流" class="headerlink" title="创建流"></a>创建流</h3><p>创建流的方式有很多，具体可以划分为以下几种：</p>
+<h4 id="由值创建流"><a href="#由值创建流" class="headerlink" title="由值创建流"></a>由值创建流</h4><p>使用静态方法<code>Stream.of()</code>创建流，该方法接收一个变长参数：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;Stream&gt; stream = Stream.of(<span class="string">"A"</span>, <span class="string">"B"</span>, <span class="string">"C"</span>, <span class="string">"D"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>也可以使用静态方法<code>Stream.empty()</code>创建一个空的流：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;Stream&gt; stream = Stream.empty();</span><br></pre></td></tr></table></figure></p>
+<h4 id="由数组创建流"><a href="#由数组创建流" class="headerlink" title="由数组创建流"></a>由数组创建流</h4><p>使用静态方法<code>Arrays.stream()</code>从数组创建一个流，该方法接收一个数组参数：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String[] strs = &#123;<span class="string">"A"</span>, <span class="string">"B"</span>, <span class="string">"C"</span>, <span class="string">"D"</span>&#125;;</span><br><span class="line">Stream&lt;Stream&gt; stream = Arrays.stream(strs);</span><br></pre></td></tr></table></figure></p>
+<h4 id="通过文件生成流"><a href="#通过文件生成流" class="headerlink" title="通过文件生成流"></a>通过文件生成流</h4><p>使用<code>java.nio.file.Files</code>类中的很多静态方法都可以获取流，比如<code>Files.lines()</code>方法，该方法接收一个<code>java.nio.file.Path</code>对象，返回一个由文件行构成的字符串流：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;String&gt; stream = Files.lines(Paths.get(<span class="string">"text.txt"</span>), Charset.defaultCharset());</span><br></pre></td></tr></table></figure></p>
+<h4 id="通过函数创建流"><a href="#通过函数创建流" class="headerlink" title="通过函数创建流"></a>通过函数创建流</h4><p><code>java.util.stream.Stream</code>中有两个静态方法用于从函数生成流，他们分别是<code>Stream&lt;T&gt; generate(Supplier&lt;T&gt; s)</code>和<code>Stream&lt;T&gt; iterate(final T seed, final UnaryOperator&lt;T&gt; f)</code>：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// iteartor</span></span><br><span class="line">Stream.iterate(<span class="number">0</span>, n -&gt; n + <span class="number">2</span>).limit(<span class="number">51</span>).forEach(System.out::println);</span><br><span class="line"><span class="comment">// generate</span></span><br><span class="line">Stream.generate(() -&gt; <span class="string">"Hello Man!"</span>).limit(<span class="number">10</span>).forEach(System.out::println);</span><br></pre></td></tr></table></figure></p>
+<p>第一个方法会打印100以内的所有偶数，第二个方法打印10个<code>Hello Man!</code>。<strong>值得注意的是，这两个方法生成的流都是无限流，没有固定大小，可以无穷的计算下去</strong>，在上面的代码中我们使用了<code>limit()</code>来避免打印无穷个值。</p>
+<p>一般来说，<code>iterate()</code>用于生成一系列值，比如生成以当前时间开始之后的10天的日期：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream.iterate(LocalDate.now(), date -&gt; date.plusDays(<span class="number">1</span>)).limit(<span class="number">10</span>).forEach(System.out::println);</span><br></pre></td></tr></table></figure></p>
+<p><code>generate()</code>方法用于生成一些随机数，比如生成10个UUID：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream.generate(() -&gt; UUID.randomUUID().toString()).limit(<span class="number">10</span>).forEach(System.out::println);</span><br></pre></td></tr></table></figure></p>
+<h3 id="使用流"><a href="#使用流" class="headerlink" title="使用流"></a>使用流</h3><p><code>Stream</code>接口中包含许多对流操作的方法，这些方法分别为：</p>
+<ul>
+<li><code>filter()</code>：对流的元素过滤</li>
+<li><code>map()</code>：将流的元素映射成另一个类型</li>
+<li><code>distinct()</code>：去除流中重复的元素</li>
+<li><code>sorted()</code>：对流的元素排序</li>
+<li><code>forEach()</code>：对流中的每个元素执行某个操作</li>
+<li><code>peek()</code>：与<code>forEach()</code>方法效果类似，不同的是，该方法会返回一个新的流，而<code>forEach()</code>无返回</li>
+<li><code>limit()</code>：截取流中前面几个元素</li>
+<li><code>skip()</code>：跳过流中前面几个元素</li>
+<li><code>toArray()</code>：将流转换为数组</li>
+<li><code>reduce()</code>：对流中的元素归约操作，将每个元素合起来形成一个新的值</li>
+<li><code>collect()</code>：对流的汇总操作，比如输出成<code>List</code>集合</li>
+<li><code>anyMatch()</code>：匹配流中的元素，类似的操作还有<code>allMatch()</code>和<code>noneMatch()</code>方法</li>
+<li><code>findFirst()</code>：查找第一个元素，类似的还有<code>findAny()</code>方法</li>
+<li><code>max()</code>：求最大值</li>
+<li><code>min()</code>：求最小值</li>
+<li><code>count()</code>：求总数</li>
+</ul>
+<p>下面逐一介绍这些方法的用法。</p>
+<p><strong>简单栗子</strong>：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Stream.of(<span class="number">1</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">8</span>)</span><br><span class="line">    .filter(n -&gt; n &gt; <span class="number">2</span>)     <span class="comment">// 对元素过滤，保留大于2的元素</span></span><br><span class="line">    .distinct()             <span class="comment">// 去重，类似于SQL语句中的DISTINCT</span></span><br><span class="line">    .skip(<span class="number">1</span>)                <span class="comment">// 跳过前面1个元素</span></span><br><span class="line">    .limit(<span class="number">2</span>)               <span class="comment">// 返回开头2个元素，类似于SQL语句中的SELECT TOP</span></span><br><span class="line">    .sorted()               <span class="comment">// 对结果排序</span></span><br><span class="line">    .forEach(System.out::println);</span><br></pre></td></tr></table></figure></p>
+<h4 id="过滤"><a href="#过滤" class="headerlink" title="过滤"></a>过滤</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Apple&gt; filterList = appleList.stream().filter(a -&gt; a.getName().equals(<span class="string">"香蕉"</span>)).collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
+<h4 id="求和-规约"><a href="#求和-规约" class="headerlink" title="求和(规约)"></a>求和(规约)</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//计算 总金额</span></span><br><span class="line"><span class="comment">// map -&gt; reduce</span></span><br><span class="line">BigDecimal totalMoney = appleList.stream().map(Apple::getMoney).reduce(BigDecimal.ZERO, BigDecimal::add);</span><br><span class="line"><span class="comment">//计算 数量</span></span><br><span class="line"><span class="keyword">int</span> sum = appleList.stream().mapToInt(Apple::getNum).sum();</span><br></pre></td></tr></table></figure>
+<h4 id="提取Bean某一属性"><a href="#提取Bean某一属性" class="headerlink" title="提取Bean某一属性"></a>提取Bean某一属性</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 取Bean某一属性</span></span><br><span class="line">stuList.stream()</span><br><span class="line">		.map(Student::getId).distinct()</span><br><span class="line">		.collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
+<h4 id="去重"><a href="#去重" class="headerlink" title="去重"></a>去重</h4><ul>
+<li><h5 id="一般去重"><a href="#一般去重" class="headerlink" title="一般去重"></a>一般去重</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; distinctNumbers = numbers.stream().distinct().collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
+</li>
+<li><h5 id="条件去重"><a href="#条件去重" class="headerlink" title="条件去重"></a>条件去重</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 根据Bean的某种属性去重</span></span><br><span class="line"><span class="comment">// 首先定义一个过滤器</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">Predicate&lt;T&gt; <span class="title">distinctByKey</span><span class="params">(Function&lt;? <span class="keyword">super</span> T, Object&gt; keyExtractor)</span> </span>&#123;</span><br><span class="line">    Map&lt;Object, Boolean&gt; seen = <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;();</span><br><span class="line">    <span class="keyword">return</span> object -&gt; seen.putIfAbsent(keyExtractor.apply(object), Boolean.TRUE) == <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">List&lt;User&gt; distinctUsers = users.stream()</span><br><span class="line">        .filter(distinctByKey(User::getName))</span><br><span class="line">        .collect(Collectors.toList());</span><br><span class="line"></span><br><span class="line">这种去重也可以对多个Key进行，将多个Key拼接成一个Key。</span><br><span class="line"><span class="function"><span class="keyword">private</span> String <span class="title">getGroupingByKey</span><span class="params">(Person p)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> p.getAge()+<span class="string">"-"</span>+p.getName();</span><br><span class="line">&#125;</span><br><span class="line">下面的分组也是用了这个思想。</span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者</span></span><br><span class="line">List&lt;HKCsm&gt; unique = list.stream()</span><br><span class="line">            .collect(Collectors</span><br><span class="line">            .collectingAndThen(Collectors</span><br><span class="line">            .toCollection(() -&gt; <span class="keyword">new</span> TreeSet&lt;&gt;(Comparator.comparing(o -&gt; o.getIDVUNIC()))), ArrayList::<span class="keyword">new</span>));</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h4><p><strong>排序需重新赋值，内部操作循环的foreach的话就不用赋值新变量</strong><br><code>list = list.stream().sorted(byNumber).collect(Collectors.toList());</code></p>
+<p>多属性先后顺序排序：<br>自己重写comparator方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void testSort_with_multipleComparator() throws Exception &#123;</span><br><span class="line"></span><br><span class="line">   ArrayList&lt;Human&gt; humans = Lists.newArrayList(</span><br><span class="line">           new Human(&quot;tomy&quot;, 22),</span><br><span class="line">           new Human(&quot;li&quot;, 25)</span><br><span class="line">   );</span><br><span class="line"></span><br><span class="line">   Comparator&lt;Human&gt; comparator = (h1, h2) -&gt; &#123;</span><br><span class="line"></span><br><span class="line">       if (h1.getName().equals(h2.getName())) &#123;</span><br><span class="line">           return Integer.compare(h1.getAge(), h2.getAge());</span><br><span class="line">       &#125;</span><br><span class="line">       return h1.getName().compareTo(h2.getName());</span><br><span class="line">   &#125;;</span><br><span class="line">   humans.sort(comparator.reversed());</span><br><span class="line">   Assert.assertThat(&quot;tomy&quot;, equalTo(humans.get(0).getName()));</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 一般排序</span></span><br><span class="line"><span class="comment">// 定义一个比较器，用于排序</span></span><br><span class="line">Comparator&lt;Rule&gt; byNumber = Comparator.comparingInt(Rule::getNumber);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取排序后的list，先通过filter筛选，然后在排序</span></span><br><span class="line">List&lt;Rule&gt; rule = lstRule.stream().filter(s -&gt; s.getCode() == <span class="number">2</span>).sorted(byNumber).collect(Collectors.toList());</span><br><span class="line"></span><br><span class="line"><span class="comment">// 联合排序</span></span><br><span class="line">Comparator&lt;Rule&gt; byNumber = Comparator.comparingInt(Rule::getNumber);</span><br><span class="line">Comparator&lt;Rule&gt; byCode = Comparator.comparingInt(Rule::getCode);</span><br><span class="line">Comparator&lt;Rule&gt; byNumberAndCode = byNumber.thenComparing(byCode);</span><br><span class="line"><span class="comment">// byNumberAndCode是一个联合排序的比较器</span></span><br><span class="line">List&lt;Rule&gt; rule = lstRule.stream().filter(s -&gt; s.getCode() == <span class="number">2</span>).sorted(byNumberAndCode).collect(Collectors.toList());</span><br><span class="line"></span><br><span class="line"><span class="comment">// 排序时包括null</span></span><br><span class="line">List&lt;User&gt; nList = list.stream()</span><br><span class="line">    .sorted(Comparator.comparing(User::getCode, Comparator.nullsFirst(String::compareTo)))</span><br><span class="line">    .collect(Collectors.toList());</span><br><span class="line"></span><br><span class="line">List&lt;User&gt; list = minPriceList.stream()</span><br><span class="line">    .sorted(Comparator.comparing(l -&gt; l.getCreateDate(), Comparator.nullsLast(Date::compareTo)))</span><br><span class="line">    .collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
+<p>更多参考：<a href="http://www.importnew.com/15259.html" target="_blank" rel="noopener">Java8：Lambda表达式增强版Comparator和排序 - ImportNew</a></p>
+<h4 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h4><p>此方法类似Mysql的group by，但是可能比sql的复杂语句来得简单些。</p>
 <blockquote>
-<p>(parameters) -&gt; { statements; }</p>
+<p>辅助POJO</p>
 </blockquote>
-<p>为什么要使用Lambda表达式？前面你也看到了，在Java中使用内部类显得十分冗长，要编写很多样板代码，Lambda表达式正是为了简化这些步骤出现的，它使代码变得清晰易懂。</p>
-<h2 id="如何使用Lambda表达式"><a href="#如何使用Lambda表达式" class="headerlink" title="如何使用Lambda表达式"></a>如何使用Lambda表达式</h2><p>Lambda表达式是为了简化内部类的，你可以把它当成是内部类的一种简写方式，只要是有内部类的代码块，都可以转化成Lambda表达式：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Comparator排序</span></span><br><span class="line">List&lt;Integer&gt; list = Arrays.asList(<span class="number">3</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">2</span>);</span><br><span class="line">list.sort(<span class="keyword">new</span> Comparator&lt;Integer&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Integer o1, Integer o2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> o1.compareTo(o2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用Lambda表达式简化</span></span><br><span class="line">list.sort((o1, o2) -&gt; o1.compareTo(o2));</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Runnable代码块</span></span><br><span class="line">Thread thread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Hello Man!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用Lambda表达式简化</span></span><br><span class="line">Thread thread = <span class="keyword">new</span> Thread(() -&gt; System.out.println(<span class="string">"Hello Man!"</span>));</span><br></pre></td></tr></table></figure>
-<p>可以看出，只要是内部类的代码块，就可以使用Lambda表达式简化，并且简化后的代码清晰易懂。</p>
-<h3 id="方法引用"><a href="#方法引用" class="headerlink" title="方法引用"></a>方法引用</h3><p>甚至，Comparator排序的Lambda表达式还可以进一步简化：</p>
-<blockquote>
-<p>list.sort(Integer::compareTo);</p>
-</blockquote>
-<p>这种写法被称为 <strong>方法引用</strong>，方法引用是Lambda表达式的简便写法。如果你的Lambda表达式只是调用这个方法，最好使用名称调用，而不是描述如何调用，这样可以提高代码的可读性。</p>
-<p>方法引用使用<code>::</code>分隔符，分隔符的前半部分表示引用类型，后面半部分表示引用的方法名称。例如：<code>Integer::compareTo</code>表示引用类型为<code>Integer</code>，引用名称为<code>compareTo</code>的方法。</p>
-<p>对于 Lambda 表达式到方法引用的简化，我们提供以下规则： </p>
+<pre><code>static class Person {
+
+    private String name;
+    private int age;
+    private long salary;
+
+    Person(String name, int age, long salary) {
+
+        this.name = name;
+        this.age = age;
+        this.salary = salary;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(&quot;Person{name=&apos;%s&apos;, age=%d, salary=%d}&quot;, name, age, salary);
+    }
+}
+</code></pre><ul>
+<li><h5 id="针对单个属性分组"><a href="#针对单个属性分组" class="headerlink" title="针对单个属性分组"></a>针对单个属性分组</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 一般分组后的结构是Map，key是分组的属性，value是组成员</span></span><br><span class="line">Map&lt;Integer, List&lt;Person&gt;&gt; peopleByAge = people.stream().collect(Collectors.groupingBy(Person::getAge));</span><br><span class="line"></span><br><span class="line">Map&lt;Integer, List&lt;Person&gt;&gt; peopleByAge = people.stream().collect(Collectors.groupingBy(Person::getAge, Collectors.toList()));</span><br><span class="line"></span><br><span class="line">Map&lt;Integer, List&lt;Person&gt;&gt; peopleByAge = people.stream().collect(Collectors.groupingBy(p -&gt; p.age, Collectors.mapping((Person p) -&gt; p, toList())));</span><br><span class="line"></span><br><span class="line">上面三种方法返回均相同，分组后的Map里的value也可以根据Collectors.groupingBy方法的第二个参数设置不同，Collectors里还有更多的方法，如求和、最值、均值、拼接。</span><br></pre></td></tr></table></figure>
+</li>
+<li><h5 id="针对多个属性分组"><a href="#针对多个属性分组" class="headerlink" title="针对多个属性分组"></a>针对多个属性分组</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">方式一：</span><br><span class="line">Map&lt;String, Map&lt;Integer, List&lt;Person&gt;&gt;&gt; map = people.stream()</span><br><span class="line">    .collect(Collectors.groupingBy(Person::getName,</span><br><span class="line">        Collectors.groupingBy(Person::getAge));</span><br><span class="line">map.get(&quot;Fred&quot;).get(18);</span><br><span class="line"></span><br><span class="line">方式二：</span><br><span class="line">定义一个表示分组的类：</span><br><span class="line">//静态内部类</span><br><span class="line">class Person &#123;</span><br><span class="line">    public static class NameAge &#123;</span><br><span class="line">        public NameAge(String name, int age) &#123;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 注意 重写方法 must implement equals and hash function</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public NameAge getNameAge() &#123;</span><br><span class="line">        return new NameAge(name, age);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Map&lt;NameAge, List&lt;Person&gt;&gt; map = people.collect(Collectors.groupingBy(Person::getNameAge));</span><br><span class="line">map.get(new NameAge(&quot;Fred&quot;, 18));</span><br><span class="line"></span><br><span class="line">不定义分组类也可以使用如apache commons pair如果您使用这些库之一。</span><br><span class="line">Map&lt;Pair&lt;String, Integer&gt;, List&lt;Person&gt;&gt; map =</span><br><span class="line">    people.collect(Collectors.groupingBy(p -&gt; Pair.of(p.getName(), p.getAge())));</span><br><span class="line">map.get(Pair.of(&quot;Fred&quot;, 18));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">最终方式：</span><br><span class="line">将多个字段拼接成一个新字段，在使用Java8的groupBy进行分组。上面的去重里我也是沿用了这个思想。</span><br><span class="line">这个方法虽然看起来简单笨拙，但是却是最有效的解决了我的问题的，多个字段如果大于2个字段，上面的Pair就不是很好用，并且分组出来的结构也复杂。</span><br><span class="line">Map&lt;String, List&lt;Person&gt;&gt; peopleBySomeKey = people</span><br><span class="line">                .collect(Collectors.groupingBy(p -&gt; getGroupingByKey(p), Collectors.mapping((Person p) -&gt; p, toList())));</span><br><span class="line"></span><br><span class="line">//write getGroupingByKey() function</span><br><span class="line">private String getGroupingByKey(Person p)&#123;</span><br><span class="line">    return p.getAge()+&quot;-&quot;+p.getName();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><h5 id="分组求和"><a href="#分组求和" class="headerlink" title="分组求和"></a>分组求和</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//分组求和，key是分组属性名</span></span><br><span class="line">Map&lt;String, Long&gt; tt = orgHoldingDatas.stream()</span><br><span class="line">        .collect(Collectors.groupingBy(OrgHoldingData::getOrgTypeCode, Collectors.summingLong(OrgHoldingData::getHeldNum)));</span><br></pre></td></tr></table></figure>
+</li>
+<li><h5 id="分组相加"><a href="#分组相加" class="headerlink" title="分组相加"></a>分组相加</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">list.stream()</span><br><span class="line">        .sorted(Comparator.comparing(HKCsm::getPSNREFC))</span><br><span class="line">        .collect(Collectors.groupingBy(HKCsm::getIDVUNIC))</span><br><span class="line">        .forEach((k, v) -&gt; &#123;</span><br><span class="line">            Optional&lt;HKCsm&gt; csm = v.stream().reduce((v1, v2) -&gt; &#123;</span><br><span class="line">                v1.setPSNNAME_OGDIS(v1.getPSNNAME_OGDIS() + <span class="string">"、"</span> + v2.getPSNNAME_OGDIS());</span><br><span class="line">                list.remove(v2);</span><br><span class="line">                <span class="keyword">return</span> v1;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者</span></span><br><span class="line">holderList.stream().collect(Collectors.groupingBy(HkMjshhshgStu::getShhnameOgdis))</span><br><span class="line">        .forEach((k, v) -&gt; &#123;</span><br><span class="line">            Optional&lt;HkMjshhshgStu&gt; sum = v.stream().reduce((v1, v2) -&gt; &#123;	<span class="comment">//合并</span></span><br><span class="line">                v1.setNumrts(v1.getNumrts() + v2.getNumrts());</span><br><span class="line">                v1.setPctishg(v1.getPctishg() + v2.getPctishg());</span><br><span class="line">                <span class="keyword">return</span> v1;</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="keyword">if</span> (sum.isPresent()) &#123;</span><br><span class="line">                items.add(sum.get());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><h5 id="自定义分组"><a href="#自定义分组" class="headerlink" title="自定义分组"></a>自定义分组</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, List&lt;OrgHoldingData&gt;&gt; tt  = orgHoldingDatas.stream()</span><br><span class="line">        .collect(Collectors.groupingBy((Function&lt;OrgHoldingData, String&gt;) org -&gt; &#123;</span><br><span class="line">            String key;</span><br><span class="line">            <span class="keyword">if</span> (org.getOrgTypeEncode().equals(<span class="string">"1"</span>)) &#123;</span><br><span class="line">                key = <span class="string">"苹果"</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (org.getOrgTypeEncode().equals(<span class="string">"2"</span>)) &#123;</span><br><span class="line">                key = <span class="string">"香蕉"</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                key = <span class="string">"其他"</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> key;</span><br><span class="line">        &#125;, Collectors.toList()));</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h4><p>分区的话就结果就只有两个部分part这种。要么是这一个区要么是另一个。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;Boolean, List&lt;Student&gt;&gt; map4 = students.stream()</span><br><span class="line">              .collect(Collectors.partitioningBy(student -&gt; student.getScore() &gt; <span class="number">90</span>));</span><br></pre></td></tr></table></figure></p>
+<h4 id="巧用flatMap"><a href="#巧用flatMap" class="headerlink" title="巧用flatMap"></a>巧用flatMap</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 应该使用flatMap . flatMap()的作用在于打平</span></span><br><span class="line">List&lt;String&gt; reList = list.stream().map(item -&gt; item.split(<span class="string">" "</span>)).flatMap(Arrays::stream).distinct()</span><br><span class="line">        .collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
+<h4 id="规约"><a href="#规约" class="headerlink" title="规约"></a>规约</h4><p>规约是什么？规约就是我们想要处理后要进行计算的东西，如上面我们进行的 求和、分组、分区、</p>
+<h4 id="流统计"><a href="#流统计" class="headerlink" title="流统计"></a>流统计</h4><ul>
+<li>DoubleSummaryStatistics</li>
+<li>LongSummaryStatistics</li>
+<li>IntSummaryStatistics<h3 id="并行流"><a href="#并行流" class="headerlink" title="并行流"></a>并行流</h3>并行流使用集合的<code>parallelStream()</code>方法可以获取一个并行流。Java内部会将流的内容分割成若干个子部分，然后将它们交给多个线程并行处理，这样就将工作的负担交给多核CPU的其他内核处理。</li>
+</ul>
+<p>在并行流中，我们关注最多的大概就是性能问题。在观察发现，在选择合适的数据结构和处理后，并行流确实可以优于平时的for循环。</p>
+<h2 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h2><ul>
+<li>在Stream.of创建的流中，对于流的使用只能操作一次，操作后会有个标志位被置为true，如果再次对此<code>流</code>进行操作，会报错。但是对于集合的流形式，如list.stream()不会有问题，可多次操作。</li>
+<li>parallelStream 的多线程并发写list会发生线程安全问题，list数据少了，导致数组越界。建议使用线程安全的集合类。<br><a href="https://blog.csdn.net/u011001723/article/details/52794455" target="_blank" rel="noopener">深入浅出parallelStream - 梦铃之境的专栏 - CSDN博客</a><br><a href="https://my.oschina.net/7001/blog/1475500" target="_blank" rel="noopener">记一次java8 parallelStream使用不当引发的血案 - AbeJeffrey的个人空间 - 开源中国</a><br><a href="https://yq.aliyun.com/articles/652718" target="_blank" rel="noopener">java8的ParallelStream踩坑记录-云栖社区-阿里云</a></li>
+</ul>
+<h4 id="性能测试"><a href="#性能测试" class="headerlink" title="性能测试"></a>性能测试</h4><p><a href="https://www.cnblogs.com/CarpenterLee/p/6675568.html" target="_blank" rel="noopener">Java Stream API性能测试 - CarpenterLee - 博客园</a></p>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.cnblogs.com/shenlanzhizun/p/6027042.html" target="_blank" rel="noopener">Java8 新特性之流式数据处理 - 深蓝至尊 - 博客园</a><br><a href="https://lw900925.github.io/java/java8-stream-api.html" target="_blank" rel="noopener">Java 8新特性（二）：Stream API | 一书生VOID的博客</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/04/es-2019-04-04-ES遇到的问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lancelot He">
+      <meta itemprop="description" content="I can do all things!">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lancelot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/04/es-2019-04-04-ES遇到的问题/" class="post-title-link" itemprop="url">ES遇到的问题</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-04 21:14:54" itemprop="dateCreated datePublished" datetime="2019-04-04T21:14:54+08:00">2019-04-04</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-10 00:24:17" itemprop="dateModified" datetime="2019-05-10T00:24:17+08:00">2019-05-10</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ElasticSearch/" itemprop="url" rel="index"><span itemprop="name">ElasticSearch</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="一、org-elasticsearch-action-NoShardAvailableActionException-No-shard-available-for-get-event-event-SH601011-padt-20029340-routing-null"><a href="#一、org-elasticsearch-action-NoShardAvailableActionException-No-shard-available-for-get-event-event-SH601011-padt-20029340-routing-null" class="headerlink" title="一、org.elasticsearch.action.NoShardAvailableActionException: No shard available for [get [event][event][SH601011_padt_20029340]: routing [null]]"></a>一、org.elasticsearch.action.NoShardAvailableActionException: No shard available for [get [event][event][SH601011_padt_20029340]: routing [null]]</h2><p>起因：2019-04-04 10:30（第二次）删除数据后插入数据发现未更新，查看服务日志发现出现下面报错：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2019-04-04 10:31:20.050|ERROR|c96bf1f26485aa05.c96bf1f26485aa05&lt;:c96bf1f26485aa05|c.x.s.s.c.s.e.EventServiceDisclosure|process symbol failed, symbol:SH601011</span><br><span class="line">org.elasticsearch.action.NoShardAvailableActionException: No shard available for [get [event][event][SH601011_padt_20029340]: routing [null]]</span><br><span class="line">        at org.elasticsearch.action.support.single.shard.TransportSingleShardAction$AsyncSingleAction.perform(TransportSingleShardAction.java:209)</span><br></pre></td></tr></table></figure></p>
+<p>随后查看了ES集群的健康状态，发现状态变成红色，且活动分片只有98%多</p>
+<p>问了SRE同事，确认磁盘未满，且只有插入数据的那个索引状态为红色，</p>
+<p>但是三个 es节点的物理机  的磁盘空间都是  80%、90%、 79%<br>顺便让SRE同事也清了下磁盘，保证后面的可用量。</p>
+<p>这时发现健康状态持续恶化：unassigned_shards增多，同时还出现了initializing_shards</p>
+<p>这时组内同事建议我重启ES集群，之后查看健康状态正常：</p>
+<p>无initializing_shards和unassigned_shards且活动分片数占比达到100%。</p>
+<p>网络上相关问题解决方案：<br>参考1-1：<a href="https://www.cnblogs.com/bonelee/p/7459408.html" target="_blank" rel="noopener">Reroute Unassigned Shards——遇到主shard 出现的解决方法就是重新路由 - bonelee - 博客园</a><br>参考1-2：<a href="http://www.wklken.me/posts/2015/05/23/elasticsearch-issues.html#" target="_blank" rel="noopener">Elasticsearch几个问题的解决</a><br>参考1-3：<a href="https://toutiao.io/posts/na8zgp/preview" target="_blank" rel="noopener">彻底解决 es 的 unassigned shards 症状 - 开发者头条</a> — 参考1-4的翻译版<br>参考1-4：<a href="https://www.datadoghq.com/blog/elasticsearch-unassigned-shards/" target="_blank" rel="noopener">How to resolve unassigned shards in Elasticsearch | Datadog</a><br>命令：<br><code>curl -XPOST &quot;http://your.elasticsearch.host.com:9200/twitter/_flush/synced&quot;</code><br>Step 1: Check Unassigned Shards<br>Step 2: Reroute<br># Step1 and Step2 结合的shell脚本，可快速转移UNASSIGNED分片<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">for shard in $(curl -XGET http://localhost:9200/_cat/shards | grep UNASSIGNED | awk &apos;&#123;print $2&#125;&apos;); do</span><br><span class="line">curl -XPOST &apos;localhost:9200/_cluster/reroute&apos; -d &apos;&#123;</span><br><span class="line">    &quot;commands&quot; : [ &#123;</span><br><span class="line">    &quot;allocate&quot; : &#123;</span><br><span class="line">    &quot;index&quot; : &quot;t37&quot;, # index name</span><br><span class="line">    &quot;shard&quot; : $shard,</span><br><span class="line">    &quot;node&quot; : &quot;datanode15&quot;, # node name</span><br><span class="line">    &quot;allow_primary&quot; : true</span><br><span class="line">    &#125;</span><br><span class="line">&#125;]</span><br><span class="line">&#125;&apos;</span><br><span class="line">sleep 5</span><br><span class="line">done</span><br></pre></td></tr></table></figure></p>
+<p>未分配分片的可能原因:</p>
 <table>
 <thead>
 <tr>
-<th>Lambda 表达式</th>
-<th>方法引用</th>
+<th>Name</th>
+<th>Comment</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>(args) -&gt; ClassName.staticMethod(args)</td>
-<td>ClassName::staticMethod</td>
+<td>CLUSTER_RECOVERED</td>
+<td>Unassigned as a result of a full cluster recovery</td>
 </tr>
 <tr>
-<td>(arg0, …) -&gt; arg0.instanceMethod(…)</td>
-<td>ClassName::instanceMethod</td>
+<td>INDEX_REOPENED</td>
+<td>Unassigned as a result of opening a closed index</td>
 </tr>
 <tr>
-<td>(args) -&gt; expression.instanceMethod(args)</td>
-<td>expression::instanceMethod</td>
+<td>DANGLING_INDEX_IMPORTED</td>
+<td>Unassigned as a result of importing a dangling index</td>
+</tr>
+<tr>
+<td>NEW_INDEX_RESTORED</td>
+<td>Unassigned as a result of restoring into a new index</td>
+</tr>
+<tr>
+<td>EXISTING_INDEX_RESTORED</td>
+<td>Unassigned as a result of restoring into a closed index</td>
+</tr>
+<tr>
+<td>REPLICA_ADDED</td>
+<td>Unassigned as a result of explicit addition of a replica</td>
+</tr>
+<tr>
+<td>ALLOCATION_FAILED</td>
+<td>Unassigned as a result of a failed allocation of the shard</td>
+</tr>
+<tr>
+<td>NODE_LEFT</td>
+<td>Unassigned as a result of the node hosting it leaving the cluster</td>
+</tr>
+<tr>
+<td>REROUTE_CANCELLED</td>
+<td>Unassigned as a result of explicit cancel reroute command</td>
+</tr>
+<tr>
+<td>REINITIALIZED</td>
+<td>When a shard moves from started back to initializing, for example, with shadow replicas</td>
+</tr>
+<tr>
+<td>REALLOCATED_REPLICA</td>
+<td>A better replica location is identified and causes the existing replica allocation to be cancelled</td>
 </tr>
 </tbody>
 </table>
-<p>特别的，对于构造函数的方法引用：  <code>ClassName::new</code><br>类似使用方法引用的例子还有打印集合中的元素到控制台中：<br><code>list.forEach(System.out::println);</code></p>
+<h2 id="二、Unassigned-Shards-无法reroute的问题"><a href="#二、Unassigned-Shards-无法reroute的问题" class="headerlink" title="二、Unassigned Shards 无法reroute的问题"></a>二、Unassigned Shards 无法reroute的问题</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FileSystemException[/opt/elasticsearch/elasticsearch-node8/data/nodes/0/indices/FgLdgYTmTfazlP8i5K0Knw/0/index: Too many open files in system</span><br></pre></td></tr></table></figure>
+<p>参考2-1：<a href="https://www.jianshu.com/p/542ed5a5bdfc" target="_blank" rel="noopener">解决elasticsearch集群Unassigned Shards 无法reroute的问题</a></p>
 
           
         
@@ -555,7 +857,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/02/如何在默认安装openjdk的Linux系统中安装独立JDK/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/04/es-2019-03-04-ES集群相关/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Lancelot He">
@@ -575,7 +877,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/01/02/如何在默认安装openjdk的Linux系统中安装独立JDK/" class="post-title-link" itemprop="url">如何在默认安装openjdk的Linux系统中安装独立JDK</a>
+                <a href="/2019/03/04/es-2019-03-04-ES集群相关/" class="post-title-link" itemprop="url">ES集群相关</a>
               
             
           </h1>
@@ -600,7 +902,7 @@
                 
               
 
-              <time title="创建时间：2019-01-02 12:58:01" itemprop="dateCreated datePublished" datetime="2019-01-02T12:58:01+08:00">2019-01-02</time>
+              <time title="创建时间：2019-03-04 23:14:43" itemprop="dateCreated datePublished" datetime="2019-03-04T23:14:43+08:00">2019-03-04</time>
             
 
             
@@ -617,7 +919,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-20 00:47:40" itemprop="dateModified" datetime="2019-02-20T00:47:40+08:00">2019-02-20</time>
+                <time title="修改时间：2019-05-10 00:29:58" itemprop="dateModified" datetime="2019-05-10T00:29:58+08:00">2019-05-10</time>
               
             
           </span>
@@ -634,7 +936,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ElasticSearch/" itemprop="url" rel="index"><span itemprop="name">ElasticSearch</span></a></span>
 
                 
                 
@@ -671,39 +973,69 @@
       
         
           
-            <p>今天总结一下在Linux系统中卸载默认的openjdk改为我们自己独立安装的oracle的Jdk版本。就像我们在Windows上安装的环境一样。</p>
-<hr>
+            <p>[TOC]</p>
+<h3 id="elasticsearch-head启动："><a href="#elasticsearch-head启动：" class="headerlink" title="elasticsearch-head启动："></a>elasticsearch-head启动：</h3><pre><code>cd elasticsearch-head
+grunt server
+或者 输入npm run start启动
+# 打开浏览器 http://localhost:9100
+</code></pre><h3 id="ES单机集群搭建："><a href="#ES单机集群搭建：" class="headerlink" title="ES单机集群搭建："></a>ES单机集群搭建：</h3><p>修改完配置文件后，将压缩目录复制多份，然后修改对应配置文件的<code>node.name</code>、<code>http.port</code>、<code>transport.tcp.port</code>、<code>discovery.zen.ping.unicast.hosts</code>即可，<code>node.master</code>和<code>node.data</code>两个参数看需要修改，默认值都是<code>true</code>。</p>
 <ul>
-<li><a href="#1">1.卸载&amp;下载</a></li>
-<li><a href="#2">2.解压安装</a></li>
-<li><a href="#3">3.修改配置</a></li>
-<li><a href="#4">4.选择使用JAVA的版本</a></li>
-<li><a href="#5">5.测试</a></li>
+<li>脚本一件启动<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">./es-node-master/bin/elasticsearch -d</span><br><span class="line">./es-node-data-1/bin/elasticsearch -d</span><br><span class="line">./es-node-data-2/bin/elasticsearch -d</span><br><span class="line">./es-node-client/bin/elasticsearch -d</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
-<h2 id="1"> 一、卸载&amp;下载   </h2><br>#### 1、卸载自带的opendjk ####<br><br>    rpm –qa|grep jdk<br>    rpm –e –nodeps  jdk***    //将过滤出的结果进行卸载<br>#### 2、下载一个Sun的JDK（现在应该叫oracle的JDK）。 ####<br>下一个自解压的tar包。<br>这里我下载的是jdk-7u79-linux-x64.tar.gz<br><br>下载地址 : <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html" target="_blank" rel="noopener">点击这里</a><br><br><h2 id="2"> 二、解压安装 </h2>
-
-<p>1.解压jdk-7u79-linux-x64.tar.gz<br></p>
-<p>2.将解压后jdk-7u79-linux-x64.tar.gz复制到/usr/java下</p>
-<h2 id="3"> 三、修改配置 </h2><br>#### 方法1：修改/etc/profile 文件 ####<br>所有用户的 shell都有权使用这些环境变量<br><strong><1> 在 shell终端执行命令：vi /etc/profile</1></strong><br><strong><2> 在 profile文件末尾加入：</2></strong><br><br>    JAVA_HOME=/usr/jdk1.7.0_79<br>      JRE_HOME=/usr/local/java/jdk1.7.0_79/jre<br>      PATH=$JAVA_HOME/bin:$PATH<br>      CLASSPATH=.:$JAVA_HOME/lib/dt.jar: $JAVA_HOME/lib/tools.jar<br>      export JAVA_HOME,JRE_HOME,PATH,CLASSPATH<br><br><code>PS：上面我们说的修改配置系统环境变量是在Unix操作系统下面的。</code><p><br>下面来说说在DOS系统下面如何更改配置系统环境变量。<br>#### DOS: ####<br><br>1. 在系统变量里新建JAVA_HOME变量，变量值为：<code>D:\others\JAVA\JDK</code>（根据自己的安装路径填写）<br><br>2. 新建Classpath变量，在Classpath变量（已存在不用新建）添加变量值，变量值为：<br><code>.;%JAVA\_HOME%\lib;%JAVA_HOME%\lib\tools.jar;</code><br><br>3. 在path变量（已存在不用新建）添加变量值：<br><code>%JAVA\_HOME%\bin;%JAVA_HOME%\jre\bin（注意变量值之间用“;”隔开）</code><br><br><code>eg:;%JAVA\_HOME%\lib;%JAVA\_HOME%\lib\tools.jar;%JAVA\_HOME%\bin;%JAVA\_HOME%\jre\bin;</code><br><br>4. 测试是否配置成功<br>在dos中，输入命令java，回车后应该会出现java的各种命令；<br>javac  出现相关编译的命令；<br>java -version 出现jdk版本号<br>补充环境变量的解析:<br>JAVA_HOME:jdk的安装路径<br>Classpath:java加载类路径，只有类在classpath中java命令才能识别，在路径前加了个”.”表示当前路径。<br>path：系统在任何路径下都可以识别java,javac命令。<br><br><strong><3>重启系统</3></strong><br>ps: 如果你不想重新系统，可以用命令<code>source /etc/profile</code>使配置文件立即生效。否则只能重启系统才能使配置参数生效。然后我们可以通过<br><br>    echo $JAVA_HOME<br>    echo $PATH<br>    echo $CLASSPATH<br>查看配置的信息。<br>但是我最后还是重启了才真正生效。<br>#### 方法2：修改.bashrc文件 ####<br>如果你需要给某个用户权限使用这些环境变量，你只需要修改其个人用户主目录下的.bashrc就可以了,而不像第一种方法给所有用户权限。<br><strong><1>在 shell终端执行命令：vi ~/.bashrc</1></strong><br><strong><2>在.bashrc文件末尾加入：</2></strong><br><br>    set JAVA_HOME=/usr/jdk1.7.0_79<br>    export JAVA_HOME<br>    set PATH=$JAVA_HOME/bin:$PATH<br>    export PATH<br>    set CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar<br>    export CLASSPATH<br><strong><3>重新登录</3></strong><br><code>注意：Linux使用:(冒号)而不是;(分号)来分隔路径</code><br><br></p><h2 id="4"> 四、选择使用JAVA的版本 </h2>
-
+<h4 id="elasticsearch启动"><a href="#elasticsearch启动" class="headerlink" title="elasticsearch启动"></a>elasticsearch启动</h4><blockquote>
+<p>正常启动:<br>${es目录}/bin/elasticsearch<br>守护进程启动:<br>${es目录}/bin/elasticsearch  -d</p>
+</blockquote>
+<p><strong>PS：</strong></p>
 <ol>
-<li><p>更新参数使配置生效<br><br> <code>update-alternatives --install /usr/bin/java java /usr/jdk1.7.0\_79/bin/java 300</code><br><br> <code>update-alternatives --install /usr/bin/javac javac /usr/jdk1.7.0\_79/bin/javac 300</code></p>
+<li><code>http.port</code>、<code>transport.tcp.port</code>、<code>discovery.zen.ping.unicast.hosts</code>也可以不设置，es会自动选取合适的端口来启动，默认使用多播方式通讯，这种方式在本地或者VPC环境下可以使用，但是不建议。</li>
+<li><code>network.host</code>这个参数和redis的host参数一样，根据填写的IP来限制访问权限，例如127.0.0.1那么就只有本地可以访问，192等内网IP那么就只有内网能访问，写公网IP的话外网才能访问。当我们在远程服务器上搭建服务时，如果设置的不是外网IP，很可能就是无法访问的。遇到这个问题我们可以通过使用netstat命令：netstat -tunlp | grep elasticsearch来查看ip与端口的绑定使用情况来检查。</li>
+</ol>
+<p>参考：<a href="https://blog.csdn.net/qq_36666651/article/details/81704717" target="_blank" rel="noopener">elasticsearch本地集群搭建及远程服务器搭建注意事项 - wkNote - CSDN博客</a></p>
+<h3 id="启用X-pack："><a href="#启用X-pack：" class="headerlink" title="启用X-pack："></a>启用X-pack：</h3><p>（ELK Stack 6.3以后版本默认自带x-pack，不用手动安装）</p>
+<ol>
+<li>运行elasticsearch</li>
+<li>启用trial license（30天试用，后面有破解方法）<blockquote>
+<p>curl -H “Content-Type:application/json” -XPOST  <a href="http://127.0.0.1:9200/_xpack/license/start_trial?acknowledge=true" target="_blank" rel="noopener">http://127.0.0.1:9200/_xpack/license/start_trial?acknowledge=true</a></p>
+</blockquote>
 </li>
-<li><p>选择需要使用的版本<br>在终端输入命令：<code>update-alternatives –config java</code></p>
+<li>设置用户名密码<blockquote>
+<p>命令：bin/elasticsearch-setup-passwords interactive</p>
+</blockquote>
+</li>
+<li>elasticsearch.yml中开启安全验证配置<blockquote>
+<p>添加配置： <code>xpack.security.enabled: true</code></p>
+</blockquote>
 </li>
 </ol>
-<p></p><h2 id="5"> 五、测试 </h2><br>进行完如上配置后，就可以进行测试了<br><br>在DOS或终端下输入 <code>java -version</code>，然后输出显示，显示出来的是当前系统JRE的最高版本<br>我这里显示的是：<p></p>
-<p><strong>ps：环境变量配置文件</strong><br>在Ubuntu中有如下几个文件可以设置环境变量</p><p></p>
+<p>参考：<br><a href="https://blog.csdn.net/zou79189747/article/details/81164576" target="_blank" rel="noopener">elasticsearch6.3.1 启用x-pack - 11111 - CSDN博客</a><br><a href="https://blog.csdn.net/qq_25475209/article/details/81906701?tdsourcetag=s_pctim_aiomsg" target="_blank" rel="noopener">elasticsearch6.3.2之x-pack6.3.2破解安装并配合kibana使用 - qq_25475209的博客 - CSDN博客</a></p>
+<p>破解参考：<a href="https://www.plaza4me.com/article/20180825223849878" target="_blank" rel="noopener">elasticsearch6.3.2之x-pack6.3.2破解安装并配合kibana使用 - 我的广场</a></p>
+<h3 id="Kibana相关"><a href="#Kibana相关" class="headerlink" title="Kibana相关"></a>Kibana相关</h3><h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># 配置elasticsearch.yaml</span><br><span class="line"># 是否开启安全验证</span><br><span class="line">xpack.security.enabled: true</span><br><span class="line"># 是否开启监控</span><br><span class="line">xpack.monitoring.enabled: true</span><br><span class="line"># 是否开启图形</span><br><span class="line">xpack.graph.enabled: true</span><br><span class="line"># 是否开启watcher 仅仅es配置</span><br><span class="line">xpack.watcher.enabled: true</span><br><span class="line"></span><br><span class="line"># 配置kibana.yml</span><br><span class="line">server.port: 5601</span><br><span class="line">server.name: &quot;my-kibana&quot;</span><br><span class="line">elasticsearch.url: &quot;http://127.0.0.1:9200&quot;</span><br><span class="line"># 这里配用户名、密码</span><br><span class="line">elasticsearch.username: elastic</span><br><span class="line">elasticsearch.password: XXXXXXXXXXX</span><br><span class="line"># 为了防止启动报警告，所以增加一个随机的32位encryptionKey</span><br><span class="line">xpack.reporting.encryptionKey: 7d2e5883e72b7b0077305966442f51e3</span><br><span class="line">xpack.security.encryptionKey: 7d2e5883e72b7b0077305966442f51e4</span><br><span class="line"># 是否开启报表仅仅kibana配置</span><br><span class="line">xpack.reporting.enabled: true</span><br></pre></td></tr></table></figure>
+<p><strong>监控台Monitoring刚开始用Kibana账号登陆进去没有数据，说没有开启，但是点击Turn on后又报错，捣鼓了半天，最后用ElasticSearch账号密码进入监控台才有数据！后来第二天再试，用Kibana账号也有数据了，这里还不太清楚原因，或许是哪里配置的生效关系</strong></p>
+<h4 id="Kibana启动"><a href="#Kibana启动" class="headerlink" title="Kibana启动"></a>Kibana启动</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-H 参数解释  设置kibana  网络</span><br><span class="line">正常启动:</span><br><span class="line">    ./kibana -H 0.0.0.0</span><br><span class="line">守护进程启动:</span><br><span class="line">本次守护进程启动,主要用到了 nohup命令:</span><br><span class="line">在 kibana目录内运行!! (与kibana bin文件夹同级)</span><br><span class="line">    nohup ./bin/kibana -H 0.0.0.0 &gt; ./log/kibana.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+<p><strong>PS：</strong></p>
 <ol>
-<li><p>/etc/profile:在登录时,操作系统定制用户环境时使用的第一个文件,此文件为系统的每个用户设置环境信息,当用户第一次登录时,该文件被执行。</p>
-</li>
-<li><p>/etc/environment:在登录时操作系统使用的第二个文件,系统在读取你自己的profile前,设置环境文件的环境变量。</p>
-</li>
-<li><p>~/.bash_profile:在登录时用到的第三个文件是.profile文件,每个用户都可使用该文件输入专用于自己使用的shell信息,当用户登录时,该文件仅仅执行一次!默认情况下,他设置一些环境变量,执行用户的.bashrc文件。/etc/bashrc:为每一个运行bash shell的用户执行此文件.当bash shell被打开时,该文件被读取.</p>
-</li>
-<li><p>~/.bashrc:该文件包含专用于你的bash shell的bash信息,当登录时以及每次打开新的shell时,该该文件被读取。<br>几个环境变量的优先级<br><strong>1&gt;2&gt;3</strong></p>
+<li>关于集群多节点配置x-pack。每个节点都需要安装x-pack。但是kibana只需要安装一次。</li>
+<li>x-pack的密码修改。(需要指定content-type)<blockquote>
+<p>curl -H “Content-Type: application/json” -XPUT -u elastic -p ‘内网ip:9303/_xpack/security/user/elastic/_password’ -d ‘{ “password” : “密码”}’</p>
+</blockquote>
 </li>
 </ol>
+<p>如果忘记elastic用户的密码，可以再创建一个用户超级角色的用户（用户admin，密码admin1）</p>
+<blockquote>
+<p>bin/x-pack/users useradd admin -p admin1 -r superuser</p>
+</blockquote>
+<p>上面的请求改一下:</p>
+<blockquote>
+<p>curl -H “Content-Type: application/json” -XPUT -u admin -p ‘内网ip:9303/_xpack/security/user/elastic/_password’ -d ‘{ “password” : “密码”}’</p>
+</blockquote>
+<h3 id="ES集群节点配置"><a href="#ES集群节点配置" class="headerlink" title="ES集群节点配置"></a>ES集群节点配置</h3><p>下面用到只是一些主要配置，还有更多的请看链接详解。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"># 这个参数必须设置  此参数是用来允许单机允许多个实例，默认不允许</span><br><span class="line">node.max_local_storage_nodes: 32</span><br><span class="line"># 集群名称，同一个集群里的此参数要一致</span><br><span class="line">cluster.name: my-es</span><br><span class="line"># 节点名称，同一集群的节点之间需要不一致</span><br><span class="line">node.name: node-2</span><br><span class="line">#node.attr.rack: r1</span><br><span class="line"># 设置候选主节点，默认 true</span><br><span class="line">node.master: true</span><br><span class="line"># 设置数据节点，默认 true</span><br><span class="line">node.data: true</span><br><span class="line"># 设置预处理节点，默认 true</span><br><span class="line">node.ingest: true</span><br><span class="line"></span><br><span class="line"># 设置默认索引分片个数，默认为5片。</span><br><span class="line">#index.number_of_shards: 5</span><br><span class="line"># 设置默认索引副本个数，默认为1个副本。如果采用默认设置，而你集群只配置了一台机器，那么集群的健康度为yellow，也就是所有的数据都是可用的，但是某些复制没有被分配（健康度可用 curl &apos;localhost:9200/_cat/health?v&apos; 查看， 分为绿色、黄色或红色。绿色代表一切正常，集群功能齐全，&gt;黄色意味着所有的数据都是可用的，但是某些复制没有被分配，红色则代表因为某些原因，某些数据不可用）</span><br><span class="line">#index.number_of_replicas: 1</span><br><span class="line"></span><br><span class="line"># 数据目录路径</span><br><span class="line">path.data: /Users/lancelot/Documents/lancelot/service/elasticsearch-cluster/es-node2/data</span><br><span class="line"># 日志目录路径</span><br><span class="line">path.logs: /Users/lancelot/Documents/lancelot/service/elasticsearch-cluster/es-node2/logs</span><br><span class="line"></span><br><span class="line"># 设置为true来锁住内存不进行swapping。因为当jvm开始swapping时es的效率 会降低，</span><br><span class="line"># 所以要保证它不swap，可以把ES_MIN_MEM和ES_MAX_MEM两个环境变量设置成同一个值，</span><br><span class="line"># 并且保证机器有足够的内存分配给es。 同时也要允许elasticsearch的进程可以锁住内存，</span><br><span class="line"># linux下启动es之前可以通过`ulimit -l unlimited`命令设置。</span><br><span class="line">#bootstrap.memory_lock: true</span><br><span class="line"></span><br><span class="line"># 设置绑定的ip地址，可以是ipv4或ipv6的，默认为0.0.0.0，绑定这台机器的任何一个ip。</span><br><span class="line">#network.bind_host: 127.0.0.1</span><br><span class="line"># 设置其它节点和该节点交互的ip地址，如果不设置它会自动判断，值必须是个真实的ip地址。(可以不配)</span><br><span class="line">#network.publish_host: 127.0.0.1</span><br><span class="line"># 此节点对外的ip  本地直接写127.0.0.1即可(这个参数是用来同时设置bind_host和publish_host上面两个参数)</span><br><span class="line">network.host: 127.0.0.1</span><br><span class="line"># 对外暴露的http访问端口</span><br><span class="line">http.port: 9202</span><br><span class="line"># 内部节点间通讯TCP端口，单播使用</span><br><span class="line">transport.tcp.port: 9302</span><br><span class="line"># 设置是否压缩tcp传输时的数据，默认为false，不压缩。</span><br><span class="line">#transport.tcp.compress: true</span><br><span class="line"># 是否使用http协议对外提供服务，默认为true，开启。</span><br><span class="line">#http.enabled: false</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 组播设置，默认true</span><br><span class="line">#discovery.zen.ping.multicast.enabled: false</span><br><span class="line"># 单播访问的地址 域名直接改成127.0.0.1即可  或者修改下本机host将127.0.0.1映射到多个域名，比如1个client 3个master  所以配了4个地址</span><br><span class="line">discovery.zen.ping.unicast.hosts: [&quot;127.0.0.1:9301&quot;, &quot;127.0.0.1:9302&quot;,&quot;127.0.0.1:9303&quot;]</span><br><span class="line"># 设置master选举需要赞同的最小节点数</span><br><span class="line"># 值得计算方式为 master候选节点数除2加1</span><br><span class="line"># 例如 node.master值为true的节点数量为5 值即为（5/2)+1 = 3</span><br><span class="line">discovery.zen.minimum_master_nodes: 2</span><br><span class="line"># 设置集群中自动发现其它节点时ping连接超时时间，默认为3秒，对于比较差的网络环境可以高点的值来防止自动发现时出错。</span><br><span class="line">#discovery.zen.ping.timeout: 3s</span><br><span class="line"></span><br><span class="line"># 设置集群中N个节点启动时进行数据恢复，默认为1。</span><br><span class="line">#gateway.recover_after_nodes: 3</span><br><span class="line"># 设置初始化数据恢复进程的超时时间，默认是5分钟。</span><br><span class="line">#gateway.recover_after_time: 5m</span><br><span class="line"># 设置这个集群中节点的数量，默认为2，一旦这N个节点启动，就会立即进行数据恢复。</span><br><span class="line">#gateway.expected_nodes: 2</span><br><span class="line"></span><br><span class="line"># 初始化数据恢复时，并发恢复线程的个数，默认为4。</span><br><span class="line">#cluster.routing.allocation.node_initial_primaries_recoveries: 4</span><br><span class="line"># 添加删除节点或负载均衡时并发恢复线程的个数，默认为4。</span><br><span class="line">#cluster.routing.allocation.node_concurrent_recoveries: 2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#action.destructive_requires_name: true</span><br><span class="line"></span><br><span class="line"># CORS跨域访问设置，使head插件可以访问es</span><br><span class="line">http.cors.enabled: true</span><br><span class="line">http.cors.allow-origin: &quot;*&quot;</span><br><span class="line"></span><br><span class="line"># 集群中其他节点</span><br><span class="line"># 修改对应配置文件的node.name、http.port、transport.tcp.port、discovery.zen.ping.unicast.hosts即可，node.master和node.data两个参数看需要修改，默认值都是true。</span><br></pre></td></tr></table></figure></p>
+<p>一. 获取License<br>网站：<a href="https://register.elastic.co/" target="_blank" rel="noopener">https://register.elastic.co/</a><br>二. 查看License<br>命令：curl -XGET -u elastic:changem ‘<a href="http://10.10.55.1:9200/_xpack/license&#39;" target="_blank" rel="noopener">http://10.10.55.1:9200/_xpack/license&#39;</a><br>三. 更新License<br>第一步注册完毕后，会收到一封邮件，内容会包含下载地址，下载完毕后运行命令：</p>
+<p>curl -XPUT -u elastic:changeme ‘<a href="http://10.10.55.1:9200/_xpack/license&#39;" target="_blank" rel="noopener">http://10.10.55.1:9200/_xpack/license&#39;</a>  -H “Content-Type: application/json” -d @license.json</p>
+<p>license文件下载：license_2018.json</p>
+<blockquote>
+<p>{“license”:{“uid”:”bee39742-cc50-4e83-9e49-17366d9a109c”,”type”:”basic”,”issue_date_in_millis”:1515628800000,”expiry_date_in_millis”:1547251199999,”max_nodes”:100,”issued_to”:”shan yl (XueQiu)”,”issuer”:”Web Form”,”signature”:”AAAAAwAAAA2PkBbsGKLXXURLaOugAAABmC9ZN0hjZDBGYnVyRXpCOW5Bb3FjZDAxOWpSbTVoMVZwUzRxVk1PSmkxaktJRVl5MUYvUWh3bHZVUTllbXNPbzBUemtnbWpBbmlWRmRZb25KNFlBR2x0TXc2K2p1Y1VtMG1UQU9TRGZVSGRwaEJGUjE3bXd3LzRqZ05iLzRteWFNekdxRGpIYlFwYkJiNUs0U1hTVlJKNVlXekMrSlVUdFIvV0FNeWdOYnlESDc3MWhlY3hSQmdKSjJ2ZTcvYlBFOHhPQlV3ZHdDQ0tHcG5uOElCaDJ4K1hob29xSG85N0kvTWV3THhlQk9NL01VMFRjNDZpZEVXeUtUMXIyMlIveFpJUkk2WUdveEZaME9XWitGUi9WNTZVQW1FMG1DenhZU0ZmeXlZakVEMjZFT2NvOWxpZGlqVmlHNC8rWVVUYzMwRGVySHpIdURzKzFiRDl4TmM1TUp2VTBOUlJZUlAyV0ZVL2kvVk10L0NsbXNFYVZwT3NSU082dFNNa2prQ0ZsclZ4NTltbU1CVE5lR09Bck93V2J1Y3c9PQAAAQCe8MNM2+qs5TKCC/soPeHSdYMxkdQt+uYGfqjFGowb5meW7xSTvmsxp8IQc5iOdwtFJqZq9cJakCz1PSmsDxasUCLVnWJ59qZA4RzqWoC4qUqY94W41Vocz3oZNpCUTU4tVi0yd24n8Q1w1dp1wv6Ujm2/OJ5vkuj2iIQk6csnr8Q2kPUyDcGb+xPK74NTEj6XEsB7D8yEA8ftPeCEff1QgsV9LPPvzCIaWLmyrL30P/CS95twG6hr/DAaGK2oPP9UIsE5U+9Q3b4Ly6urSJVbv0rLaPB4nrt4/JERRSqytgvhg5rX+zs1P0eQRLMPlBL/6Q7NwmQYb8NZWHrCI/du”,”start_date_in_millis”:1515628800000}}</p>
+</blockquote>
 
           
         
@@ -760,7 +1092,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/01/利用Hexo-GitHub搭建免费的个人博客/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/19/git-2019-02-19-在同一台电脑上使用两个Git账号/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Lancelot He">
@@ -780,7 +1112,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/01/01/利用Hexo-GitHub搭建免费的个人博客/" class="post-title-link" itemprop="url">利用Hexo + GitHub搭建免费的个人博客</a>
+                <a href="/2019/02/19/git-2019-02-19-在同一台电脑上使用两个Git账号/" class="post-title-link" itemprop="url">在同一台电脑上使用两个Git账号</a>
               
             
           </h1>
@@ -805,7 +1137,7 @@
                 
               
 
-              <time title="创建时间：2019-01-01 16:50:15" itemprop="dateCreated datePublished" datetime="2019-01-01T16:50:15+08:00">2019-01-01</time>
+              <time title="创建时间：2019-02-19 23:13:27" itemprop="dateCreated datePublished" datetime="2019-02-19T23:13:27+08:00">2019-02-19</time>
             
 
             
@@ -822,7 +1154,210 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-20 00:47:40" itemprop="dateModified" datetime="2019-02-20T00:47:40+08:00">2019-02-20</time>
+                <time title="修改时间：2019-05-09 23:30:34" itemprop="dateModified" datetime="2019-05-09T23:30:34+08:00">2019-05-09</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><p>由于公司团队使用 GitLab 来托管代码，同时，个人在 Github 上还有一些代码仓库，可公司邮箱与个人邮箱是不同的，由此产生的 SSH key 也是不同的，这就造成了冲突 ，文章提供此类问题的解决方案：<strong>如何在一台机器上面同时使用 Github 与 Gitlab 的服务？</strong></p>
+<h1 id="问题产生场景"><a href="#问题产生场景" class="headerlink" title="问题产生场景"></a>问题产生场景</h1><hr>
+<h2 id="无密码与远程服务器交互的秘密-SSH"><a href="#无密码与远程服务器交互的秘密-SSH" class="headerlink" title="无密码与远程服务器交互的秘密 - SSH"></a>无密码与远程服务器交互的秘密 - SSH</h2><p>如果采用<code>ssh 协议</code>或者<code>git 协议</code>通过终端命令对远程仓库进行<code>push</code>操作的时候，大概的过程如下：（前提在 Github 上已经配置的本机的 SSH Public Key）</p>
+<ol>
+<li>客户端发起一个 Public Key 的认证请求，并发送RSA Key的模数作为标识符。（关于 RSA Key 详细 <a href="https://en.wikipedia.org/wiki/RSA_(algorithm" target="_blank" rel="noopener">维基百科</a>)）</li>
+<li>服务端检查是否存在请求帐号的公钥（Linux中存储在~/.ssh/authorized_keys文件中），以及其拥有的访问权限。</li>
+<li>服务端使用对应的公钥对一个随机的256位的字符串进行加密，并发送给客户端。</li>
+<li>客户端使用私钥对字符串进行解密，并将其结合session id生成一个MD5值发送给服务端。 结合session id的目的是为了避免攻击者采用重放攻击（replay attack）。</li>
+<li>服务端采用同样的方式生成MD5值与客户端返回的MD5值进行比较，完成对客户端的认证。</li>
+<li>将push的内容进行加密与服务端传输数据。</li>
+</ol>
+<p>关于 SSH，请查看 <a href="http://erik-2-blog.logdown.com/posts/74081-ssh-principle" target="_blank" rel="noopener">SSH原理简介</a> ，更通俗易懂的文章请查看<a href="http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html" target="_blank" rel="noopener">阮一峰-SSH原理与运用（一）：远程登录</a> 。</p>
+<h2 id="具体场景"><a href="#具体场景" class="headerlink" title="具体场景"></a>具体场景</h2><p>无论使用哪种代码托管服务商，对于 Git 而言，<code>邮箱</code> 是识别用户的唯一手段，所以对于不同的服务商，由于邮箱不同，那么通过邮件名创建的 SSH Key 自然是不同的，这时候在不同的服务商之间进行 <code>push</code> 命令的时候，Git 是不知道使用哪个 SSH Key ，自然导致 <code>push</code> 的失败。场景如下：</p>
+<ol>
+<li>在公司团队使用搭建的 Gitlab 服务，提交邮箱<a href="mailto:`xirong.liu@corp.xx.com" target="_blank" rel="noopener">`xirong.liu@corp.xx.com</a><code>， 个人 Github 服务，提交邮箱</code><a href="mailto:ixirong.liu@gmail.com" target="_blank" rel="noopener">ixirong.liu@gmail.com</a>` （Bitbucket 同理）。</li>
+<li>有两个Github账户，不同的账户提交不同的仓库内容。</li>
+</ol>
+<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><h2 id="方案一：同一个邮箱"><a href="#方案一：同一个邮箱" class="headerlink" title="方案一：同一个邮箱"></a>方案一：同一个邮箱</h2><p>由于<code>邮箱</code>是识别的唯一手段，那么自然的，这两者采用同一个邮箱，生成的 public key 也会是同一个，上传到 Github 或者 Gitlab 上面，在 Git 的配置中 ，设置好 Global 的配置 ：<code>git config --global user.name &#39;xirong.liu&#39; &amp;&amp; git config --global user.email &#39;xirong.liu@corp.xx.com&#39;</code> 进行日常的开发是没有问题的。</p>
+<p>实际生活中采用同一个邮箱的可能性并不是太大，这就引出了方案二</p>
+<h2 id="方案二：基于config文件"><a href="#方案二：基于config文件" class="headerlink" title="方案二：基于config文件"></a>方案二：基于config文件</h2><p>所谓的方案二，原理上就是对 SSH 协议配置 config 文件，对不同的域名采用不同的认证密钥。</p>
+<h4 id="git-config-介绍"><a href="#git-config-介绍" class="headerlink" title="git config 介绍"></a>git config 介绍</h4><p> Git有一个工具被称为git config，它允许你获得和设置配置变量；这些变量可以控制Git的外观和操作的各个方面。这些变量可以被存储在三个不同的位置：</p>
+<ol>
+<li>/etc/gitconfig 文件：包含了适用于系统所有用户和所有库的值。如果你传递参数选项’<code>--system</code>’ 给 git config，它将明确的读和写这个文件。</li>
+<li>~/.gitconfig 文件 ：具体到你的用户。你可以通过传递 ‘<code>--global</code>’ 选项使Git 读或写这个特定的文件。</li>
+<li>位于 Git 目录的 config 文件 (也就是 .git/config) ：无论你当前在用的库是什么，特定指向该单一的库。每个级别重写前一个级别的值。因此，在 .git/config 中的值覆盖了在/etc/gitconfig中的同一个值，可以通过传递‘<code>--local</code>’选项使Git 读或写这个特定的文件。</li>
+</ol>
+<p>由于采用了不同的邮箱，对不同的服务商进行提交，所以此时我们经常配置的 <code>git config --global</code> 就不能常用了，必须在每个仓库的目录下进行配置自己的用户名、邮箱。（嫌麻烦？xirong 是这么解决的，由于个人的 Github 上有较多的仓库，而自己团队的代码基本上都是稳定的，有数的几个，所以在 <code>git config --global user.email &#39;ixirong.liu@gmail.com&#39;</code> 中全局配置的是个人邮箱，在团队的项目中配置）</p>
+<h3 id="1-配置-Git-用户名、邮箱"><a href="#1-配置-Git-用户名、邮箱" class="headerlink" title="1.  配置 Git 用户名、邮箱"></a>1.  配置 Git 用户名、邮箱</h3><p>如刚才所说，xirong 的配置如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 全局配置，Github仓库中默认使用此配置</span></span><br><span class="line">git config --global user.name <span class="string">'xirong'</span> &amp;&amp; git config --global user.email <span class="string">'ixirong.liu@gmail.com'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 团队项目配置，每次新创建一个项目，需要执行下</span></span><br><span class="line">git config --<span class="built_in">local</span> user.name <span class="string">'xirong.liu'</span> &amp;&amp; git config --<span class="built_in">local</span> user.email <span class="string">'xirong.liu@corp.xxx.com'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 比如，我就是</span></span><br><span class="line">git config --<span class="built_in">local</span> user.name <span class="string">'lancelothe'</span> &amp;&amp; git config --<span class="built_in">local</span> user.email <span class="string">'294044124@qq.com'</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-生成-ssh-key-上传到-Github-Gitlab"><a href="#2-生成-ssh-key-上传到-Github-Gitlab" class="headerlink" title="2. 生成 ssh key 上传到 Github/Gitlab"></a>2. 生成 ssh key 上传到 Github/Gitlab</h3><p>ssh key 默认生成后保存在 <code>~/.ssh/</code>目录下 ，默认为 <code>id_rsa 和 id_rsa.pub</code> 两个文件，由于我们需要分开配置，所以这么做：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 生成公钥、密钥的同时指定文件名，Gitlab使用</span></span><br><span class="line">ssh-keygen -t rsa -f ~/.ssh/id_rsa.gitlab -C <span class="string">"xirong.liu@corp.xxx.com"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成默认，Github使用</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">"ixirong.liu@gmail.com"</span></span><br></pre></td></tr></table></figure>
+<p>命令执行完成后，这时<code>~/.ssh</code>目录下会多出<code>id_rsa.gitlab</code>和<code>id_rsa.gitlab.pub</code>两个文件，<code>id_rsa.gitlab.pub</code> 里保存的就是我们要使用的key，这个key就是用来上传到 Gitlab上的。</p>
+<h3 id="3-配置-config-文件"><a href="#3-配置-config-文件" class="headerlink" title="3. 配置 config 文件"></a>3. 配置 config 文件</h3><p>在 <code>~/.ssh</code>目录下，如果不存在，则新建 <code>touch ~/.ssh/config</code>文件 ，文件内容添加如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Host *.corp.xxx.com</span><br><span class="line">     IdentityFile ~/.ssh/id_rsa.gitlab</span><br><span class="line">     User xirong.liu</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># my ~/.ssh/config</span></span><br><span class="line">Host github.com</span><br><span class="line">  HostName github.com</span><br><span class="line">  IdentityFile ~/.ssh/id_rsa.github</span><br><span class="line">  User lancelothe</span><br></pre></td></tr></table></figure>
+<p>配置完成后，符合 <code>*.corp.xxx.com</code>后缀的 Git 仓库，均采取<code>~/.ssh/id_rsa.gitlab</code> 密钥进行验证，其它的采取默认的。</p>
+<h3 id="4-上传public-key-到-Github-Gitlab"><a href="#4-上传public-key-到-Github-Gitlab" class="headerlink" title="4. 上传public key 到 Github/Gitlab"></a>4. 上传public key 到 Github/Gitlab</h3><p>以Github为例，过程如下：</p>
+<ol>
+<li>登录github</li>
+<li>点击右上方的Accounting settings图标</li>
+<li>选择 SSH key</li>
+<li>点击 Add SSH key</li>
+</ol>
+<p>在出现的界面中填写SSH key的名称，填一个你自己喜欢的名称即可，然后将上面拷贝的<code>~/.ssh/id_rsa.pub</code>文件内容粘帖到<code>key</code>一栏，在点击“<code>add key</code>”按钮就可以了。</p>
+<p>添加过程github会提示你输入一次你的github密码 ，确认后即添加完毕。 上传Gitlab的过程一样，请自己操作。</p>
+<h3 id="5-验证是否OK"><a href="#5-验证是否OK" class="headerlink" title="5. 验证是否OK"></a>5. 验证是否OK</h3><p>由于每个托管商的仓库都有唯一的后缀，比如 Github的是 <a href="mailto:`git@github.com" target="_blank" rel="noopener">`git@github.com</a>:*`，所以可以这样测试：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">➜  ~  ssh -T git@github.com</span><br><span class="line">Hi xirong! You<span class="string">'ve successfully authenticated, but GitHub does not provide shell access.</span></span><br><span class="line"><span class="string">➜  ~  ssh -T git@gitlab.dev</span></span><br><span class="line"><span class="string">Welcome to GitLab, xirong.liu!</span></span><br></pre></td></tr></table></figure>
+<p>看到这些 <code>Welcome</code> 信息，说明就是 OK的了。</p>
+<p>以后，如果还有任何的需求，都可以这么解决，看下 xirong 的几个托管仓库：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">➜  ~  ll ~/.ssh</span><br><span class="line">total 40</span><br><span class="line">-rw-r--r-- 1 xirong staff  264 Jul 10 14:42 config</span><br><span class="line">-rw------- 1 xirong staff 3243 Jul 10 14:09 id_rsa</span><br><span class="line">-rw------- 1 xirong staff 1675 Jan 28 20:39 id_rsa.gitlab</span><br><span class="line">-rw-r--r-- 1 xirong staff  407 Jan 28 20:39 id_rsa.gitlab.pub</span><br><span class="line">-rw-r--r-- 1 xirong staff  747 Jul 10 14:09 id_rsa.pub</span><br><span class="line">-rw------- 1 xirong staff 1679 Jun 22 11:42 id_rsa_gitcafe</span><br><span class="line">-rw-r--r-- 1 xirong staff  407 Jun 22 11:42 id_rsa_gitcafe.pub</span><br><span class="line">-rw-r--r-- 1 xirong staff 9139 Jul 29 15:08 known_hosts</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/30/git-2019-01-30-Git-骚操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lancelot He">
+      <meta itemprop="description" content="I can do all things!">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lancelot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/01/30/git-2019-01-30-Git-骚操作/" class="post-title-link" itemprop="url">Git 骚操作</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-30 21:11:30" itemprop="dateCreated datePublished" datetime="2019-01-30T21:11:30+08:00">2019-01-30</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-09 23:31:14" itemprop="dateModified" datetime="2019-05-09T23:31:14+08:00">2019-05-09</time>
               
             
           </span>
@@ -839,7 +1374,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hexo/" itemprop="url" rel="index"><span itemprop="name">Hexo</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a></span>
 
                 
                 
@@ -876,45 +1411,13 @@
       
         
           
-            <p>今天给大家带来一份用Hexo + Github 搭建属于自己的个人博客的教程。其实现在这种博客的搭建方式有很多种。最早我见的是Jekyll、接下来这个Hexo，最近在研究Python发现用Flask和Django都可以搭建的，只是路数不同罢了。<br>我选择了这个Hexo，目前这个用的人也比较多，应该说是简单易搭建吧，可扩展也可自己美化。话不多说，下面就开始。</p>
-
-
-<hr>
-<ul>
-<li><a href="#1">1.环境配置</a></li>
-<li><a href="#2">2.Hexo安装部署</a></li>
-<li><a href="#3">3.错误总结</a></li>
-</ul>
-<p></p><h2 id="1">1.环境配置</h2><br>首先要明确有几个环境是必须有的。没有的话请先安装。<p></p>
-<ul>
-<li>Git（官网下载较慢，我建议用这个网址<a href="http://gitb.org/" target="_blank" rel="noopener">gitb,org</a>）<br>　作用：用来提交Hexo的内容。</li>
-<li>nodejs（我建议用v4.*版本较好，官网有6.*和8.*的我装上后有点问题）<br>　作用：用来生成静态页面的。</li>
-<li>Github的账号（自己申请，并创建一个名为<code>yourname.github.io</code>的仓库）</li>
-</ul>
-<p>自行安装完环境后，将自己 SSH key导入到申请的GitHub中。建议导入，不然后面每次提交代码都要手动输入GitHub的账号密码，相当麻烦。</p>
-<p></p><h2 id="2">2.Hexo安装部署</h2><br>Hexo的安装也相当简单，以Windows为例：<p></p>
-<p><pre><code class="bash">$ cd d:/hexo<br>$ npm install hexo-cli -g   #  -g代表全局安装<br>$ hexo init blog            #  初始化blog目录<br>$ cd blog<br>$ npm install               #  安装依赖的组件<br>$ hexo g # 或者hexo generate<br>$ hexo s # 或者hexo server，可以在<a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a> 查看</code></pre><br><b>说几个比较常用的命令:</b></p>
-<ol>
-<li>hexo generate (hexo g) 生成静态文件，会在当前目录下生成一个新的叫做public的文件夹</li>
-<li>hexo server (hexo s) 启动本地web服务，用于博客的本地预览</li>
-<li>hexo deploy (hexo d) 发布博客到远端</li>
-<li>hexo clena 清除hexo g生成的本地缓存</li>
-<li>hexo new “postName” #新建文章</li>
-<li>hexo new page “pageName” #新建页面</li>
-</ol>
-<p><b>还有一些常用的组合</b><br>hexo d -g #生成后+远程部署<br>hexo s -g #生成后+本地预览</p>
-<p>现在我们来看一下本地预览的效果吧<br><code>hexo g</code><br><code>hexo s</code><br>　<br>其实这里有个问题，默认的4000端口我在Windows上一直打不开，我没有在配置文件中重新设置，所以我每次启动的时候都会用这个命令指定端口<code>hexo s -p 40000</code> 我直接加了个0，用了40000端口。<br>出现下面这个就说明你可以开始用网页在本地预览了。</p>
-<p><pre>INFO  Start processing<br>INFO  Hexo is running at <a href="http://localhost:40000/" target="_blank" rel="noopener">http://localhost:40000/</a>. Press Ctrl+C to stop.<br></pre><br>预览图如下：<br><img src="/images/20170703161639.png" alt="预览效果"></p>
-<p>然后你就可以发布到你的Github上了</p><br>用命令<code>hexo d</code> 即可。但是我们发现需要输入Github的账号密码，所以这里还需要配置你的Github的地址，<br>编辑本地的<code>_config.yml</code> 文件，这是关于Hexo的配置文件。找到如下配置项：<br><pre>deploy:<br>  type: git<br>  repository: <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:Lancelothe/Lancelothe.github.io.git<br>  branch: master<br></pre><br>按照我的格式填写即可，我的Github名字是Lancelothe，所以你需要将这个改为你的名字。关于type和repository的格式似乎在Hexo3.0版本以上就是需要这样写，以前好像type可以写成github.<br>如何查看你的Hexo版本呢？<br>　　<br>用<code>hexo -v</code>命令<br><pre>hexo: 3.3.7<br>hexo-cli: 1.0.3<br>os: Windows_NT 6.1.7601 win32 x64<br>http_parser: 2.5.2<br>node: 4.4.2<br>v8: 4.5.103.35<br>uv: 1.8.0<br>zlib: 1.2.8<br>ares: 1.10.1-DEV<br>icu: 56.1<br>modules: 46<br>openssl: 1.0.2g<br><br></pre><br><p>到此为止，你的Hexo个人博客就已经搭建完毕了。<br>下面来看看搭建过程中哪些可能遇到的问题</p>
-
-<p></p><h2 id="3">3.错误总结</h2><p></p>
-<p></p><h4>问题1：npm install 报 command not found</h4><br>原因：PATH配置不对。<br>解决：选择『计算机』-『属性』-『高级系统设置』-『环境变量』，先查看了『系统变量』部分，发现安装后确实在系统变量的Path后追加了安装路径，即：C:\Program Files\nodejs；然后，打开『用户环境变量』部分查看了下Path的值，发现在最后系统自动加入了C:\Users\s94983\AppData\Roaming\npm，在『用户环境变量』部分的Path下再追加C:\Program Files\nodejs，然后关闭掉git base，（有可能需要重启电脑才可生效）问题解决！<p></p>
-<p></p><h4>问题2：hexo deploy时重复输入用户名密码的问题</h4><br>原因：repository配置时没有采用<a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>的形式，而是采用了老的<a href="https://github.com" target="_blank" rel="noopener">https://github.com</a><br>解决：采用<a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>形式即可。<p></p>
-<p></p><h4>问题3：ERROR Deployer not found: git 或者 ERROR Deployer not found: github</h4><br>原因：未安装依赖包<p></p><br>解决：使用 <code>npm install hexo-deployer-git --save</code> 安装依赖<p></p>
-<p></p><h4>问题4：npm安装时下载速度慢</h4><br>解决： 可以换成淘宝的镜像源。<br>镜像举例：<br>1.临时使用<br><code>npm --registry https://registry.npm.taobao.org install express</code><p></p>
-<p>2.持久使用<br><code>npm config set registry https://registry.npm.taobao.org</code><br>// 配置后可通过下面方式来验证是否成功<br><code>npm config get registry</code><br>// 或npm info express</p>
-<p>3.通过cnpm<br>  使用<br><code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code><br>// 使用cnpm install expresstall express</p>
-<p>后面还会为大家带来Hexo的高级用法的，谢谢支持。</p>
+            <p><a href="https://blog.csdn.net/RonnyJiang/article/details/53507306" target="_blank" rel="noopener">删除git库中untracked files（未监控）的文件 - RonnyJiang的博客 - CSDN博客</a><br><a href="https://gist.github.com/subchen/3409a16cb46327ca7691" target="_blank" rel="noopener">Git Stash 用法</a></p>
+<h2 id="命令行快捷键设置"><a href="#命令行快捷键设置" class="headerlink" title="命令行快捷键设置"></a>命令行快捷键设置</h2><blockquote>
+<p>vim ~/.bashrc<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">alias gs=&apos;git status &apos;</span><br><span class="line">alias gl=&apos;git log &apos;</span><br><span class="line">alias ga=&apos;git add &apos;</span><br><span class="line">alias gpu=&apos;git pull upstream&apos;</span><br><span class="line">alias gpo=&apos;git pull origin&apos;</span><br><span class="line">alias gp=&apos;git push &apos;</span><br><span class="line">alias gb=&apos;git branch &apos;</span><br><span class="line">alias gcm=&apos;git commit&apos;</span><br><span class="line">alias gd=&apos;git diff&apos;</span><br><span class="line">alias gc=&apos;git checkout &apos;</span><br><span class="line">alias gau=&apos;git remote add upstream&apos;</span><br><span class="line">alias gr=&apos;git remote -v&apos;</span><br><span class="line">alias gsa=&apos;git stash&apos;</span><br><span class="line">alias gsp=&apos;git stash pop&apos;</span><br><span class="line"></span><br><span class="line">alias ss=&apos;ssh jump&apos;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>source ~/.bashrc<br>加载配置文件</p>
+</blockquote>
 
           
         
@@ -959,6 +1462,10 @@
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
 
 
           </div>
@@ -1001,7 +1508,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-count">15</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1018,7 +1525,19 @@
                     
                       
                     
-                    <span class="site-state-item-count">2</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1041,7 +1560,19 @@
                     
                       
                     
-                    <span class="site-state-item-count">5</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

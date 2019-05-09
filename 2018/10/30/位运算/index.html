@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/favicon_16x16.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/favicon_32x32.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/favicon_16x16.ico?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/uploads/favicon_32x32.ico?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.0.0',
+    sidebar: {"position":"right","display":"always","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Bit，Byte，Word，Dword，Qwordbit，通常指一个二进制位，八个比特(Bit)称为一个字节（Byte），两个字节称为一个字（Word），两个字称为一个双字（Dword），两个双字称为一个四字（Qword）。 类型范围最大负数：10000000 00000000 00000000 00000000最大正数：01111111 11111111 11111111 11111111 原码">
+<meta name="keywords" content="位运算">
+<meta property="og:type" content="article">
+<meta property="og:title" content="位运算">
+<meta property="og:url" content="http://yoursite.com/2018/10/30/位运算/index.html">
+<meta property="og:site_name" content="Lancelot&#39;s blog">
+<meta property="og:description" content="Bit，Byte，Word，Dword，Qwordbit，通常指一个二进制位，八个比特(Bit)称为一个字节（Byte），两个字节称为一个字（Word），两个字称为一个双字（Dword），两个双字称为一个四字（Qword）。 类型范围最大负数：10000000 00000000 00000000 00000000最大正数：01111111 11111111 11111111 11111111 原码">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-09T15:19:59.855Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="位运算">
+<meta name="twitter:description" content="Bit，Byte，Word，Dword，Qwordbit，通常指一个二进制位，八个比特(Bit)称为一个字节（Byte），两个字节称为一个字（Word），两个字称为一个双字（Dword），两个双字称为一个四字（Qword）。 类型范围最大负数：10000000 00000000 00000000 00000000最大正数：01111111 11111111 11111111 11111111 原码">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/10/30/位运算/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>位运算 | Lancelot's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lancelot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">I can do all things!</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/30/位运算/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lancelot He">
+      <meta itemprop="description" content="I can do all things!">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lancelot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">位运算
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-30 21:08:44" itemprop="dateCreated datePublished" datetime="2018-10-30T21:08:44+08:00">2018-10-30</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-09 23:19:59" itemprop="dateModified" datetime="2019-05-09T23:19:59+08:00">2019-05-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/位运算/" itemprop="url" rel="index"><span itemprop="name">位运算</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Bit，Byte，Word，Dword，Qword"><a href="#Bit，Byte，Word，Dword，Qword" class="headerlink" title="Bit，Byte，Word，Dword，Qword"></a>Bit，Byte，Word，Dword，Qword</h2><p>bit，通常指一个二进制位，<br>八个比特(Bit)称为一个字节（Byte），两个字节称为一个字（Word），两个字称为一个双字（Dword），两个双字称为一个四字（Qword）。</p>
+<p>类型范围<br>最大负数：10000000 00000000 00000000 00000000<br>最大正数：01111111 11111111 11111111 11111111</p>
+<h2 id="原码-反码-补码"><a href="#原码-反码-补码" class="headerlink" title="原码 反码 补码"></a>原码 反码 补码</h2><p><strong>原码：</strong> 将一个数字转换成二进制就是这个数值的原码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a =  5;  //原码  0000 0000 0000 0101</span><br><span class="line">int b = -3;  //原码  1000 0000 0000 0011</span><br></pre></td></tr></table></figure></p>
+<p><strong>反码：</strong><br>分两种情况：正数和负数</p>
+<ul>
+<li>正数：正数的反码就是原码。</li>
+<li>负数：负数的反码是在原码的基础上，符号位不变 其它位都取反。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">5 的原码：0000 0000 0000 0101</span><br><span class="line">5 的反码：0000 0000 0000 0101</span><br><span class="line">-3 的原码：1000 0000 0000 0011</span><br><span class="line">-3 的反码：1111 1111 1111 1100</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>补码:</strong><br>仍然分正数和负数两种情况</p>
+<ul>
+<li>正数： 正数的补码就是原码。</li>
+<li>负数： 负数的补码在反码的基础上加1。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">5 的反码：0000 0000 0000 0101</span><br><span class="line">5 的补码：0000 0000 0000 0101</span><br><span class="line"></span><br><span class="line">-3 的反码：1111 1111 1111 1100</span><br><span class="line">-3 的补码: 1111 1111 1111 1101</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>其实负数的：<br>十进制变二进制：原码–反码–加一（补码）；<br>二进制变十进制：减一–反码–原码。</p>
+<h2 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h2><h3 id="amp-与运算符"><a href="#amp-与运算符" class="headerlink" title="&amp; 与运算符"></a>&amp; 与运算符</h3><p>规则： 从高到低，两个数的对应bit位相与，两个位都为 1 时，结果才为 1，否则为0。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">3的二进制：0000 0011</span><br><span class="line">&amp;</span><br><span class="line">5的二进制：0000 0101</span><br><span class="line">=</span><br><span class="line">0000 0001</span><br><span class="line">所以</span><br><span class="line">3 &amp; 5 = 1</span><br><span class="line">PS : 因为是整数高位为0，所以均省略。</span><br></pre></td></tr></table></figure></p>
+<h3 id="或运算符"><a href="#或运算符" class="headerlink" title="| 或运算符"></a>| 或运算符</h3><p>规则： 从高到低，两个数的对应bit位相或，两个位都是 0 时，结果才为 0，否则为1。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">3的二进制：0000 0011</span><br><span class="line">|</span><br><span class="line">5的二进制：0000 0101</span><br><span class="line">=</span><br><span class="line">0000 0111</span><br><span class="line">所以</span><br><span class="line">3 | 5 = 7</span><br></pre></td></tr></table></figure></p>
+<h3 id="取反运算符"><a href="#取反运算符" class="headerlink" title="~ 取反运算符"></a>~ 取反运算符</h3><p>规则： 从高到低，0 变 1，1 变 0。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">3的二进制：0000 0011</span><br><span class="line">~3 的二进制：1111111 11111111 11111111 111111100</span><br><span class="line">所以</span><br><span class="line">~3 = -4</span><br><span class="line">-5的二进制：0000 0101</span><br><span class="line">~-5的二进制：00000000 00000000 00000000 00000100</span><br><span class="line">所以</span><br><span class="line">~-5 = 4</span><br></pre></td></tr></table></figure></p>
+<h3 id="异或运算符"><a href="#异或运算符" class="headerlink" title="^ 异或运算符"></a>^ 异或运算符</h3><p>规则： 从高到低，两个数的对应bit位相异或，两个位相同时为 0，相异为 1，相同为0。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">3的二进制：0000 0011</span><br><span class="line">^</span><br><span class="line">5的二进制：0000 0101</span><br><span class="line">=</span><br><span class="line">0000 0110</span><br><span class="line">所以</span><br><span class="line">3 ^ 5 = 6</span><br><span class="line">值得注意的是 3 ^ 5 = 6,而 6 ^ 5 = 3</span><br><span class="line">所以交换两个变量可以用异或。</span><br></pre></td></tr></table></figure></p>
+<h3 id="gt-gt-右移运算符"><a href="#gt-gt-右移运算符" class="headerlink" title="&gt;&gt; 右移运算符"></a>&gt;&gt; 右移运算符</h3><p>规则： a &gt;&gt; b 将数值 a 的二进制数值从 0 位算起到第 b - 1 位，整体向右方向移动 b 位，符号位不变，高位空出来的位补数值 0。</p>
+<ul>
+<li><p>正数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">16的二进制：0001 0000</span><br><span class="line">16 &gt;&gt; 2</span><br><span class="line">=</span><br><span class="line">0000 0100</span><br><span class="line">所以</span><br><span class="line">16 &gt;&gt; 2 = 4</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>负数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-16的二进制：11111111 11111111 11111111 11110000</span><br><span class="line">-16 &gt;&gt; 2</span><br><span class="line">=</span><br><span class="line">11111111 11111111 11111111 11111100</span><br><span class="line">所以</span><br><span class="line">-16 &gt;&gt; 2 = -4</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="lt-lt-左移运算符"><a href="#lt-lt-左移运算符" class="headerlink" title="&lt;&lt; 左移运算符"></a>&lt;&lt; 左移运算符</h3><p>规则： a &lt;&lt; b 将数值 a 的二进制数值从 0 位算起到第 b - 1 位，整体向左方向移动 b 位，符号位不变，低位空出来的位补数值 0。</p>
+<ul>
+<li><p>正数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1的二进制：0000 0001</span><br><span class="line">1 &lt;&lt; 3</span><br><span class="line">=</span><br><span class="line">0001000</span><br><span class="line">所以</span><br><span class="line">1 &lt;&lt; 3 = 8 = 1 * 2的3次幂</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>负数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-2的二进制：11111111 11111111 11111111 11111110</span><br><span class="line">-2 &lt;&lt; 3</span><br><span class="line">=</span><br><span class="line">11111111 11111111 11111111 11110000</span><br><span class="line">所以</span><br><span class="line">-2 &lt;&lt; 3 = -8</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="gt-gt-gt-无符号右移运算符"><a href="#gt-gt-gt-无符号右移运算符" class="headerlink" title="&gt;&gt;&gt; 无符号右移运算符"></a>&gt;&gt;&gt; 无符号右移运算符</h3><p>规则： 与右移不同的是，负数右移时，高位补0。</p>
+<ul>
+<li>正数：和普通右移无区别。</li>
+<li>负数：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-2的二进制：11111111 11111111 11111111 11111110</span><br><span class="line">-2 &gt;&gt;&gt; 3</span><br><span class="line">=</span><br><span class="line">00011111 11111111 11111111 11111111</span><br><span class="line">所以</span><br><span class="line">-2 &gt;&gt;&gt; 3 = 536870911</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="移位操作说明"><a href="#移位操作说明" class="headerlink" title="移位操作说明"></a>移位操作说明</h3><ul>
+<li>正数左移N位表示乘以2的N次幂，右移N位表示除以2的N次幂；</li>
+<li>负数移位最高位符号位不变，规则同上。</li>
+<li>整型最大值向左移位会越位到负值，因为低位补0了</li>
+<li>整型最小值左移会变成0，因为原来是最高位是1，其余是0，左移则全为0</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = Integer.MAX_VALUE &lt;&lt; <span class="number">1</span>;</span><br><span class="line"><span class="comment">// int x = Integer.MIN_VALUE &lt;&lt; 1;</span></span><br><span class="line"><span class="comment">// 整型的二进制字符串</span></span><br><span class="line">String y = Integer.toBinaryString(x);</span><br><span class="line"><span class="comment">// 将二进制字符串用大整数类型存储，基本类型范围不够容纳</span></span><br><span class="line">BigInteger z = <span class="keyword">new</span> BigInteger(y);</span><br><span class="line">System.out.println(<span class="string">"十进制："</span> + x);</span><br><span class="line">System.out.println(<span class="string">"二进制字符串："</span> +y);</span><br><span class="line">System.out.println(<span class="string">"二进制大整数："</span> +z);</span><br><span class="line">System.out.println(<span class="string">"二进制大整数补齐32位："</span> + String.format(<span class="string">"%032d"</span>, z));</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/位运算/" rel="tag"># 位运算</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/20/Markdown使用/" rel="next" title="Markdown使用">
+                <i class="fa fa-chevron-left"></i> Markdown使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/25/JVM分析工具、方法/" rel="prev" title="JVM分析工具、方法">
+                JVM分析工具、方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Lancelot He">
+            
+              <p class="site-author-name" itemprop="name">Lancelot He</p>
+              <p class="site-description motion-element" itemprop="description">I can do all things!</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Lancelothe" title="GitHub &rarr; https://github.com/Lancelothe" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.zhihu.com/people/he-bo-hao-74/activities" title="知乎 &rarr; https://www.zhihu.com/people/he-bo-hao-74/activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>知乎</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bit，Byte，Word，Dword，Qword"><span class="nav-text">Bit，Byte，Word，Dword，Qword</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原码-反码-补码"><span class="nav-text">原码 反码 补码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#位运算符"><span class="nav-text">位运算符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#amp-与运算符"><span class="nav-text">&amp; 与运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#或运算符"><span class="nav-text">| 或运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#取反运算符"><span class="nav-text">~ 取反运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异或运算符"><span class="nav-text">^ 异或运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gt-gt-右移运算符"><span class="nav-text">&gt;&gt; 右移运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lt-lt-左移运算符"><span class="nav-text">&lt;&lt; 左移运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gt-gt-gt-无符号右移运算符"><span class="nav-text">&gt;&gt;&gt; 无符号右移运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移位操作说明"><span class="nav-text">移位操作说明</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lancelot He</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+  <!-- 页面点击文字 -->
+  <script type="text/javascript" src="/js/src/mouse.js"></script>
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

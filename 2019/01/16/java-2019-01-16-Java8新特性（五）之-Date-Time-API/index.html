@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/favicon_16x16.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/favicon_32x32.ico?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/favicon_16x16.ico?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/uploads/favicon_32x32.ico?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.0.0',
+    sidebar: {"position":"right","display":"always","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Java8新增的就是LocalDate、LocalTime、LocalDateTime、Instant、Duration、Period几个大类。 之前用joda能做到的，现在用Java8里面的api几乎都能做到，语法也很相似。 LocalDateTime的一些用法123456789101112131415161718192021// 取时间戳long localDateTime = LocalDa">
+<meta name="keywords" content="Java8,LocalDate">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java8新特性（五）之 Date Time API">
+<meta property="og:url" content="http://yoursite.com/2019/01/16/java-2019-01-16-Java8新特性（五）之-Date-Time-API/index.html">
+<meta property="og:site_name" content="Lancelot&#39;s blog">
+<meta property="og:description" content="Java8新增的就是LocalDate、LocalTime、LocalDateTime、Instant、Duration、Period几个大类。 之前用joda能做到的，现在用Java8里面的api几乎都能做到，语法也很相似。 LocalDateTime的一些用法123456789101112131415161718192021// 取时间戳long localDateTime = LocalDa">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-09T15:42:28.523Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java8新特性（五）之 Date Time API">
+<meta name="twitter:description" content="Java8新增的就是LocalDate、LocalTime、LocalDateTime、Instant、Duration、Period几个大类。 之前用joda能做到的，现在用Java8里面的api几乎都能做到，语法也很相似。 LocalDateTime的一些用法123456789101112131415161718192021// 取时间戳long localDateTime = LocalDa">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/01/16/java-2019-01-16-Java8新特性（五）之-Date-Time-API/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Java8新特性（五）之 Date Time API | Lancelot's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lancelot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">I can do all things!</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/16/java-2019-01-16-Java8新特性（五）之-Date-Time-API/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lancelot He">
+      <meta itemprop="description" content="I can do all things!">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lancelot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java8新特性（五）之 Date Time API
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-16 23:06:43" itemprop="dateCreated datePublished" datetime="2019-01-16T23:06:43+08:00">2019-01-16</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-09 23:42:28" itemprop="dateModified" datetime="2019-05-09T23:42:28+08:00">2019-05-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Java8新增的就是LocalDate、LocalTime、LocalDateTime、Instant、Duration、Period几个大类。</p>
+<p>之前用joda能做到的，现在用Java8里面的api几乎都能做到，语法也很相似。</p>
+<h2 id="LocalDateTime的一些用法"><a href="#LocalDateTime的一些用法" class="headerlink" title="LocalDateTime的一些用法"></a>LocalDateTime的一些用法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// 取时间戳</span><br><span class="line">long localDateTime = LocalDateTime.of(LocalDate.now().minusDays(1), LocalTime.MIN).toInstant(ZoneOffset.UTC).toEpochMilli();</span><br><span class="line"></span><br><span class="line">// 获取当天零点时间</span><br><span class="line">LocalDateTime today_start = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);//当天零点</span><br><span class="line">String td_st_str =</span><br><span class="line">today_start.format(DateTimeFormatter.ofPattern(&quot;yyyyMMddHHmmss&quot;));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 获取当天结束时间</span><br><span class="line">LocalDateTime today_end = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);//当天零点</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 设置2018年1月1日</span><br><span class="line">LocalDateTime.of(2018, 1, 1, 0, 0).toLocalDate();</span><br><span class="line">// 获取2018年1月1日时间戳</span><br><span class="line">LocalDateTime.of(2018, 1, 1, 0, 0).toInstant(ZoneOffset.of(&quot;+8&quot;)).toEpochMilli();</span><br><span class="line">// 此时减一年时间戳1</span><br><span class="line">LocalDateTime.of(LocalDate.now().minusYears(1), LocalTime.MIN).toInstant(ZoneOffset.of(&quot;+8&quot;)).toEpochMilli();</span><br><span class="line">// 此时减一年时间戳2</span><br><span class="line">long lastYear = LocalDateTime.now().minusYears(1).withHour(0).withMinute(0).withSecond(0).withNano(0).toInstant(ZoneOffset.of(&quot;+8&quot;)).toEpochMilli();</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.jianshu.com/p/b4629857fc6f" target="_blank" rel="noopener">LocalDate、LocalDateTime与timestamp、Date的转换 - 简书</a></p>
+<h2 id="Date和LocalDate互转"><a href="#Date和LocalDate互转" class="headerlink" title="Date和LocalDate互转"></a>Date和LocalDate互转</h2><p>Date对象表示特定的日期和时间，而LocalDate(Java8)对象只包含没有任何时间信息的日期。<br>因此，如果我们只关心日期而不是时间信息，则可以在Date和LocalDate之间进行转换。</p>
+<h3 id="Date转LocalDate"><a href="#Date转LocalDate" class="headerlink" title="Date转LocalDate"></a>Date转LocalDate</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Date date = new Date();</span><br><span class="line">Instant instant = date.toInstant();</span><br><span class="line">ZoneId zoneId = ZoneId.systemDefault();</span><br><span class="line"></span><br><span class="line">// atZone()方法返回在指定时区从此Instant生成的ZonedDateTime。</span><br><span class="line">LocalDate localDate = instant.atZone(zoneId).toLocalDate();</span><br><span class="line">System.out.println(&quot;Date = &quot; + date);</span><br><span class="line">System.out.println(&quot;LocalDate = &quot; + localDate);</span><br></pre></td></tr></table></figure>
+<h3 id="LocalDate转Date"><a href="#LocalDate转Date" class="headerlink" title="LocalDate转Date"></a>LocalDate转Date</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ZoneId zoneId = ZoneId.systemDefault();</span><br><span class="line">LocalDate localDate = LocalDate.now();</span><br><span class="line">ZonedDateTime zdt = localDate.atStartOfDay(zoneId);</span><br><span class="line"></span><br><span class="line">Date date = Date.from(zdt.toInstant());</span><br><span class="line"></span><br><span class="line">System.out.println(&quot;LocalDate = &quot; + localDate);</span><br><span class="line">System.out.println(&quot;Date = &quot; + date);</span><br></pre></td></tr></table></figure>
+<h2 id="LocalDate和String互转"><a href="#LocalDate和String互转" class="headerlink" title="LocalDate和String互转"></a>LocalDate和String互转</h2><h3 id="LocalDate转String"><a href="#LocalDate转String" class="headerlink" title="LocalDate转String"></a>LocalDate转String</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LocalDate localDate = LocalDate.now();</span><br><span class="line">String dateStr = localDate.format(DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd&quot;));</span><br></pre></td></tr></table></figure>
+<h3 id="LocalDateTime转String"><a href="#LocalDateTime转String" class="headerlink" title="LocalDateTime转String"></a>LocalDateTime转String</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">LocalDateTime dateTime = LocalDateTime.now();</span><br><span class="line"></span><br><span class="line">//使用预定义实例来转换</span><br><span class="line">DateTimeFormatter fmt = DateTimeFormatter.ISO_LOCAL_DATE;</span><br><span class="line">String dateStr = dateTime.format(fmt);</span><br><span class="line">System.out.println(&quot;LocalDateTime转String[预定义]:&quot;+dateStr);</span><br><span class="line"></span><br><span class="line">//使用pattern来转换</span><br><span class="line">//12小时制与24小时制输出由hh的大小写决定</span><br><span class="line">DateTimeFormatter fmt12 = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd hh:mm:ss:SSS&quot;);</span><br><span class="line">String dateStr12 = dateTime.format(fmt12);</span><br><span class="line">System.out.println(&quot;LocalDateTime转String[pattern](12小时制):&quot;+dateStr12);</span><br><span class="line"></span><br><span class="line">DateTimeFormatter fmt24 = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm:ss:SSS&quot;);</span><br><span class="line">String dateStr24 = dateTime.format(fmt24);</span><br><span class="line">System.out.println(&quot;LocalDateTime转String[pattern](24小时制):&quot;+dateStr24);</span><br><span class="line"></span><br><span class="line">//如果想要给12小时制时间加上am/pm,这样子做：</span><br><span class="line">fmt12 = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd hh:mm:ss:SSS a&quot;);</span><br><span class="line">dateStr12 = dateTime.format(fmt12);</span><br><span class="line">System.out.println(&quot;LocalDateTime转String[pattern](12小时制带am/pm):&quot;+dateStr12);</span><br></pre></td></tr></table></figure>
+<h3 id="String转LocalDate和LocalDateTime"><a href="#String转LocalDate和LocalDateTime" class="headerlink" title="String转LocalDate和LocalDateTime"></a>String转LocalDate和LocalDateTime</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">String str = &quot;2017-11-21 14:41:06:612&quot;;</span><br><span class="line">DateTimeFormatter fmt = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm:ss:SSS&quot;);</span><br><span class="line">LocalDate date = LocalDate.parse(str, fmt);</span><br><span class="line">LocalDateTime time = LocalDateTime.parse(str, fmt);</span><br><span class="line">System.out.println(&quot;date:&quot;+date);</span><br><span class="line">System.out.println(&quot;time:&quot;+time);</span><br></pre></td></tr></table></figure>
+<h2 id="时区"><a href="#时区" class="headerlink" title="时区"></a>时区</h2><p>Java 8中的时区操作被很大程度上简化了，新的时区类<code>java.time.ZoneId</code>是原有的<code>java.util.TimeZone</code>类的替代品。<code>ZoneId</code>对象可以通过<code>ZoneId.of()</code>方法创建，也可以通过<code>ZoneId.systemDefault()</code>获取系统默认时区：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ZoneId shanghaiZoneId = ZoneId.of(<span class="string">"Asia/Shanghai"</span>);</span><br><span class="line">ZoneId systemZoneId = ZoneId.systemDefault();</span><br></pre></td></tr></table></figure>
+<p><code>of()</code>方法接收一个“区域/城市”的字符串作为参数，你可以通过<code>getAvailableZoneIds()</code>方法获取所有合法的“区域/城市”字符串：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set&lt;String&gt; zoneIds = ZoneId.getAvailableZoneIds();</span><br></pre></td></tr></table></figure>
+<p>对于老的时区类<code>TimeZone</code>，Java 8也提供了转化方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZoneId oldToNewZoneId = TimeZone.getDefault().toZoneId();</span><br></pre></td></tr></table></figure>
+<p>有了<code>ZoneId</code>，我们就可以将一个<code>LocalDate</code>、<code>LocalTime</code>或<code>LocalDateTime</code>对象转化为<code>ZonedDateTime</code>对象：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LocalDateTime localDateTime = LocalDateTime.now();</span><br><span class="line">ZonedDateTime zonedDateTime = ZonedDateTime.of(localDateTime, shanghaiZoneId);</span><br></pre></td></tr></table></figure>
+<p>将<code>zonedDateTime</code>打印到控制台为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2017-01-05T15:26:56.147+08:00[Asia/Shanghai]</span><br></pre></td></tr></table></figure>
+<p><code>ZonedDateTime</code>对象由两部分构成，<code>LocalDateTime</code>和<code>ZoneId</code>，其中<code>2017-01-05T15:26:56.147</code>部分为<code>LocalDateTime</code>，<code>+08:00[Asia/Shanghai]</code>部分为<code>ZoneId</code>。</p>
+<p>另一种表示时区的方式是使用<code>ZoneOffset</code>，它是以当前时间和<strong>世界标准时间（UTC）/格林威治时间（GMT）</strong>的偏差来计算，例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ZoneOffset zoneOffset = ZoneOffset.of(<span class="string">"+09:00"</span>);</span><br><span class="line">LocalDateTime localDateTime = LocalDateTime.now();</span><br><span class="line">OffsetDateTime offsetDateTime = OffsetDateTime.of(localDateTime, zoneOffset);</span><br></pre></td></tr></table></figure>
+<h2 id="DateTimeFormatter详解"><a href="#DateTimeFormatter详解" class="headerlink" title="DateTimeFormatter详解"></a>DateTimeFormatter详解</h2><p>DateTimeFormatter我们更多的是直接使用pattern来做转换，<br>其实这个类本身已经提供了一些预定义好的实例供我们使用。<br>下面把两者的具体释义和示例都贴出来供大家参考。</p>
+<p>预定义<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Predefined Formatters                       Formatter Description                                               Example</span><br><span class="line">----------------------                      ----------------------                                              ------------</span><br><span class="line">ofLocalizedDate(dateStyle)                  Formatter with date style from the locale                           &apos;2011-12-03&apos;</span><br><span class="line">ofLocalizedTime(timeStyle)                  Formatter with time style from the locale                           &apos;10:15:30&apos;</span><br><span class="line">ofLocalizedDateTime(dateTimeStyle)          Formatter with a style for date and time from the locale            &apos;3 Jun 2008 11:05:30&apos;</span><br><span class="line">ofLocalizedDateTime(dateStyle,timeStyle)    Formatter with date and time styles from the locale                 &apos;3 Jun 2008 11:05&apos;</span><br><span class="line">BASIC_ISO_DATE                              Basic ISO date                                                      &apos;20111203&apos;</span><br><span class="line">ISO_LOCAL_DATE                              ISO Local Date                                                      &apos;2011-12-03&apos;</span><br><span class="line">ISO_OFFSET_DATE                             ISO Date with offset                                                &apos;2011-12-03+01:00&apos;</span><br><span class="line">ISO_DATE                                    ISO Date with or without offset                                     &apos;2011-12-03+01:00&apos;; &apos;2011-12-03&apos;</span><br><span class="line">ISO_LOCAL_TIME                              Time without offset                                                 &apos;10:15:30&apos;</span><br><span class="line">ISO_OFFSET_TIME                             Time with offset                                                    &apos;10:15:30+01:00&apos;</span><br><span class="line">ISO_TIME                                    Time with or without offset                                         &apos;10:15:30+01:00&apos;; &apos;10:15:30&apos;</span><br><span class="line">ISO_LOCAL_DATE_TIME                         ISO Local Date and Time                                             &apos;2011-12-03T10:15:30&apos;</span><br><span class="line">ISO_OFFSET_DATE_TIME                        Date Time with Offset                                               &apos;2011-12-03T10:15:30+01:00&apos;</span><br><span class="line">ISO_ZONED_DATE_TIME                         Zoned Date Time                                                     &apos;2011-12-03T10:15:30+01:00[Europe/Paris]&apos;</span><br><span class="line">ISO_DATE_TIME                               Date and time with ZoneId                                           &apos;2011-12-03T10:15:30+01:00[Europe/Paris]&apos;</span><br><span class="line">ISO_ORDINAL_DATE                            Year and day of year                                                &apos;2012-337&apos;</span><br><span class="line">ISO_WEEK_DATE                               Year and Week                                                       &apos;2012-W48-6&apos;</span><br><span class="line">ISO_INSTANT                                 Date and Time of an Instant                                         &apos;2011-12-03T10:15:30Z&apos;</span><br><span class="line">RFC_1123_DATE_TIME                          RFC 1123 / RFC 822                                                  &apos;Tue, 3 Jun 2008 11:05:30 GMT&apos;</span><br></pre></td></tr></table></figure></p>
+<p>Pattern<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">All letters &apos;A&apos; to &apos;Z&apos; and &apos;a&apos; to &apos;z&apos; are reserved as pattern letters. The following pattern letters are defined:</span><br><span class="line"></span><br><span class="line">  Symbol  Meaning                     Presentation      Examples</span><br><span class="line">  ------  -------                     ------------      -------</span><br><span class="line">   G       era                         text              AD; Anno Domini; A</span><br><span class="line">   u       year                        year              2004; 04</span><br><span class="line">   y       year-of-era                 year              2004; 04</span><br><span class="line">   D       day-of-year                 number            189</span><br><span class="line">   M/L     month-of-year               number/text       7; 07; Jul; July; J</span><br><span class="line">   d       day-of-month                number            10</span><br><span class="line"></span><br><span class="line">   Q/q     quarter-of-year             number/text       3; 03; Q3; 3rd quarter</span><br><span class="line">   Y       week-based-year             year              1996; 96</span><br><span class="line">   w       week-of-week-based-year     number            27</span><br><span class="line">   W       week-of-month               number            4</span><br><span class="line">   E       day-of-week                 text              Tue; Tuesday; T</span><br><span class="line">   e/c     localized day-of-week       number/text       2; 02; Tue; Tuesday; T</span><br><span class="line">   F       week-of-month               number            3</span><br><span class="line"></span><br><span class="line">   a       am-pm-of-day                text              PM</span><br><span class="line">   h       clock-hour-of-am-pm (1-12)  number            12</span><br><span class="line">   K       hour-of-am-pm (0-11)        number            0</span><br><span class="line">   k       clock-hour-of-am-pm (1-24)  number            0</span><br><span class="line"></span><br><span class="line">   H       hour-of-day (0-23)          number            0</span><br><span class="line">   m       minute-of-hour              number            30</span><br><span class="line">   s       second-of-minute            number            55</span><br><span class="line">   S       fraction-of-second          fraction          978</span><br><span class="line">   A       milli-of-day                number            1234</span><br><span class="line">   n       nano-of-second              number            987654321</span><br><span class="line">   N       nano-of-day                 number            1234000000</span><br><span class="line"></span><br><span class="line">   V       time-zone ID                zone-id           America/Los_Angeles; Z; -08:30</span><br><span class="line">   z       time-zone name              zone-name         Pacific Standard Time; PST</span><br><span class="line">   O       localized zone-offset       offset-O          GMT+8; GMT+08:00; UTC-08:00;</span><br><span class="line">   X       zone-offset &apos;Z&apos; for zero    offset-X          Z; -08; -0830; -08:30; -083015; -08:30:15;</span><br><span class="line">   x       zone-offset                 offset-x          +0000; -08; -0830; -08:30; -083015; -08:30:15;</span><br><span class="line">   Z       zone-offset                 offset-Z          +0000; -0800; -08:00;</span><br><span class="line"></span><br><span class="line">   p       pad next                    pad modifier      1</span><br><span class="line"></span><br><span class="line">   &apos;       escape for text             delimiter</span><br><span class="line">   &apos;&apos;      single quote                literal           &apos;</span><br><span class="line">   [       optional section start</span><br><span class="line">   ]       optional section end</span><br><span class="line">   #       reserved for future use</span><br><span class="line">   &#123;       reserved for future use</span><br><span class="line">   &#125;       reserved for future use</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java8/" rel="tag"># Java8</a>
+          
+            <a href="/tags/LocalDate/" rel="tag"># LocalDate</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/15/java-2019-01-15-Java8新特性（四）之-Optional-类/" rel="next" title="Java8新特性（四）之 Optional 类">
+                <i class="fa fa-chevron-left"></i> Java8新特性（四）之 Optional 类
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/30/git-2019-01-30-Git-骚操作/" rel="prev" title="Git 骚操作">
+                Git 骚操作 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Lancelot He">
+            
+              <p class="site-author-name" itemprop="name">Lancelot He</p>
+              <p class="site-description motion-element" itemprop="description">I can do all things!</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Lancelothe" title="GitHub &rarr; https://github.com/Lancelothe" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.zhihu.com/people/he-bo-hao-74/activities" title="知乎 &rarr; https://www.zhihu.com/people/he-bo-hao-74/activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>知乎</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#LocalDateTime的一些用法"><span class="nav-text">LocalDateTime的一些用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Date和LocalDate互转"><span class="nav-text">Date和LocalDate互转</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Date转LocalDate"><span class="nav-text">Date转LocalDate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LocalDate转Date"><span class="nav-text">LocalDate转Date</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LocalDate和String互转"><span class="nav-text">LocalDate和String互转</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LocalDate转String"><span class="nav-text">LocalDate转String</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LocalDateTime转String"><span class="nav-text">LocalDateTime转String</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String转LocalDate和LocalDateTime"><span class="nav-text">String转LocalDate和LocalDateTime</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时区"><span class="nav-text">时区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DateTimeFormatter详解"><span class="nav-text">DateTimeFormatter详解</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lancelot He</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+  <!-- 页面点击文字 -->
+  <script type="text/javascript" src="/js/src/mouse.js"></script>
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
