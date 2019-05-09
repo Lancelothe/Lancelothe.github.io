@@ -1,11 +1,11 @@
 ---
 title: Java8新特性（一） 之 Lambda表达式
-date: 2019-02-19 23:30:53
-categories: 
-- Java
-tags: 
-- Java8
-- Lambda
+date: 2018-12-15 23:30:53
+categories:
+  - Java
+tags:
+  - Java8
+  - Lambda
 ---
 
 ## Lambda表达式是什么
@@ -60,7 +60,7 @@ Thread thread = new Thread(() -> System.out.println("Hello Man!"));
 
 方法引用使用`::`分隔符，分隔符的前半部分表示引用类型，后面半部分表示引用的方法名称。例如：`Integer::compareTo`表示引用类型为`Integer`，引用名称为`compareTo`的方法。
 
-对于 Lambda 表达式到方法引用的简化，我们提供以下规则： 
+对于 Lambda 表达式到方法引用的简化，我们提供以下规则：
 
 Lambda 表达式 | 方法引用
 ---|---
@@ -68,9 +68,6 @@ Lambda 表达式 | 方法引用
 (arg0, ...) -> arg0.instanceMethod(...)	   | ClassName::instanceMethod
 (args) -> expression.instanceMethod(args)  | expression::instanceMethod
 
-特别的，对于构造函数的方法引用：  `ClassName::new`  
+特别的，对于构造函数的方法引用：  `ClassName::new`
 类似使用方法引用的例子还有打印集合中的元素到控制台中：
 `list.forEach(System.out::println);`
-
-
-

@@ -1,10 +1,10 @@
 ---
 title: 如何在默认安装openjdk的Linux系统中安装独立JDK
-date: 2019-01-02 12:58:01
-categories: 
-- Java
-tags: 
-- Jdk
+date: 2017-07-10 12:58:01
+categories:
+  - Java
+tags:
+  - Jdk
 ---
 
 
@@ -19,11 +19,11 @@ tags:
 
 
 <h2 id="1"> 一、卸载&下载   </h2>
-#### 1、卸载自带的opendjk ####
+#### 1、卸载自带的opendjk
 
     rpm –qa|grep jdk
     rpm –e –nodeps  jdk***	//将过滤出的结果进行卸载
-#### 2、下载一个Sun的JDK（现在应该叫oracle的JDK）。 ####
+#### 2、下载一个Sun的JDK（现在应该叫oracle的JDK）
 下一个自解压的tar包。
 这里我下载的是jdk-7u79-linux-x64.tar.gz
 
@@ -36,7 +36,7 @@ tags:
 2.将解压后jdk-7u79-linux-x64.tar.gz复制到/usr/java下
 
 <h2 id="3"> 三、修改配置 </h2>
-#### 方法1：修改/etc/profile 文件 ####
+#### 方法1：修改/etc/profile 文件
 所有用户的 shell都有权使用这些环境变量
 **<1> 在 shell终端执行命令：vi /etc/profile**
 **<2> 在 profile文件末尾加入：**
@@ -49,7 +49,7 @@ tags:
 
 `PS：上面我们说的修改配置系统环境变量是在Unix操作系统下面的。`<p>
 下面来说说在DOS系统下面如何更改配置系统环境变量。
-#### DOS: ####
+#### DOS:
 
 1. 在系统变量里新建JAVA_HOME变量，变量值为：`D:\others\JAVA\JDK`（根据自己的安装路径填写）
 
@@ -77,7 +77,7 @@ ps: 如果你不想重新系统，可以用命令`source /etc/profile`使配置�
     echo $CLASSPATH
 查看配置的信息。
 但是我最后还是重启了才真正生效。
-#### 方法2：修改.bashrc文件 ####
+#### 方法2：修改.bashrc文件
 如果你需要给某个用户权限使用这些环境变量，你只需要修改其个人用户主目录下的.bashrc就可以了,而不像第一种方法给所有用户权限。
 **<1>在 shell终端执行命令：vi ~/.bashrc**
 **<2>在.bashrc文件末尾加入：**

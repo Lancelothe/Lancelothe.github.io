@@ -1,14 +1,15 @@
 ---
 title: 利用Hexo + GitHub搭建免费的个人博客
-date: 2019-01-01 16:50:15
-categories: 
-- Hexo
-tags: 
-- Hexo
-- 博客
+date: 2017-07-03 16:50:15
+categories:
+  - Hexo
+tags:
+  - Hexo
+  - 博客
 ---
 
 <p>今天给大家带来一份用Hexo + Github 搭建属于自己的个人博客的教程。其实现在这种博客的搭建方式有很多种。最早我见的是Jekyll、接下来这个Hexo，最近在研究Python发现用Flask和Django都可以搭建的，只是路数不同罢了。
+
 我选择了这个Hexo，目前这个用的人也比较多，应该说是简单易搭建吧，可扩展也可自己美化。话不多说，下面就开始。</p>
 
 
@@ -71,6 +72,7 @@ INFO  Hexo is running at http://localhost:40000/. Press Ctrl+C to stop.
   repository: git@github.com:Lancelothe/Lancelothe.github.io.git
   branch: master
 </pre>
+
 按照我的格式填写即可，我的Github名字是Lancelothe，所以你需要将这个改为你的名字。关于type和repository的格式似乎在Hexo3.0版本以上就是需要这样写，以前好像type可以写成github.
 如何查看你的Hexo版本呢？
 　　<br/>用`hexo -v`命令
@@ -86,39 +88,43 @@ ares: 1.10.1-DEV
 icu: 56.1
 modules: 46
 openssl: 1.0.2g
-
 </pre>
+
 <p>到此为止，你的Hexo个人博客就已经搭建完毕了。
 下面来看看搭建过程中哪些可能遇到的问题</p>
 
 <h2 id="3">3.错误总结</h2>
-<h4>问题1：npm install 报 command not found</h4>
+#### 问题1：npm install 报 command not found
 原因：PATH配置不对。
 解决：选择『计算机』-『属性』-『高级系统设置』-『环境变量』，先查看了『系统变量』部分，发现安装后确实在系统变量的Path后追加了安装路径，即：C:\Program Files\nodejs；然后，打开『用户环境变量』部分查看了下Path的值，发现在最后系统自动加入了C:\Users\s94983\AppData\Roaming\npm，在『用户环境变量』部分的Path下再追加C:\Program Files\nodejs，然后关闭掉git base，（有可能需要重启电脑才可生效）问题解决！
 
-<h4>问题2：hexo deploy时重复输入用户名密码的问题</h4>
+#### 问题2：hexo deploy时重复输入用户名密码的问题
 原因：repository配置时没有采用git@github.com的形式，而是采用了老的https://github.com
 解决：采用git@github.com形式即可。
 
-<h4>问题3：ERROR Deployer not found: git 或者 ERROR Deployer not found: github</h4>
-原因：未安装依赖包</p>
+#### 问题3：ERROR Deployer not found: git 或者 ERROR Deployer not found: github
+原因：未安装依赖包
 解决：使用 `npm install hexo-deployer-git --save` 安装依赖
 
-<h4>问题4：npm安装时下载速度慢</h4>
+#### 问题4：npm安装时下载速度慢
 解决： 可以换成淘宝的镜像源。
 镜像举例：
 1.临时使用
 `npm --registry https://registry.npm.taobao.org install express`
 
 2.持久使用
-`npm config set registry https://registry.npm.taobao.org`
-// 配置后可通过下面方式来验证是否成功
-`npm config get registry`
-// 或npm info express
+```
+npm config set registry https://registry.npm.taobao.org`
+//配置后可通过下面方式来验证是否成功
+npm config get registry
+或
+npm info express
+```
 
 3.通过cnpm
   使用
-`npm install -g cnpm --registry=https://registry.npm.taobao.org`
-// 使用cnpm install expresstall express
-
+```
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+使用cnpm install expresstall express
+```
 后面还会为大家带来Hexo的高级用法的，谢谢支持。
