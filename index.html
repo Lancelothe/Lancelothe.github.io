@@ -919,7 +919,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-10 00:29:58" itemprop="dateModified" datetime="2019-05-10T00:29:58+08:00">2019-05-10</time>
+                <time title="修改时间：2019-05-10 00:45:11" itemprop="dateModified" datetime="2019-05-10T00:45:11+08:00">2019-05-10</time>
               
             
           </span>
@@ -973,12 +973,11 @@
       
         
           
-            <p>[TOC]</p>
-<h3 id="elasticsearch-head启动："><a href="#elasticsearch-head启动：" class="headerlink" title="elasticsearch-head启动："></a>elasticsearch-head启动：</h3><pre><code>cd elasticsearch-head
+            <h3 id="elasticsearch-head启动"><a href="#elasticsearch-head启动" class="headerlink" title="elasticsearch-head启动"></a>elasticsearch-head启动</h3><pre><code>cd elasticsearch-head
 grunt server
 或者 输入npm run start启动
 # 打开浏览器 http://localhost:9100
-</code></pre><h3 id="ES单机集群搭建："><a href="#ES单机集群搭建：" class="headerlink" title="ES单机集群搭建："></a>ES单机集群搭建：</h3><p>修改完配置文件后，将压缩目录复制多份，然后修改对应配置文件的<code>node.name</code>、<code>http.port</code>、<code>transport.tcp.port</code>、<code>discovery.zen.ping.unicast.hosts</code>即可，<code>node.master</code>和<code>node.data</code>两个参数看需要修改，默认值都是<code>true</code>。</p>
+</code></pre><h3 id="ES单机集群搭建"><a href="#ES单机集群搭建" class="headerlink" title="ES单机集群搭建"></a>ES单机集群搭建</h3><p>修改完配置文件后，将压缩目录复制多份，然后修改对应配置文件的<code>node.name</code>、<code>http.port</code>、<code>transport.tcp.port</code>、<code>discovery.zen.ping.unicast.hosts</code>即可，<code>node.master</code>和<code>node.data</code>两个参数看需要修改，默认值都是<code>true</code>。</p>
 <ul>
 <li>脚本一件启动<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">./es-node-master/bin/elasticsearch -d</span><br><span class="line">./es-node-data-1/bin/elasticsearch -d</span><br><span class="line">./es-node-data-2/bin/elasticsearch -d</span><br><span class="line">./es-node-client/bin/elasticsearch -d</span><br></pre></td></tr></table></figure>
 </li>
@@ -992,7 +991,7 @@ grunt server
 <li><code>network.host</code>这个参数和redis的host参数一样，根据填写的IP来限制访问权限，例如127.0.0.1那么就只有本地可以访问，192等内网IP那么就只有内网能访问，写公网IP的话外网才能访问。当我们在远程服务器上搭建服务时，如果设置的不是外网IP，很可能就是无法访问的。遇到这个问题我们可以通过使用netstat命令：netstat -tunlp | grep elasticsearch来查看ip与端口的绑定使用情况来检查。</li>
 </ol>
 <p>参考：<a href="https://blog.csdn.net/qq_36666651/article/details/81704717" target="_blank" rel="noopener">elasticsearch本地集群搭建及远程服务器搭建注意事项 - wkNote - CSDN博客</a></p>
-<h3 id="启用X-pack："><a href="#启用X-pack：" class="headerlink" title="启用X-pack："></a>启用X-pack：</h3><p>（ELK Stack 6.3以后版本默认自带x-pack，不用手动安装）</p>
+<h3 id="启用X-pack"><a href="#启用X-pack" class="headerlink" title="启用X-pack"></a>启用X-pack</h3><p>（ELK Stack 6.3以后版本默认自带x-pack，不用手动安装）</p>
 <ol>
 <li>运行elasticsearch</li>
 <li>启用trial license（30天试用，后面有破解方法）<blockquote>
