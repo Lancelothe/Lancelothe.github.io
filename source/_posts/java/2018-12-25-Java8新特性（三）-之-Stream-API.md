@@ -6,7 +6,6 @@ categories:
 tags:
   - Java8
   - Lambda
-top: 1
 ---
 ## Stream API
 本文继续介绍Java 8的另一个新特性——Stream API。Stream API是对Java中集合操作的增强，可以利用它进行各种过滤、排序、分组、聚合等操作。Stream API配合Lambda表达式可以加大的提高代码可读性和编码效率，Stream API也支持并行操作，我们不用再花费很多精力来编写容易出错的多线程代码了，Stream API已经替我们做好了，并且充分利用多核CPU的优势。借助Stream API和Lambda，开发人员可以很容易的编写出高性能的并发处理程序。
@@ -232,18 +231,18 @@ List<User> list = minPriceList.stream()
 > 辅助POJO
 
     static class Person {
-
+    
         private String name;
         private int age;
         private long salary;
-
+    
         Person(String name, int age, long salary) {
-
+    
             this.name = name;
             this.age = age;
             this.salary = salary;
         }
-
+    
         @Override
         public String toString() {
             return String.format("Person{name='%s', age=%d, salary=%d}", name, age, salary);

@@ -5,7 +5,6 @@ categories:
   - Java
 tags:
   - Java8
-  - LocalDate
 ---
 Java8新增的就是LocalDate、LocalTime、LocalDateTime、Instant、Duration、Period几个大类。
 

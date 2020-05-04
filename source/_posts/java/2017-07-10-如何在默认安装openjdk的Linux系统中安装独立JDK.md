@@ -30,7 +30,6 @@ tags:
 下载地址 : [点击这里](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html)
 
 <h2 id="2"> 二、解压安装 </h2>
-
 1.解压jdk-7u79-linux-x64.tar.gz<br>
 
 2.将解压后jdk-7u79-linux-x64.tar.gz复制到/usr/java下
@@ -92,7 +91,6 @@ ps: 如果你不想重新系统，可以用命令`source /etc/profile`使配置�
 `注意：Linux使用:(冒号)而不是;(分号)来分隔路径`
 
 <h2 id="4"> 四、选择使用JAVA的版本 </h2>
-
 1. 更新参数使配置生效<br>
 	`update-alternatives --install /usr/bin/java java /usr/jdk1.7.0\_79/bin/java 300`<br>
 	`update-alternatives --install /usr/bin/javac javac /usr/jdk1.7.0\_79/bin/javac 300`

@@ -5,7 +5,6 @@ categories:
   - Java
 tags:
   - Java8
-  - Optional
 ---
 本篇文章将详细介绍Optional类，以及如何用它消除代码中的null检查。Optional是为了防止NullPointerException，使代码更优雅。
 
