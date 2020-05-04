@@ -343,283 +343,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/25/java-2018-12-25-Java8新特性（三）-之-Stream-API/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lancelot He">
-      <meta itemprop="description" content="I can do all things!">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lancelot's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/12/25/java-2018-12-25-Java8新特性（三）-之-Stream-API/" class="post-title-link" itemprop="url">Java8新特性（三） 之 Stream API</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-12-25 22:50:10" itemprop="dateCreated datePublished" datetime="2018-12-25T22:50:10+08:00">2018-12-25</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-05-10 00:02:43" itemprop="dateModified" datetime="2019-05-10T00:02:43+08:00">2019-05-10</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Stream-API"><a href="#Stream-API" class="headerlink" title="Stream API"></a>Stream API</h2><p>本文继续介绍Java 8的另一个新特性——Stream API。Stream API是对Java中集合操作的增强，可以利用它进行各种过滤、排序、分组、聚合等操作。Stream API配合Lambda表达式可以加大的提高代码可读性和编码效率，Stream API也支持并行操作，我们不用再花费很多精力来编写容易出错的多线程代码了，Stream API已经替我们做好了，并且充分利用多核CPU的优势。借助Stream API和Lambda，开发人员可以很容易的编写出高性能的并发处理程序。</p>
-<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Stream API是Java 8中加入的一套新的API，主要用于处理集合操作，不过它的处理方式与传统的方式不同，称为“数据流处理”。流（Stream）类似于关系数据库的查询操作，是一种声明式操作。比如要从数据库中获取所有年龄大于20岁的用户的名称，并按照用户的创建时间进行排序，用一条SQL语句就可以搞定，不过使用Java程序实现就会显得有些繁琐，这时候可以使用流：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; userNames =</span><br><span class="line">        users.stream()</span><br><span class="line">        .filter(user -&gt; user.getAge() &gt; <span class="number">20</span>)</span><br><span class="line">        .sorted(comparing(User::getCreationDate))</span><br><span class="line">        .map(User::getUserName)</span><br><span class="line">        .collect(toList());</span><br></pre></td></tr></table></figure>
-<p>在这个大数据的时代，数据变得越来越多样化，很多时候我们会面对海量数据，并对其做一些复杂的操作（比如统计，分组），依照传统的遍历方式<code>（for-each）</code>，每次只能处理集合中的一个元素，并且是按顺序处理，这种方法是极其低效的。你也许会想到并行处理，但是编写多线程代码并非易事，很容易出错并且维护困难。不过在Java 8之后，你可以使用Stream API来解决这一问题。</p>
-<p>Stream API将迭代操作封装到了内部，它会自动的选择最优的迭代方式，并且使用并行方式处理时，将集合分成多段，每一段分别使用不同的线程处理，最后将处理结果合并输出。</p>
-<p>需要注意的是，<strong>流只能遍历一次</strong>，遍历结束后，这个流就被关闭掉了。如果要重新遍历，可以从数据源（集合）中重新获取一个流。如果你对一个流遍历两次，就会抛出<code>java.lang.IllegalStateException异常</code>：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = Arrays.asList(<span class="string">"A"</span>, <span class="string">"B"</span>, <span class="string">"C"</span>, <span class="string">"D"</span>);</span><br><span class="line">Stream&lt;String&gt; stream = list.stream();</span><br><span class="line">stream.forEach(System.out::println);</span><br><span class="line">stream.forEach(System.out::println); <span class="comment">// 这里会抛出java.lang.IllegalStateException异常，因为流已经被关闭</span></span><br></pre></td></tr></table></figure></p>
-<p>流通常由三部分构成：<br><img src="/images/markdown-img-paste-20181220151915981.png" alt="stream_1"></p>
-<ol>
-<li>数据源：数据源一般用于流的获取，比如本文开头那个过滤用户的例子中users.stream()方法。</li>
-<li>中间处理：中间处理包括对流中元素的一系列处理，如：过滤（filter()），映射（map()），排序（sorted()）。</li>
-<li>终端处理：终端处理会生成结果，结果可以是任何不是流值，如List<string>；也可以不返回结果，如stream.forEach(System.out::println)就是将结果打印到控制台中，并没有返回。<br><img src="/images/markdown-img-paste-20181220152359823.png" alt><br>Stream中的操作可以分为两大类：中间操作与结束操作，中间操作只是对操作进行了记录，只有结束操作才会触发实际的计算（即惰性求值），这也是Stream在迭代大集合时高效的原因之一。<br>中间操作又可以分为无状态（Stateless）操作与有状态（Stateful）操作，前者是指元素的处理不受之前元素的影响；后者是指该操作只有拿到所有元素之后才能继续下去。结束操作又可以分为短路与非短路操作，这个应该很好理解，前者是指遇到某些符合条件的元素就可以得到最终结果；而后者是指必须处理所有元素才能得到最终结果。</string></li>
-</ol>
-<p>中间操作也称为惰性操作。<br>终端操作也称为急切操作。<br>惰性操作不处理元素，直到在流上调用热切操作。<br>流上的中间操作产生另一流。<br>Streams链接操作以创建流管道。</p>
-<h3 id="创建流"><a href="#创建流" class="headerlink" title="创建流"></a>创建流</h3><p>创建流的方式有很多，具体可以划分为以下几种：</p>
-<h4 id="由值创建流"><a href="#由值创建流" class="headerlink" title="由值创建流"></a>由值创建流</h4><p>使用静态方法<code>Stream.of()</code>创建流，该方法接收一个变长参数：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;Stream&gt; stream = Stream.of(<span class="string">"A"</span>, <span class="string">"B"</span>, <span class="string">"C"</span>, <span class="string">"D"</span>);</span><br></pre></td></tr></table></figure></p>
-<p>也可以使用静态方法<code>Stream.empty()</code>创建一个空的流：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;Stream&gt; stream = Stream.empty();</span><br></pre></td></tr></table></figure></p>
-<h4 id="由数组创建流"><a href="#由数组创建流" class="headerlink" title="由数组创建流"></a>由数组创建流</h4><p>使用静态方法<code>Arrays.stream()</code>从数组创建一个流，该方法接收一个数组参数：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String[] strs = &#123;<span class="string">"A"</span>, <span class="string">"B"</span>, <span class="string">"C"</span>, <span class="string">"D"</span>&#125;;</span><br><span class="line">Stream&lt;Stream&gt; stream = Arrays.stream(strs);</span><br></pre></td></tr></table></figure></p>
-<h4 id="通过文件生成流"><a href="#通过文件生成流" class="headerlink" title="通过文件生成流"></a>通过文件生成流</h4><p>使用<code>java.nio.file.Files</code>类中的很多静态方法都可以获取流，比如<code>Files.lines()</code>方法，该方法接收一个<code>java.nio.file.Path</code>对象，返回一个由文件行构成的字符串流：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;String&gt; stream = Files.lines(Paths.get(<span class="string">"text.txt"</span>), Charset.defaultCharset());</span><br></pre></td></tr></table></figure></p>
-<h4 id="通过函数创建流"><a href="#通过函数创建流" class="headerlink" title="通过函数创建流"></a>通过函数创建流</h4><p><code>java.util.stream.Stream</code>中有两个静态方法用于从函数生成流，他们分别是<code>Stream&lt;T&gt; generate(Supplier&lt;T&gt; s)</code>和<code>Stream&lt;T&gt; iterate(final T seed, final UnaryOperator&lt;T&gt; f)</code>：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// iteartor</span></span><br><span class="line">Stream.iterate(<span class="number">0</span>, n -&gt; n + <span class="number">2</span>).limit(<span class="number">51</span>).forEach(System.out::println);</span><br><span class="line"><span class="comment">// generate</span></span><br><span class="line">Stream.generate(() -&gt; <span class="string">"Hello Man!"</span>).limit(<span class="number">10</span>).forEach(System.out::println);</span><br></pre></td></tr></table></figure></p>
-<p>第一个方法会打印100以内的所有偶数，第二个方法打印10个<code>Hello Man!</code>。<strong>值得注意的是，这两个方法生成的流都是无限流，没有固定大小，可以无穷的计算下去</strong>，在上面的代码中我们使用了<code>limit()</code>来避免打印无穷个值。</p>
-<p>一般来说，<code>iterate()</code>用于生成一系列值，比如生成以当前时间开始之后的10天的日期：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream.iterate(LocalDate.now(), date -&gt; date.plusDays(<span class="number">1</span>)).limit(<span class="number">10</span>).forEach(System.out::println);</span><br></pre></td></tr></table></figure></p>
-<p><code>generate()</code>方法用于生成一些随机数，比如生成10个UUID：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream.generate(() -&gt; UUID.randomUUID().toString()).limit(<span class="number">10</span>).forEach(System.out::println);</span><br></pre></td></tr></table></figure></p>
-<h3 id="使用流"><a href="#使用流" class="headerlink" title="使用流"></a>使用流</h3><p><code>Stream</code>接口中包含许多对流操作的方法，这些方法分别为：</p>
-<ul>
-<li><code>filter()</code>：对流的元素过滤</li>
-<li><code>map()</code>：将流的元素映射成另一个类型</li>
-<li><code>distinct()</code>：去除流中重复的元素</li>
-<li><code>sorted()</code>：对流的元素排序</li>
-<li><code>forEach()</code>：对流中的每个元素执行某个操作</li>
-<li><code>peek()</code>：与<code>forEach()</code>方法效果类似，不同的是，该方法会返回一个新的流，而<code>forEach()</code>无返回</li>
-<li><code>limit()</code>：截取流中前面几个元素</li>
-<li><code>skip()</code>：跳过流中前面几个元素</li>
-<li><code>toArray()</code>：将流转换为数组</li>
-<li><code>reduce()</code>：对流中的元素归约操作，将每个元素合起来形成一个新的值</li>
-<li><code>collect()</code>：对流的汇总操作，比如输出成<code>List</code>集合</li>
-<li><code>anyMatch()</code>：匹配流中的元素，类似的操作还有<code>allMatch()</code>和<code>noneMatch()</code>方法</li>
-<li><code>findFirst()</code>：查找第一个元素，类似的还有<code>findAny()</code>方法</li>
-<li><code>max()</code>：求最大值</li>
-<li><code>min()</code>：求最小值</li>
-<li><code>count()</code>：求总数</li>
-</ul>
-<p>下面逐一介绍这些方法的用法。</p>
-<p><strong>简单栗子</strong>：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Stream.of(<span class="number">1</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">8</span>)</span><br><span class="line">    .filter(n -&gt; n &gt; <span class="number">2</span>)     <span class="comment">// 对元素过滤，保留大于2的元素</span></span><br><span class="line">    .distinct()             <span class="comment">// 去重，类似于SQL语句中的DISTINCT</span></span><br><span class="line">    .skip(<span class="number">1</span>)                <span class="comment">// 跳过前面1个元素</span></span><br><span class="line">    .limit(<span class="number">2</span>)               <span class="comment">// 返回开头2个元素，类似于SQL语句中的SELECT TOP</span></span><br><span class="line">    .sorted()               <span class="comment">// 对结果排序</span></span><br><span class="line">    .forEach(System.out::println);</span><br></pre></td></tr></table></figure></p>
-<h4 id="过滤"><a href="#过滤" class="headerlink" title="过滤"></a>过滤</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Apple&gt; filterList = appleList.stream().filter(a -&gt; a.getName().equals(<span class="string">"香蕉"</span>)).collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
-<h4 id="求和-规约"><a href="#求和-规约" class="headerlink" title="求和(规约)"></a>求和(规约)</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//计算 总金额</span></span><br><span class="line"><span class="comment">// map -&gt; reduce</span></span><br><span class="line">BigDecimal totalMoney = appleList.stream().map(Apple::getMoney).reduce(BigDecimal.ZERO, BigDecimal::add);</span><br><span class="line"><span class="comment">//计算 数量</span></span><br><span class="line"><span class="keyword">int</span> sum = appleList.stream().mapToInt(Apple::getNum).sum();</span><br></pre></td></tr></table></figure>
-<h4 id="提取Bean某一属性"><a href="#提取Bean某一属性" class="headerlink" title="提取Bean某一属性"></a>提取Bean某一属性</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 取Bean某一属性</span></span><br><span class="line">stuList.stream()</span><br><span class="line">		.map(Student::getId).distinct()</span><br><span class="line">		.collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
-<h4 id="去重"><a href="#去重" class="headerlink" title="去重"></a>去重</h4><ul>
-<li><h5 id="一般去重"><a href="#一般去重" class="headerlink" title="一般去重"></a>一般去重</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; distinctNumbers = numbers.stream().distinct().collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
-</li>
-<li><h5 id="条件去重"><a href="#条件去重" class="headerlink" title="条件去重"></a>条件去重</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 根据Bean的某种属性去重</span></span><br><span class="line"><span class="comment">// 首先定义一个过滤器</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">Predicate&lt;T&gt; <span class="title">distinctByKey</span><span class="params">(Function&lt;? <span class="keyword">super</span> T, Object&gt; keyExtractor)</span> </span>&#123;</span><br><span class="line">    Map&lt;Object, Boolean&gt; seen = <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;();</span><br><span class="line">    <span class="keyword">return</span> object -&gt; seen.putIfAbsent(keyExtractor.apply(object), Boolean.TRUE) == <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">List&lt;User&gt; distinctUsers = users.stream()</span><br><span class="line">        .filter(distinctByKey(User::getName))</span><br><span class="line">        .collect(Collectors.toList());</span><br><span class="line"></span><br><span class="line">这种去重也可以对多个Key进行，将多个Key拼接成一个Key。</span><br><span class="line"><span class="function"><span class="keyword">private</span> String <span class="title">getGroupingByKey</span><span class="params">(Person p)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> p.getAge()+<span class="string">"-"</span>+p.getName();</span><br><span class="line">&#125;</span><br><span class="line">下面的分组也是用了这个思想。</span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者</span></span><br><span class="line">List&lt;HKCsm&gt; unique = list.stream()</span><br><span class="line">            .collect(Collectors</span><br><span class="line">            .collectingAndThen(Collectors</span><br><span class="line">            .toCollection(() -&gt; <span class="keyword">new</span> TreeSet&lt;&gt;(Comparator.comparing(o -&gt; o.getIDVUNIC()))), ArrayList::<span class="keyword">new</span>));</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h4><p><strong>排序需重新赋值，内部操作循环的foreach的话就不用赋值新变量</strong><br><code>list = list.stream().sorted(byNumber).collect(Collectors.toList());</code></p>
-<p>多属性先后顺序排序：<br>自己重写comparator方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void testSort_with_multipleComparator() throws Exception &#123;</span><br><span class="line"></span><br><span class="line">   ArrayList&lt;Human&gt; humans = Lists.newArrayList(</span><br><span class="line">           new Human(&quot;tomy&quot;, 22),</span><br><span class="line">           new Human(&quot;li&quot;, 25)</span><br><span class="line">   );</span><br><span class="line"></span><br><span class="line">   Comparator&lt;Human&gt; comparator = (h1, h2) -&gt; &#123;</span><br><span class="line"></span><br><span class="line">       if (h1.getName().equals(h2.getName())) &#123;</span><br><span class="line">           return Integer.compare(h1.getAge(), h2.getAge());</span><br><span class="line">       &#125;</span><br><span class="line">       return h1.getName().compareTo(h2.getName());</span><br><span class="line">   &#125;;</span><br><span class="line">   humans.sort(comparator.reversed());</span><br><span class="line">   Assert.assertThat(&quot;tomy&quot;, equalTo(humans.get(0).getName()));</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 一般排序</span></span><br><span class="line"><span class="comment">// 定义一个比较器，用于排序</span></span><br><span class="line">Comparator&lt;Rule&gt; byNumber = Comparator.comparingInt(Rule::getNumber);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取排序后的list，先通过filter筛选，然后在排序</span></span><br><span class="line">List&lt;Rule&gt; rule = lstRule.stream().filter(s -&gt; s.getCode() == <span class="number">2</span>).sorted(byNumber).collect(Collectors.toList());</span><br><span class="line"></span><br><span class="line"><span class="comment">// 联合排序</span></span><br><span class="line">Comparator&lt;Rule&gt; byNumber = Comparator.comparingInt(Rule::getNumber);</span><br><span class="line">Comparator&lt;Rule&gt; byCode = Comparator.comparingInt(Rule::getCode);</span><br><span class="line">Comparator&lt;Rule&gt; byNumberAndCode = byNumber.thenComparing(byCode);</span><br><span class="line"><span class="comment">// byNumberAndCode是一个联合排序的比较器</span></span><br><span class="line">List&lt;Rule&gt; rule = lstRule.stream().filter(s -&gt; s.getCode() == <span class="number">2</span>).sorted(byNumberAndCode).collect(Collectors.toList());</span><br><span class="line"></span><br><span class="line"><span class="comment">// 排序时包括null</span></span><br><span class="line">List&lt;User&gt; nList = list.stream()</span><br><span class="line">    .sorted(Comparator.comparing(User::getCode, Comparator.nullsFirst(String::compareTo)))</span><br><span class="line">    .collect(Collectors.toList());</span><br><span class="line"></span><br><span class="line">List&lt;User&gt; list = minPriceList.stream()</span><br><span class="line">    .sorted(Comparator.comparing(l -&gt; l.getCreateDate(), Comparator.nullsLast(Date::compareTo)))</span><br><span class="line">    .collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
-<p>更多参考：<a href="http://www.importnew.com/15259.html" target="_blank" rel="noopener">Java8：Lambda表达式增强版Comparator和排序 - ImportNew</a></p>
-<h4 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h4><p>此方法类似Mysql的group by，但是可能比sql的复杂语句来得简单些。</p>
-<blockquote>
-<p>辅助POJO</p>
-</blockquote>
-<pre><code>static class Person {
-
-    private String name;
-    private int age;
-    private long salary;
-
-    Person(String name, int age, long salary) {
-
-        this.name = name;
-        this.age = age;
-        this.salary = salary;
-    }
-
-    @Override
-    public String toString() {
-        return String.format(&quot;Person{name=&apos;%s&apos;, age=%d, salary=%d}&quot;, name, age, salary);
-    }
-}
-</code></pre><ul>
-<li><h5 id="针对单个属性分组"><a href="#针对单个属性分组" class="headerlink" title="针对单个属性分组"></a>针对单个属性分组</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 一般分组后的结构是Map，key是分组的属性，value是组成员</span></span><br><span class="line">Map&lt;Integer, List&lt;Person&gt;&gt; peopleByAge = people.stream().collect(Collectors.groupingBy(Person::getAge));</span><br><span class="line"></span><br><span class="line">Map&lt;Integer, List&lt;Person&gt;&gt; peopleByAge = people.stream().collect(Collectors.groupingBy(Person::getAge, Collectors.toList()));</span><br><span class="line"></span><br><span class="line">Map&lt;Integer, List&lt;Person&gt;&gt; peopleByAge = people.stream().collect(Collectors.groupingBy(p -&gt; p.age, Collectors.mapping((Person p) -&gt; p, toList())));</span><br><span class="line"></span><br><span class="line">上面三种方法返回均相同，分组后的Map里的value也可以根据Collectors.groupingBy方法的第二个参数设置不同，Collectors里还有更多的方法，如求和、最值、均值、拼接。</span><br></pre></td></tr></table></figure>
-</li>
-<li><h5 id="针对多个属性分组"><a href="#针对多个属性分组" class="headerlink" title="针对多个属性分组"></a>针对多个属性分组</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">方式一：</span><br><span class="line">Map&lt;String, Map&lt;Integer, List&lt;Person&gt;&gt;&gt; map = people.stream()</span><br><span class="line">    .collect(Collectors.groupingBy(Person::getName,</span><br><span class="line">        Collectors.groupingBy(Person::getAge));</span><br><span class="line">map.get(&quot;Fred&quot;).get(18);</span><br><span class="line"></span><br><span class="line">方式二：</span><br><span class="line">定义一个表示分组的类：</span><br><span class="line">//静态内部类</span><br><span class="line">class Person &#123;</span><br><span class="line">    public static class NameAge &#123;</span><br><span class="line">        public NameAge(String name, int age) &#123;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 注意 重写方法 must implement equals and hash function</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public NameAge getNameAge() &#123;</span><br><span class="line">        return new NameAge(name, age);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Map&lt;NameAge, List&lt;Person&gt;&gt; map = people.collect(Collectors.groupingBy(Person::getNameAge));</span><br><span class="line">map.get(new NameAge(&quot;Fred&quot;, 18));</span><br><span class="line"></span><br><span class="line">不定义分组类也可以使用如apache commons pair如果您使用这些库之一。</span><br><span class="line">Map&lt;Pair&lt;String, Integer&gt;, List&lt;Person&gt;&gt; map =</span><br><span class="line">    people.collect(Collectors.groupingBy(p -&gt; Pair.of(p.getName(), p.getAge())));</span><br><span class="line">map.get(Pair.of(&quot;Fred&quot;, 18));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">最终方式：</span><br><span class="line">将多个字段拼接成一个新字段，在使用Java8的groupBy进行分组。上面的去重里我也是沿用了这个思想。</span><br><span class="line">这个方法虽然看起来简单笨拙，但是却是最有效的解决了我的问题的，多个字段如果大于2个字段，上面的Pair就不是很好用，并且分组出来的结构也复杂。</span><br><span class="line">Map&lt;String, List&lt;Person&gt;&gt; peopleBySomeKey = people</span><br><span class="line">                .collect(Collectors.groupingBy(p -&gt; getGroupingByKey(p), Collectors.mapping((Person p) -&gt; p, toList())));</span><br><span class="line"></span><br><span class="line">//write getGroupingByKey() function</span><br><span class="line">private String getGroupingByKey(Person p)&#123;</span><br><span class="line">    return p.getAge()+&quot;-&quot;+p.getName();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><h5 id="分组求和"><a href="#分组求和" class="headerlink" title="分组求和"></a>分组求和</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//分组求和，key是分组属性名</span></span><br><span class="line">Map&lt;String, Long&gt; tt = orgHoldingDatas.stream()</span><br><span class="line">        .collect(Collectors.groupingBy(OrgHoldingData::getOrgTypeCode, Collectors.summingLong(OrgHoldingData::getHeldNum)));</span><br></pre></td></tr></table></figure>
-</li>
-<li><h5 id="分组相加"><a href="#分组相加" class="headerlink" title="分组相加"></a>分组相加</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">list.stream()</span><br><span class="line">        .sorted(Comparator.comparing(HKCsm::getPSNREFC))</span><br><span class="line">        .collect(Collectors.groupingBy(HKCsm::getIDVUNIC))</span><br><span class="line">        .forEach((k, v) -&gt; &#123;</span><br><span class="line">            Optional&lt;HKCsm&gt; csm = v.stream().reduce((v1, v2) -&gt; &#123;</span><br><span class="line">                v1.setPSNNAME_OGDIS(v1.getPSNNAME_OGDIS() + <span class="string">"、"</span> + v2.getPSNNAME_OGDIS());</span><br><span class="line">                list.remove(v2);</span><br><span class="line">                <span class="keyword">return</span> v1;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者</span></span><br><span class="line">holderList.stream().collect(Collectors.groupingBy(HkMjshhshgStu::getShhnameOgdis))</span><br><span class="line">        .forEach((k, v) -&gt; &#123;</span><br><span class="line">            Optional&lt;HkMjshhshgStu&gt; sum = v.stream().reduce((v1, v2) -&gt; &#123;	<span class="comment">//合并</span></span><br><span class="line">                v1.setNumrts(v1.getNumrts() + v2.getNumrts());</span><br><span class="line">                v1.setPctishg(v1.getPctishg() + v2.getPctishg());</span><br><span class="line">                <span class="keyword">return</span> v1;</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="keyword">if</span> (sum.isPresent()) &#123;</span><br><span class="line">                items.add(sum.get());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><h5 id="自定义分组"><a href="#自定义分组" class="headerlink" title="自定义分组"></a>自定义分组</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, List&lt;OrgHoldingData&gt;&gt; tt  = orgHoldingDatas.stream()</span><br><span class="line">        .collect(Collectors.groupingBy((Function&lt;OrgHoldingData, String&gt;) org -&gt; &#123;</span><br><span class="line">            String key;</span><br><span class="line">            <span class="keyword">if</span> (org.getOrgTypeEncode().equals(<span class="string">"1"</span>)) &#123;</span><br><span class="line">                key = <span class="string">"苹果"</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (org.getOrgTypeEncode().equals(<span class="string">"2"</span>)) &#123;</span><br><span class="line">                key = <span class="string">"香蕉"</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                key = <span class="string">"其他"</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> key;</span><br><span class="line">        &#125;, Collectors.toList()));</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h4><p>分区的话就结果就只有两个部分part这种。要么是这一个区要么是另一个。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;Boolean, List&lt;Student&gt;&gt; map4 = students.stream()</span><br><span class="line">              .collect(Collectors.partitioningBy(student -&gt; student.getScore() &gt; <span class="number">90</span>));</span><br></pre></td></tr></table></figure></p>
-<h4 id="巧用flatMap"><a href="#巧用flatMap" class="headerlink" title="巧用flatMap"></a>巧用flatMap</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 应该使用flatMap . flatMap()的作用在于打平</span></span><br><span class="line">List&lt;String&gt; reList = list.stream().map(item -&gt; item.split(<span class="string">" "</span>)).flatMap(Arrays::stream).distinct()</span><br><span class="line">        .collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
-<h4 id="规约"><a href="#规约" class="headerlink" title="规约"></a>规约</h4><p>规约是什么？规约就是我们想要处理后要进行计算的东西，如上面我们进行的 求和、分组、分区、</p>
-<h4 id="流统计"><a href="#流统计" class="headerlink" title="流统计"></a>流统计</h4><ul>
-<li>DoubleSummaryStatistics</li>
-<li>LongSummaryStatistics</li>
-<li>IntSummaryStatistics<h3 id="并行流"><a href="#并行流" class="headerlink" title="并行流"></a>并行流</h3>并行流使用集合的<code>parallelStream()</code>方法可以获取一个并行流。Java内部会将流的内容分割成若干个子部分，然后将它们交给多个线程并行处理，这样就将工作的负担交给多核CPU的其他内核处理。</li>
-</ul>
-<p>在并行流中，我们关注最多的大概就是性能问题。在观察发现，在选择合适的数据结构和处理后，并行流确实可以优于平时的for循环。</p>
-<h2 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h2><ul>
-<li>在Stream.of创建的流中，对于流的使用只能操作一次，操作后会有个标志位被置为true，如果再次对此<code>流</code>进行操作，会报错。但是对于集合的流形式，如list.stream()不会有问题，可多次操作。</li>
-<li>parallelStream 的多线程并发写list会发生线程安全问题，list数据少了，导致数组越界。建议使用线程安全的集合类。<br><a href="https://blog.csdn.net/u011001723/article/details/52794455" target="_blank" rel="noopener">深入浅出parallelStream - 梦铃之境的专栏 - CSDN博客</a><br><a href="https://my.oschina.net/7001/blog/1475500" target="_blank" rel="noopener">记一次java8 parallelStream使用不当引发的血案 - AbeJeffrey的个人空间 - 开源中国</a><br><a href="https://yq.aliyun.com/articles/652718" target="_blank" rel="noopener">java8的ParallelStream踩坑记录-云栖社区-阿里云</a></li>
-</ul>
-<h4 id="性能测试"><a href="#性能测试" class="headerlink" title="性能测试"></a>性能测试</h4><p><a href="https://www.cnblogs.com/CarpenterLee/p/6675568.html" target="_blank" rel="noopener">Java Stream API性能测试 - CarpenterLee - 博客园</a></p>
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.cnblogs.com/shenlanzhizun/p/6027042.html" target="_blank" rel="noopener">Java8 新特性之流式数据处理 - 深蓝至尊 - 博客园</a><br><a href="https://lw900925.github.io/java/java8-stream-api.html" target="_blank" rel="noopener">Java 8新特性（二）：Stream API | 一书生VOID的博客</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/04/Java开发手册-泰山版来袭/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -665,7 +388,7 @@
                 
               
 
-              <time title="创建时间：2020-05-04 17:09:07 / 修改时间：17:10:58" itemprop="dateCreated datePublished" datetime="2020-05-04T17:09:07+08:00">2020-05-04</time>
+              <time title="创建时间：2020-05-04 17:09:07 / 修改时间：17:28:01" itemprop="dateCreated datePublished" datetime="2020-05-04T17:09:07+08:00">2020-05-04</time>
             
 
             
@@ -937,7 +660,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-10 01:19:31" itemprop="dateModified" datetime="2019-05-10T01:19:31+08:00">2019-05-10</time>
+                <time title="修改时间：2020-05-04 17:15:48" itemprop="dateModified" datetime="2020-05-04T17:15:48+08:00">2020-05-04</time>
               
             
           </span>
@@ -1171,7 +894,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-10 00:45:11" itemprop="dateModified" datetime="2019-05-10T00:45:11+08:00">2019-05-10</time>
+                <time title="修改时间：2020-05-04 17:15:48" itemprop="dateModified" datetime="2020-05-04T17:15:48+08:00">2020-05-04</time>
               
             
           </span>
@@ -1405,7 +1128,7 @@ grunt server
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-10 00:48:15" itemprop="dateModified" datetime="2019-05-10T00:48:15+08:00">2019-05-10</time>
+                <time title="修改时间：2020-05-04 17:15:48" itemprop="dateModified" datetime="2020-05-04T17:15:48+08:00">2020-05-04</time>
               
             
           </span>
@@ -1508,6 +1231,185 @@ grunt server
 <p>看到这些 <code>Welcome</code> 信息，说明就是 OK的了。</p>
 <p>以后，如果还有任何的需求，都可以这么解决，看下 xirong 的几个托管仓库：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">➜  ~  ll ~/.ssh</span><br><span class="line">total 40</span><br><span class="line">-rw-r--r-- 1 xirong staff  264 Jul 10 14:42 config</span><br><span class="line">-rw------- 1 xirong staff 3243 Jul 10 14:09 id_rsa</span><br><span class="line">-rw------- 1 xirong staff 1675 Jan 28 20:39 id_rsa.gitlab</span><br><span class="line">-rw-r--r-- 1 xirong staff  407 Jan 28 20:39 id_rsa.gitlab.pub</span><br><span class="line">-rw-r--r-- 1 xirong staff  747 Jul 10 14:09 id_rsa.pub</span><br><span class="line">-rw------- 1 xirong staff 1679 Jun 22 11:42 id_rsa_gitcafe</span><br><span class="line">-rw-r--r-- 1 xirong staff  407 Jun 22 11:42 id_rsa_gitcafe.pub</span><br><span class="line">-rw-r--r-- 1 xirong staff 9139 Jul 29 15:08 known_hosts</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/30/git-2019-01-30-Git-骚操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lancelot He">
+      <meta itemprop="description" content="I can do all things!">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lancelot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/01/30/git-2019-01-30-Git-骚操作/" class="post-title-link" itemprop="url">Git 骚操作</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-30 21:11:30" itemprop="dateCreated datePublished" datetime="2019-01-30T21:11:30+08:00">2019-01-30</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-05-04 17:15:48" itemprop="dateModified" datetime="2020-05-04T17:15:48+08:00">2020-05-04</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://blog.csdn.net/RonnyJiang/article/details/53507306" target="_blank" rel="noopener">删除git库中untracked files（未监控）的文件 - RonnyJiang的博客 - CSDN博客</a><br><a href="https://gist.github.com/subchen/3409a16cb46327ca7691" target="_blank" rel="noopener">Git Stash 用法</a></p>
+<h2 id="命令行快捷键设置"><a href="#命令行快捷键设置" class="headerlink" title="命令行快捷键设置"></a>命令行快捷键设置</h2><blockquote>
+<p>vim ~/.bashrc<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">alias gs=&apos;git status &apos;</span><br><span class="line">alias gl=&apos;git log &apos;</span><br><span class="line">alias ga=&apos;git add &apos;</span><br><span class="line">alias gpu=&apos;git pull upstream&apos;</span><br><span class="line">alias gpo=&apos;git pull origin&apos;</span><br><span class="line">alias gp=&apos;git push &apos;</span><br><span class="line">alias gb=&apos;git branch &apos;</span><br><span class="line">alias gcm=&apos;git commit&apos;</span><br><span class="line">alias gd=&apos;git diff&apos;</span><br><span class="line">alias gc=&apos;git checkout &apos;</span><br><span class="line">alias gau=&apos;git remote add upstream&apos;</span><br><span class="line">alias gr=&apos;git remote -v&apos;</span><br><span class="line">alias gsa=&apos;git stash&apos;</span><br><span class="line">alias gsp=&apos;git stash pop&apos;</span><br><span class="line"></span><br><span class="line">alias ss=&apos;ssh jump&apos;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>source ~/.bashrc<br>加载配置文件</p>
+</blockquote>
 
           
         
@@ -1660,11 +1562,7 @@ grunt server
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

@@ -405,7 +405,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-09 23:20:17" itemprop="dateModified" datetime="2019-05-09T23:20:17+08:00">2019-05-09</time>
+                <time title="修改时间：2020-05-04 17:15:48" itemprop="dateModified" datetime="2020-05-04T17:15:48+08:00">2020-05-04</time>
               
             
           </span>
@@ -596,7 +596,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-09 23:22:49" itemprop="dateModified" datetime="2019-05-09T23:22:49+08:00">2019-05-09</time>
+                <time title="修改时间：2020-05-04 17:15:48" itemprop="dateModified" datetime="2020-05-04T17:15:48+08:00">2020-05-04</time>
               
             
           </span>
@@ -809,7 +809,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-09 23:19:59" itemprop="dateModified" datetime="2019-05-09T23:19:59+08:00">2019-05-09</time>
+                <time title="修改时间：2020-05-04 17:15:48" itemprop="dateModified" datetime="2020-05-04T17:15:48+08:00">2020-05-04</time>
               
             
           </span>
@@ -1032,7 +1032,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-09 23:18:15" itemprop="dateModified" datetime="2019-05-09T23:18:15+08:00">2019-05-09</time>
+                <time title="修改时间：2020-05-04 17:15:48" itemprop="dateModified" datetime="2020-05-04T17:15:48+08:00">2020-05-04</time>
               
             
           </span>
@@ -1245,7 +1245,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-09 23:18:26" itemprop="dateModified" datetime="2019-05-09T23:18:26+08:00">2019-05-09</time>
+                <time title="修改时间：2020-05-04 17:19:38" itemprop="dateModified" datetime="2020-05-04T17:19:38+08:00">2020-05-04</time>
               
             
           </span>
@@ -1308,12 +1308,45 @@
 <li><a href="#4">4.选择使用JAVA的版本</a></li>
 <li><a href="#5">5.测试</a></li>
 </ul>
-<h2 id="1"> 一、卸载&amp;下载   </h2><br>#### 1、卸载自带的opendjk<br><br>    rpm –qa|grep jdk<br>    rpm –e –nodeps  jdk***    //将过滤出的结果进行卸载<br>#### 2、下载一个Sun的JDK（现在应该叫oracle的JDK）<br>下一个自解压的tar包。<br>这里我下载的是jdk-7u79-linux-x64.tar.gz<br><br>下载地址 : <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html" target="_blank" rel="noopener">点击这里</a><br><br><h2 id="2"> 二、解压安装 </h2>
-
-<p>1.解压jdk-7u79-linux-x64.tar.gz<br></p>
+<p></p><h2 id="1"> 一、卸载&amp;下载   </h2><p></p>
+<h4 id="1、卸载自带的opendjk"><a href="#1、卸载自带的opendjk" class="headerlink" title="1、卸载自带的opendjk"></a>1、卸载自带的opendjk</h4><pre><code>rpm –qa|grep jdk
+rpm –e –nodeps  jdk***    //将过滤出的结果进行卸载
+</code></pre><h4 id="2、下载一个Sun的JDK（现在应该叫oracle的JDK）"><a href="#2、下载一个Sun的JDK（现在应该叫oracle的JDK）" class="headerlink" title="2、下载一个Sun的JDK（现在应该叫oracle的JDK）"></a>2、下载一个Sun的JDK（现在应该叫oracle的JDK）</h4><p>下一个自解压的tar包。<br>这里我下载的是jdk-7u79-linux-x64.tar.gz</p>
+<p>下载地址 : <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html" target="_blank" rel="noopener">点击这里</a></p>
+<p></p><h2 id="2"> 二、解压安装 </h2><br>1.解压jdk-7u79-linux-x64.tar.gz<br><p></p>
 <p>2.将解压后jdk-7u79-linux-x64.tar.gz复制到/usr/java下</p>
-<h2 id="3"> 三、修改配置 </h2><br>#### 方法1：修改/etc/profile 文件<br>所有用户的 shell都有权使用这些环境变量<br><strong><1> 在 shell终端执行命令：vi /etc/profile</1></strong><br><strong><2> 在 profile文件末尾加入：</2></strong><br><br>    JAVA_HOME=/usr/jdk1.7.0_79<br>      JRE_HOME=/usr/local/java/jdk1.7.0_79/jre<br>      PATH=$JAVA_HOME/bin:$PATH<br>      CLASSPATH=.:$JAVA_HOME/lib/dt.jar: $JAVA_HOME/lib/tools.jar<br>      export JAVA_HOME,JRE_HOME,PATH,CLASSPATH<br><br><code>PS：上面我们说的修改配置系统环境变量是在Unix操作系统下面的。</code><p><br>下面来说说在DOS系统下面如何更改配置系统环境变量。<br>#### DOS:<br><br>1. 在系统变量里新建JAVA_HOME变量，变量值为：<code>D:\others\JAVA\JDK</code>（根据自己的安装路径填写）<br><br>2. 新建Classpath变量，在Classpath变量（已存在不用新建）添加变量值，变量值为：<br><code>.;%JAVA\_HOME%\lib;%JAVA_HOME%\lib\tools.jar;</code><br><br>3. 在path变量（已存在不用新建）添加变量值：<br><code>%JAVA\_HOME%\bin;%JAVA_HOME%\jre\bin（注意变量值之间用“;”隔开）</code><br><br><code>eg:;%JAVA\_HOME%\lib;%JAVA\_HOME%\lib\tools.jar;%JAVA\_HOME%\bin;%JAVA\_HOME%\jre\bin;</code><br><br>4. 测试是否配置成功<br>在dos中，输入命令java，回车后应该会出现java的各种命令；<br>javac  出现相关编译的命令；<br>java -version 出现jdk版本号<br>补充环境变量的解析:<br>JAVA_HOME:jdk的安装路径<br>Classpath:java加载类路径，只有类在classpath中java命令才能识别，在路径前加了个”.”表示当前路径。<br>path：系统在任何路径下都可以识别java,javac命令。<br><br><strong><3>重启系统</3></strong><br>ps: 如果你不想重新系统，可以用命令<code>source /etc/profile</code>使配置文件立即生效。否则只能重启系统才能使配置参数生效。然后我们可以通过<br><br>    echo $JAVA_HOME<br>    echo $PATH<br>    echo $CLASSPATH<br>查看配置的信息。<br>但是我最后还是重启了才真正生效。<br>#### 方法2：修改.bashrc文件<br>如果你需要给某个用户权限使用这些环境变量，你只需要修改其个人用户主目录下的.bashrc就可以了,而不像第一种方法给所有用户权限。<br><strong><1>在 shell终端执行命令：vi ~/.bashrc</1></strong><br><strong><2>在.bashrc文件末尾加入：</2></strong><br><br>    set JAVA_HOME=/usr/jdk1.7.0_79<br>    export JAVA_HOME<br>    set PATH=$JAVA_HOME/bin:$PATH<br>    export PATH<br>    set CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar<br>    export CLASSPATH<br><strong><3>重新登录</3></strong><br><code>注意：Linux使用:(冒号)而不是;(分号)来分隔路径</code><br><br></p><h2 id="4"> 四、选择使用JAVA的版本 </h2>
-
+<p></p><h2 id="3"> 三、修改配置 </h2><p></p>
+<h4 id="方法1：修改-etc-profile-文件"><a href="#方法1：修改-etc-profile-文件" class="headerlink" title="方法1：修改/etc/profile 文件"></a>方法1：修改/etc/profile 文件</h4><p>所有用户的 shell都有权使用这些环境变量<br><strong><1> 在 shell终端执行命令：vi /etc/profile</1></strong><br><strong><2> 在 profile文件末尾加入：</2></strong></p>
+<pre><code>JAVA_HOME=/usr/jdk1.7.0_79
+  JRE_HOME=/usr/local/java/jdk1.7.0_79/jre
+  PATH=$JAVA_HOME/bin:$PATH
+  CLASSPATH=.:$JAVA_HOME/lib/dt.jar: $JAVA_HOME/lib/tools.jar
+  export JAVA_HOME,JRE_HOME,PATH,CLASSPATH
+</code></pre><p><code>PS：上面我们说的修改配置系统环境变量是在Unix操作系统下面的。</code></p><p><br>下面来说说在DOS系统下面如何更改配置系统环境变量。</p>
+<h4 id="DOS"><a href="#DOS" class="headerlink" title="DOS:"></a>DOS:</h4><ol>
+<li><p>在系统变量里新建JAVA_HOME变量，变量值为：<code>D:\others\JAVA\JDK</code>（根据自己的安装路径填写）</p>
+</li>
+<li><p>新建Classpath变量，在Classpath变量（已存在不用新建）添加变量值，变量值为：<br><code>.;%JAVA\_HOME%\lib;%JAVA_HOME%\lib\tools.jar;</code></p>
+</li>
+<li><p>在path变量（已存在不用新建）添加变量值：<br><code>%JAVA\_HOME%\bin;%JAVA_HOME%\jre\bin（注意变量值之间用“;”隔开）</code><br><br><code>eg:;%JAVA\_HOME%\lib;%JAVA\_HOME%\lib\tools.jar;%JAVA\_HOME%\bin;%JAVA\_HOME%\jre\bin;</code></p>
+</li>
+<li><p>测试是否配置成功<br>在dos中，输入命令java，回车后应该会出现java的各种命令；<br>javac  出现相关编译的命令；<br>java -version 出现jdk版本号<br>补充环境变量的解析:<br>JAVA_HOME:jdk的安装路径<br>Classpath:java加载类路径，只有类在classpath中java命令才能识别，在路径前加了个”.”表示当前路径。<br>path：系统在任何路径下都可以识别java,javac命令。</p>
+</li>
+</ol>
+<p><strong><3>重启系统</3></strong><br>ps: 如果你不想重新系统，可以用命令<code>source /etc/profile</code>使配置文件立即生效。否则只能重启系统才能使配置参数生效。然后我们可以通过</p>
+<pre><code>echo $JAVA_HOME
+echo $PATH
+echo $CLASSPATH
+</code></pre><p>查看配置的信息。<br>但是我最后还是重启了才真正生效。</p>
+<h4 id="方法2：修改-bashrc文件"><a href="#方法2：修改-bashrc文件" class="headerlink" title="方法2：修改.bashrc文件"></a>方法2：修改.bashrc文件</h4><p>如果你需要给某个用户权限使用这些环境变量，你只需要修改其个人用户主目录下的.bashrc就可以了,而不像第一种方法给所有用户权限。<br><strong><1>在 shell终端执行命令：vi ~/.bashrc</1></strong><br><strong><2>在.bashrc文件末尾加入：</2></strong></p>
+<pre><code>set JAVA_HOME=/usr/jdk1.7.0_79
+export JAVA_HOME
+set PATH=$JAVA_HOME/bin:$PATH
+export PATH
+set CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+export CLASSPATH
+</code></pre><p><strong><3>重新登录</3></strong><br><code>注意：Linux使用:(冒号)而不是;(分号)来分隔路径</code></p>
+<p></p><h2 id="4"> 四、选择使用JAVA的版本 </h2><p></p>
 <ol>
 <li><p>更新参数使配置生效<br><br> <code>update-alternatives --install /usr/bin/java java /usr/jdk1.7.0\_79/bin/java 300</code><br><br> <code>update-alternatives --install /usr/bin/javac javac /usr/jdk1.7.0\_79/bin/javac 300</code></p>
 </li>
@@ -1484,11 +1517,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
