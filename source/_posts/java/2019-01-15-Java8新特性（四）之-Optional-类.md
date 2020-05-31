@@ -6,6 +6,10 @@ categories:
 tags:
   - Java8
 ---
+![Java-Optional-Logo](https://image-hosting-lan.oss-cn-beijing.aliyuncs.com/Java-Optional-Logo.png)
+
+NPE（NullPointerException）是我们代码工作中最常遇到的一个异常，非常的难受，如何优雅的处理它呢。
+
 本篇文章将详细介绍Optional类，以及如何用它消除代码中的null检查。Optional是为了防止NullPointerException，使代码更优雅。
 
 ## 避免使用`null`检查
@@ -55,6 +59,8 @@ public String bindUserToRole(User user) {
 ## `Optional`类
 
 `java.util.Optional<T>`类是一个封装了`Optional`值的容器对象，`Optional`值可以为`null`，如果值存在，调用`isPresent()`方法返回`true`，调用`get()`方法可以获取值。
+
+![Java8-Optional](https://image-hosting-lan.oss-cn-beijing.aliyuncs.com/Java8-Optional.jpg)
 
 ### 创建`Optional`对象
 
@@ -236,6 +242,60 @@ return userOpt.map(User::getUserName)
 
 总结一下，新的`Optional`类让我们可以以函数式编程的方式处理`null`值，抛弃了Java 8之前需要嵌套大量`if-else`代码块，使代码可读性有了很大的提高。
 
-
 ## 坑
-[使用OPtional的orElse\(\)问题 \- liubingyu12345的博客 \- CSDN博客](https://blog.csdn.net/liubingyu12345/article/details/78183638)
+
+### 使用OPtional的orElse()问题
+
+项目中有这样一段代码：
+
+```java
+return Optional.ofNullable(service.A()).orElse(service.B())
+```
+
+功能显而易见，service.A()如果返回值是null，则返回service.B()，否则直接返回service.A()。
+实际使用中发现：
+如果service.A()返回非null,最终结果是service.A(),然而service.B()这个方法也被执行了。这样肯定就不对了,如果service.B()中还有插入数据库或者RPC这种操作，问题就大了。刚开始还以为是什么执行顺序问题，后来在Stack Overflow上看到老外讨论orElse()和orElseGet()的区别，其中一点区别就是orElse(T)无论前面Optional容器是null还是non-null，都会执行orElse里的方法，orElseGet(Supplier)并不会，如果service无异常抛出的情况下，Optional使用orElse或者orElseGet的返回结果都是一样的
+stack overflow上有人还给出这样一个例子
+
+```java
+static String B() {
+    System.out.println("B()...");
+    return "B";
+}
+
+public static void main(final String... args) {
+    System.out.println("-----");
+    System.out.println(Optional.of("A").orElse(B()));
+    System.out.println("-----");
+    System.out.println(Optional.of("A").orElseGet(() -> B()));
+}
+
+// 输出结果
+-----
+B()...
+A
+-----
+A
+```
+
+看了上面代码，我就把我的代码改成如下即可：
+
+```java
+return Optional.ofNullable(service.A()).orElseGet(() -> service.B())
+```
+
+
+结论：Optional的orElse(T)若方法不是纯计算型的，有与数据库交互或者远程调用的，都应该使用orElseGet()
+
+引自：
+
+[使用Optional的orElse\(\)问题 \- liubingyu12345的博客](https://blog.csdn.net/liubingyu12345/article/details/78183638)
+
+[Java \- Difference between \`Optional\.orElse\(\)\` and \`Optional\.orElseGet\(\)\` \- Stack Overflow](https://stackoverflow.com/questions/33170109/difference-between-optional-orelse-and-optional-orelseget#)
+
+---
+
+<div style="text-align:center">求关注、分享、在看！！！
+  你的支持是我创作最大的动力。</div>
+
+![](https://image-hosting-lan.oss-cn-beijing.aliyuncs.com/qrcode_for_hbh.jpg)

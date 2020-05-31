@@ -53,6 +53,7 @@ Thread thread = new Thread(() -> System.out.println("Hello Man!"));
 可以看出，只要是内部类的代码块，就可以使用Lambda表达式简化，并且简化后的代码清晰易懂。
 
 ### 方法引用
+
 甚至，Comparator排序的Lambda表达式还可以进一步简化：
 > list.sort(Integer::compareTo);
 
@@ -71,3 +72,10 @@ Lambda 表达式 | 方法引用
 特别的，对于构造函数的方法引用：  `ClassName::new`
 类似使用方法引用的例子还有打印集合中的元素到控制台中：
 `list.forEach(System.out::println);`
+
+---
+
+<div style="text-align:center">求关注、分享、在看！！！
+  你的支持是我创作最大的动力。</div>
+
+![](https://image-hosting-lan.oss-cn-beijing.aliyuncs.com/qrcode_for_hbh.jpg)
